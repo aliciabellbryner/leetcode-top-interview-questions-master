@@ -3,10 +3,11 @@ package topinterviewquestions;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Problem_0046_Permutations {
 
-	public static List<List<Integer>> onClass(int[] nums) {
+	public static List<List<Integer>> onClass(int[] nums) {//不是很好的办法，不推荐，看下面的用queue实现的bfs方法
 		List<List<Integer>> ans = new ArrayList<>();
 		HashSet<Integer> rest = new HashSet<>();
 		for (int num : nums) {
@@ -43,7 +44,7 @@ public class Problem_0046_Permutations {
 		return ans;
 	}
 
-	public static void process(int[] nums, int index, List<List<Integer>> ans) {
+	public static void process(int[] nums, int index, List<List<Integer>> ans) {//nums中没有重复的元素
 		if (index == nums.length) {
 			ArrayList<Integer> cur = new ArrayList<>();
 			for (int num : nums) {
@@ -51,7 +52,7 @@ public class Problem_0046_Permutations {
 			}
 			ans.add(cur);
 		} else {
-			for (int j = index; j < nums.length; j++) {
+			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
 				swap(nums, index, j);
 				process(nums, index + 1, ans);
 				swap(nums, index, j);
@@ -59,10 +60,55 @@ public class Problem_0046_Permutations {
 		}
 	}
 
+	//follow up: if nums has duplicate elements, how get the permutation
+	public static List<List<Integer>> permuteWithDup(int[] nums) {
+		List<List<Integer>> ans = new ArrayList<>();
+		processWithDup(nums, 0, ans);
+		return ans;
+	}
+
+	public static void processWithDup(int[] nums, int index, List<List<Integer>> ans) {//nums中没有重复的元素
+		if (index == nums.length) {
+			ArrayList<Integer> cur = new ArrayList<>();
+			for (int num : nums) {
+				cur.add(num);
+			}
+			ans.add(cur);
+			return;
+		} else {
+//			HashSet<Integer> visited = new HashSet<>();//HashSet<Integer> visited
+//			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
+//				if (!visited.contains(nums[j])) {
+//					visited.add(nums[j]);
+//					swap(nums, index, j);
+//					processWithDup(nums, index + 1, ans);
+//					swap(nums, index, j);
+//				}
+//			}
+
+			boolean[] visited = new boolean[256];// boolean[] visited, it is the same
+			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
+				if (!visited[nums[j]]) {
+					visited[nums[j]] = true;
+					swap(nums, index, j);
+					processWithDup(nums, index + 1, ans);
+					swap(nums, index, j);
+				}
+			}
+		}
+	}
+
+
 	public static void swap(int[] nums, int i, int j) {
 		int tmp = nums[i];
 		nums[i] = nums[j];
 		nums[j] = tmp;
+	}
+
+	public static void main(String[] args) {
+		int[] test = new int[]{1,2,1};
+		int[] test2 = new int[]{1,1,3};
+		System.out.println(permuteWithDup(test));
 	}
 
 }

@@ -205,7 +205,7 @@ public class JumpGameIIFollowUpOnClass {
 			return -1;
 		}
 		Queue<Integer> queue = new LinkedList<>();
-		HashMap<Integer, Integer> levelMap = new HashMap<>();
+		HashMap<Integer, Integer> levelMap = new HashMap<>();//即起到了可以查level，还可以防止反复跳同一点，起到去重的左右
 		queue.add(start);
 		levelMap.put(start, 0);
 		while (!queue.isEmpty()) {
@@ -214,7 +214,7 @@ public class JumpGameIIFollowUpOnClass {
 			if (cur == end) {
 				return level;
 			} else {
-				int left = cur - arr[cur - 1];
+				int left = cur - arr[cur - 1];//因为原题中给的start是从1开始的。。。
 				int right = cur + arr[cur - 1];
 				if (left > 0 && !levelMap.containsKey(left)) {
 					queue.add(left);

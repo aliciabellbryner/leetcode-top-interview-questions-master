@@ -32,7 +32,7 @@ public class Problem_0044_WildcardMatching {
 		if (p[pi] == '?') {
 			return process1(s, p, si + 1, pi + 1);
 		}
-		for (int len = 0; len <= s.length - si; len++) {
+		for (int len = 0; len <= s.length - si; len++) {//if pi = '*'
 			if (process1(s, p, si + len, pi + 1)) {
 				return true;
 			}
