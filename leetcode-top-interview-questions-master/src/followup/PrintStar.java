@@ -34,7 +34,7 @@ public class PrintStar {
 		for (int col = rightDown - 1; col > leftUp; col--) {
 			m[rightDown][col] = '*';
 		}
-		for (int row = rightDown - 1; row > leftUp + 1; row--) {
+		for (int row = rightDown - 1; row > leftUp + 1; row--) {//the end of row and col = leftUp + 1 is critical
 			m[row][leftUp + 1] = '*';
 		}
 	}

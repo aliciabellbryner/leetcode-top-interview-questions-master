@@ -7,7 +7,7 @@ public class Problem_0050_PowXN {
 			return 1D;
 		}
 		if (n == Integer.MIN_VALUE) {
-			return (x == 1D || x == -1D) ? 1D : 0;
+			return (x == 1D || x == -1D) ? 1D : 0;//if x == -1D, then as MIN_VALUE is even, so it will be 1D
 		}
 		int pow = Math.abs(n);
 		double t = x;
@@ -52,11 +52,12 @@ public class Problem_0050_PowXN {
 
 		double test = 1.00000001D;
 		int N = Integer.MIN_VALUE;
-		System.out.println(test == 1D);
-		System.out.println(test + "的" + N + "次方，结果：");
-		System.out.println(Math.pow(test, (double) N));
-		System.out.println(myPow1(test, N));
-		System.out.println(myPow2(test, N));
+//		System.out.println(test == 1D);
+//		System.out.println(test + "的" + N + "次方，结果：");
+//		System.out.println(Math.pow(test, (double) N));
+//		System.out.println(myPow1(test, N));
+//		System.out.println(myPow2(test, N));
+//		System.out.println(Math.pow(-1D, N));
 	}
 
 }

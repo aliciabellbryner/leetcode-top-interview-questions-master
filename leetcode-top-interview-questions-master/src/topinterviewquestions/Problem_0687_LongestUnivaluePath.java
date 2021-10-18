@@ -8,6 +8,8 @@ public class Problem_0687_LongestUnivaluePath {
 		public TreeNode right;
 
 		public TreeNode(int v) {
+			this.left = left;
+			this.right = right;
 			val = v;
 		}
 	}
