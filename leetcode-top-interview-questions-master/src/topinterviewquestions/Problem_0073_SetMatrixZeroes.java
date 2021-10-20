@@ -2,6 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0073_SetMatrixZeroes {
 
+	//you will have to keep the first row or first colon not all zeros to keep track
 	public static void setZeroes1(int[][] matrix) {
 		boolean row0Zero = false;
 		boolean col0Zero = false;
@@ -62,7 +63,7 @@ public class Problem_0073_SetMatrixZeroes {
 				}
 			}
 		}
-		for (i = matrix.length - 1; i >= 0; i--) {
+		for (i = matrix.length - 1; i >= 0; i--) {//it has to start from the matrix.length-1, to 0, cannot reverse. or it will be all 0s
 			for (j = 1; j < matrix[0].length; j++) {
 				if (matrix[i][0] == 0 || matrix[0][j] == 0) {
 					matrix[i][j] = 0;

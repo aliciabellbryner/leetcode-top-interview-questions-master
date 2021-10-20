@@ -1,38 +1,59 @@
 package topinterviewquestions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Problem_0078_Subsets {
 
-	public static List<List<Integer>> subsets(int[] nums) {
-		List<List<Integer>> ans = new ArrayList<>();
-		LinkedList<Integer> path = new LinkedList<>();
-		process(nums, 0, path, ans);
-		return ans;
+	//my solution: no duplicate elements
+	public static List<List<Integer>> subsets_j(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (nums == null || nums.length == 0) {
+			return res;
+		}
+		List<Integer> path = new ArrayList<>();
+		Arrays.sort(nums);
+		process_j(nums, path, 0, res);
+		return res;
 	}
+	public static void process_j(int[] nums, List<Integer> path, int index, List<List<Integer>> res) {
+		res.add(new ArrayList(path));//deep copy: java默认都是pass by reference ，这里不new的话传递的是指向path的reference，后面path改变，res中加入的path也会改变，最后返回就变成了[[],[],[],[]......]
 
-	// 当前来到index位置，做决定，1）不要当前位置的数   2）要当前位置的数
-	// 如果要当前位置的数，把该数字，放入到path中去
-	// 如果不要当前位置的数，不把该数字，放入到path中去
-	public static void process(int nums[], int index, LinkedList<Integer> path, List<List<Integer>> ans) {
-		if (index == nums.length) {
-			ans.add(copy(path));
-		} else {
-			process(nums, index + 1, path, ans);
-			path.addLast(nums[index]);
-			process(nums, index + 1, path, ans);
-			path.removeLast();
+		for (int i = index; i < nums.length; i++) {
+			path.add(nums[i]);
+			process_j(nums, path, i+1, res);
+			path.remove(path.size()-1);
 		}
 	}
 
-	public static ArrayList<Integer> copy(LinkedList<Integer> path) {
-		ArrayList<Integer> ans = new ArrayList<>();
-		for (Integer num : path) {
-			ans.add(num);
+	//my solution: with duplicate elements
+	public static List<List<Integer>> subsets_dup(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (nums == null || nums.length == 0) {
+			return res;
 		}
-		return ans;
+		List<Integer> path = new ArrayList<>();
+		Arrays.sort(nums);
+		process_dup(nums, path, 0, res);
+		return res;
+	}
+	public static void process_dup(int[] nums, List<Integer> path, int index, List<List<Integer>> res) {
+		res.add(new ArrayList(path));
+		for (int i = index; i < nums.length; i++) {
+			if (i != index && (nums[i] == nums[i-1])) {
+				continue;
+			}
+			path.add(nums[i]);
+			process_dup(nums, path, i+1, res);
+			path.remove(path.size()-1);
+		}
+	}
+
+	public static void main(String[] args) {
+		int[] test = new int[]{1,1,3};
+		System.out.println(subsets_dup(test));
 	}
 
 }

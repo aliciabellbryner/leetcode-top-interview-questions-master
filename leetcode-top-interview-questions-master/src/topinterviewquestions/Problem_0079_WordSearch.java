@@ -28,13 +28,42 @@ public class Problem_0079_WordSearch {
 			return false;
 		}
 		char tmp = b[i][j];
-		b[i][j] = 0;
+		b[i][j] = 0;//一定要改，不然会重复走，重复利用元素
 		boolean ans =  process(b, i - 1, j, w, k + 1) 
 				|| process(b, i + 1, j, w, k + 1) 
 				|| process(b, i, j - 1, w, k + 1)
 				|| process(b, i, j + 1, w, k + 1);
 		b[i][j] = tmp;
 		return ans;
+	}
+
+//一样正确的方法
+public static boolean exist_j(char[][] board, String word) {
+	for (int i = 0; i < board.length; i++) {
+		for (int j = 0; j < board[0].length; j++) {
+			if (process(board, i, j, word, 0)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+	public static boolean process(char[][] b, int i, int j, String word, int index) {
+		if(index == word.length()) {
+			return true;
+		} else if (i >= 0 && i < b.length && j >= 0 && j < b[0].length && b[i][j] == word.charAt(index)) {
+			char tmp = b[i][j];
+			b[i][j] = 0;//一定要改，不然会重复走，重复利用元素
+			boolean ans =  process(b, i - 1, j, word, index + 1)
+					|| process(b, i + 1, j, word, index + 1)
+					|| process(b, i, j - 1, word, index + 1)
+					|| process(b, i, j + 1, word, index + 1);
+			b[i][j] = tmp;
+			return ans;
+		} else {
+			return false;
+		}
 	}
 
 }

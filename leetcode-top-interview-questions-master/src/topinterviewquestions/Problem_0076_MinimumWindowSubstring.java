@@ -22,10 +22,10 @@ public class Problem_0076_MinimumWindowSubstring {
 		// [L..R)   [0,0)  R
 		while (R != str.length) {
 			map[str[R]]--;
-			if (map[str[R]] >= 0) {
+			if (map[str[R]] >= 0) {//说明是有效还款
 				all--;
 			}
-			if (all == 0) {
+			if (all == 0) {//说明还完了
 				while (map[str[L]] < 0) {
 					map[str[L++]]++;
 				}
@@ -34,7 +34,7 @@ public class Problem_0076_MinimumWindowSubstring {
 					ansl = L;
 					ansr = R;
 				}
-				all++;		
+				all++;//左边界继续往右边扩，这个目前是把L上的有效还款撤销
 				map[str[L++]]++;
 			}
 			R++;
