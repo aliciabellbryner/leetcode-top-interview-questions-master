@@ -6,7 +6,6 @@ public class Problem_0108_ConvertSortedArrayToBinarySearchTree {
 		int val;
 		TreeNode left;
 		TreeNode right;
-
 		TreeNode(int val) {
 			this.val = val;
 		}

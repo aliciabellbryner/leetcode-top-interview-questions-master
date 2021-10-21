@@ -6,6 +6,9 @@ public class Problem_0098_ValidateBinarySearchTree {
 		int val;
 		TreeNode left;
 		TreeNode right;
+		public TreeNode(int v) {
+			this.val = v;
+		}
 	}
 
 	public boolean isValidBST(TreeNode root) {

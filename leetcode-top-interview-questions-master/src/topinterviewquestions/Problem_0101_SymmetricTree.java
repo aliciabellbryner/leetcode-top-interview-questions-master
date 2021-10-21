@@ -6,6 +6,9 @@ public class Problem_0101_SymmetricTree {
 		int val;
 		TreeNode left;
 		TreeNode right;
+		public TreeNode (int v) {
+			this.val = v;
+		}
 	}
 
 	public boolean isSymmetric(TreeNode root) {
@@ -26,5 +29,21 @@ public class Problem_0101_SymmetricTree {
 		// 一个为空，一个不为空  false
 		return false;
 	}
+
+	//my solution
+	public boolean isSymmetric_j(TreeNode root) {
+		return helper(root, root);
+	}
+
+	public boolean helper(TreeNode t1, TreeNode t2) {
+		if (t1 == null && t2 == null) {
+			return true;
+		}
+		if (t1 == null || t2 == null || t1.val != t2.val) {
+			return false;
+		}
+		return helper(t1.left, t2.right) && helper(t1.right, t2.left);
+	}
+
 
 }

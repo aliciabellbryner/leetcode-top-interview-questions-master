@@ -6,6 +6,9 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		int val;
 		TreeNode left;
 		TreeNode right;
+		public TreeNode(int v) {
+			this.val = v;
+		}
 	}
 
 	public static int maxPathSum(TreeNode root) {

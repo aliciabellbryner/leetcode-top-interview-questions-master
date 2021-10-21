@@ -2,6 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0091_DecodeWays {
 
+	//don't use this solution!!! time limit will be exceeded
 	public static int numDecodings1(String s) {
 		if (s == null || s.length() == 0) {
 			return 0;
@@ -16,7 +17,7 @@ public class Problem_0091_DecodeWays {
 		if (index == str.length) {
 			return 1;
 		}
-		if (str[index] == '0') {
+		if (str[index] == '0') {//don't use == 0, this is char!!!
 			return 0;
 		}
 		// index还有字符, 又不是‘0’
@@ -35,6 +36,8 @@ public class Problem_0091_DecodeWays {
 		return ways;
 	}
 
+
+	//use dp to solve
 	public static int numDecodings2(String s) {
 		if (s == null || s.length() == 0) {
 			return 0;

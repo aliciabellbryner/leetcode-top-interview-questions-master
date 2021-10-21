@@ -9,6 +9,9 @@ public class Problem_0104_MaximumDepthOfBinaryTree {
 		int val;
 		TreeNode left;
 		TreeNode right;
+		public TreeNode (int v) {
+			this.val = v;
+		}
 	}
 
 	public static int maxDepth(TreeNode root) {

@@ -1,5 +1,6 @@
 package topinterviewquestions;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class Problem_0084_LargestRectangleInHistogram {
@@ -28,5 +29,4 @@ public class Problem_0084_LargestRectangleInHistogram {
 		}
 		return maxArea;
 	}
-
 }

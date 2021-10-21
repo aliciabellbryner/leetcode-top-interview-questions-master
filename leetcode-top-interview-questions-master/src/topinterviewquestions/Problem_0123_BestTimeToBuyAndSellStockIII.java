@@ -7,7 +7,7 @@ public class Problem_0123_BestTimeToBuyAndSellStockIII {
 			return 0;
 		}
 		int ans = 0;
-		int doneOnceMinusBuyMax = -prices[0];
+		int doneOnceMinusBuyMax = -prices[0];//买入p1卖出p2各一次，然后再买入p3, 还没卖出第二支股票，所获收益（p2-p1-p3)
 		int doneOnceMax = 0;// 0 : [0] - [0]
 		int min = prices[0];
 		for (int i = 1; i < prices.length; i++) {
