@@ -11,9 +11,9 @@ public class Problem_0190_ReverseBits {
 	// 同时 n << 16  就是右边16位被移动到了左侧
 	// 又 | 在了一起，所以，n变成了
 	// 0011 1111 0110 1010 1011 0111 0011 1001
-	
+
 	// 第二行，
-	// n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);
+	// n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);//0x代表十六进制，f代表1111
 	// (n & 0xff00ff00)  
 	// 这一句意思是，左侧开始算0~7位，保留；8~15位，全变0；16~23位，保留；24~31位，全变0
 	// 0011 1111 0000 0000 1011 0111 0000 0000
@@ -40,11 +40,15 @@ public class Problem_0190_ReverseBits {
 	public static int reverseBits(int n) {
 		// n
 		n = (n >>> 16) | (n << 16);
-		n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);
+		n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);//f:1111
 		n = ((n & 0xf0f0f0f0) >>> 4) | ((n & 0x0f0f0f0f) << 4);
-		n = ((n & 0xcccccccc) >>> 2) | ((n & 0x33333333) << 2);
-		n = ((n & 0xaaaaaaaa) >>> 1) | ((n & 0x55555555) << 1);
+		n = ((n & 0xcccccccc) >>> 2) | ((n & 0x33333333) << 2);//c: 1100, 3: 0011
+		n = ((n & 0xaaaaaaaa) >>> 1) | ((n & 0x55555555) << 1);//a: 1010, 5:0101
 		return n;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(0xa);
 	}
 
 }

@@ -1,9 +1,40 @@
 package topinterviewquestions;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Problem_0163_MissingRanges {
+
+	//my solution, better miss function than Zuo using stringbuilder
+	public List<String> findMissingRanges_j(int[] nums, int lower, int upper) {
+		List<String> res = new LinkedList<>();
+		if (lower > upper) {
+			return res;
+		}
+		for (int num : nums) {
+			if (num > lower) {
+				res.add(miss(lower, num-1));
+			}
+			if (num == upper) {
+				return res;
+			}
+			lower = num + 1;
+		}
+		if (lower <= upper) {
+			res.add(miss(lower, upper));
+		}
+		return res;
+	}
+	public String miss_j(int lower, int upper) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(lower);
+		if (upper > lower) {
+			sb.append("->"+upper);
+		}
+		return sb.toString();
+	}
+
 
 	public static List<String> findMissingRanges(int[] nums, int lower, int upper) {
 		List<String> ans = new ArrayList<>();

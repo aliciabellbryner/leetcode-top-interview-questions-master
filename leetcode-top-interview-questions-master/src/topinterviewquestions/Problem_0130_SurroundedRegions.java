@@ -77,7 +77,7 @@ public class Problem_0130_SurroundedRegions {
 		}
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				if (board[i][j] == 'O') {
+				if (board[i][j] == 'O') {//千万不能能下面的判断F的调换次序！！！一定要先判断这个！！！
 					board[i][j] = 'X';
 				}
 				if (board[i][j] == 'F') {

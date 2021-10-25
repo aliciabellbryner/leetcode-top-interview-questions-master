@@ -6,6 +6,33 @@ import java.util.LinkedList;
 // 返回了所有节点是不是良好出发点
 public class Problem_0134_GasStation {
 
+	//from discussion: easy solution:
+	public int canCompleteCircuit(int[] gas, int[] cost) {
+		int tank = 0;
+		for(int i = 0; i < gas.length; i++)
+			tank += gas[i] - cost[i];
+		if(tank < 0)
+			return - 1;
+
+		int start = 0;
+		int accumulate = 0;
+		//we don't need to go from the tail to head again once we find the start, as per the problem description, there will be only one answer
+		//first thing we can be sure is that the answer cannot be in [0, start-1], then if the answer exist in [start+1, gas.length-1],
+		// then there does exists some place j that also can make the total gain > 0  from j to gas.length-1,
+		// then it is definitely sure there will be two answer as the gain from start to j is also >= 0,
+		// which contradict the only one answer statement, so we can know for sure the start is the answer
+		for(int i = 0; i < gas.length; i++){
+			int curGain = gas[i] - cost[i];
+			if(accumulate + curGain < 0){
+				start = i + 1;
+				accumulate = 0;
+			}
+			else accumulate += curGain;
+		}
+
+		return start;
+	}
+
 	public static int canCompleteCircuit1(int[] gas, int[] cost) {
 		boolean[] good = goodArray(gas, cost);
 		for (int i = 0; i < gas.length; i++) {

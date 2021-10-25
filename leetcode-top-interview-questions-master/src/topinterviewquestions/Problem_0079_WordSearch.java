@@ -2,6 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0079_WordSearch {
 
+	//不要用这个办法，time cost too much because of the line 33-36 recursion cost too much, use the prefix tree method in problem 212
 	public static boolean exist(char[][] board, String word) {
 		char[] w = word.toCharArray();
 		for (int i = 0; i < board.length; i++) {

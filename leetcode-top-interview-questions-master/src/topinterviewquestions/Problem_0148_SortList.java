@@ -11,6 +11,7 @@ public class Problem_0148_SortList {
 		}
 	}
 
+	//use the merge sort algorithm idea, teamFirst is the start of every merge, len is the number of node of the merge object
 	public static ListNode sortList(ListNode head) {
 		int N = 0;
 		ListNode cur = head;
@@ -18,12 +19,12 @@ public class Problem_0148_SortList {
 			N++;
 			cur = cur.next;
 		}
-		ListNode h = head;
+		ListNode h = head;//it is the head of new merged head
 		ListNode teamFirst = head;
-		ListNode pre = null;
+		ListNode pre = null;//it is the locater node
 		for (int len = 1; len < N; len <<= 1) {
 			while (teamFirst != null) {
-				ListNode[] hthtn = hthtn(teamFirst, len);
+				ListNode[] hthtn = hthtn(teamFirst, len);//表示下一组要merge的子链表head tail head tail和下下一组要merge的子链表
 				ListNode[] mhmt = merge(hthtn[0], hthtn[1], hthtn[2], hthtn[3]);
 				if (h == teamFirst) {
 					h = mhmt[0];
@@ -68,18 +69,19 @@ public class Problem_0148_SortList {
 			next = re.next;
 			re.next = null;
 		}
-		return new ListNode[] { ls, le, rs, re, next };
+		return new ListNode[]{ls, le, rs, re, next};
 	}
 
 	public static ListNode[] merge(ListNode ls, ListNode le, ListNode rs, ListNode re) {
 		if (rs == null) {
-			return new ListNode[] { ls, le };
+			return new ListNode[]{ls, le};
 		}
 		ListNode head = null;
 		ListNode pre = null;
 		ListNode cur = null;
 		ListNode tail = null;
-		while (ls != le.next && rs != re.next) {
+		while (ls != le.next && rs != re.next) {//means ls and rs haven't gone to the end of the list
+			//compare val of two sub-node
 			if (ls.val <= rs.val) {
 				cur = ls;
 				ls = ls.next;
@@ -87,6 +89,7 @@ public class Problem_0148_SortList {
 				cur = rs;
 				rs = rs.next;
 			}
+			//maintain the head and tail of the new merged node list
 			if (pre == null) {
 				head = cur;
 				pre = cur;
@@ -95,7 +98,7 @@ public class Problem_0148_SortList {
 				pre = cur;
 			}
 		}
-		if (ls != le.next) {
+		if (ls != le.next) {//if ls-le still has values than are not counted
 			while (ls != le.next) {
 				pre.next = ls;
 				pre = ls;
@@ -103,6 +106,7 @@ public class Problem_0148_SortList {
 				ls = ls.next;
 			}
 		} else {
+			//if rs-re still has values than are not counted
 			while (rs != re.next) {
 				pre.next = rs;
 				pre = rs;
@@ -110,7 +114,6 @@ public class Problem_0148_SortList {
 				rs = rs.next;
 			}
 		}
-		return new ListNode[] { head, tail };
+		return new ListNode[]{head, tail};
 	}
-
 }

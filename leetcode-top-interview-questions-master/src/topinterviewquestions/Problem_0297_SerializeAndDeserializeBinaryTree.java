@@ -42,7 +42,7 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
 		}
 		while (!ans.isEmpty() && ans.peekLast() == null) {
 			ans.pollLast();
-		}
+		}//去除leaf是null且右边都是null的节点
 		StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		String str = ans.pollFirst();
@@ -56,7 +56,7 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
 	}
 
 	public TreeNode deserialize(String data) {
-		String[] strs = data.substring(1, data.length() - 1).split(",");
+		String[] strs = data.substring(1, data.length() - 1).split(",");//substring(1, data.length() - 1)这个是去除左右【】
 		int index = 0;
 		TreeNode root = generateNode(strs[index++]);
 		Queue<TreeNode> queue = new LinkedList<TreeNode>();

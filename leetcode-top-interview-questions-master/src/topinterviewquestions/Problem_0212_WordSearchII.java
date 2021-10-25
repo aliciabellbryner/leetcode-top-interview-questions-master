@@ -31,7 +31,7 @@ public class Problem_0212_WordSearchII {
 		// 答案
 		List<String> res = new ArrayList<>();
 		// 沿途走过的字符，收集起来，存在path里
-		LinkedList<Character> path = new LinkedList<>();
+		List<Character> path = new ArrayList<>();
 		for (int row = 0; row < board.length; row++) {
 			for (int col = 0; col < board[0].length; col++) {
 				// 枚举在board中的所有位置
@@ -62,7 +62,7 @@ public class Problem_0212_WordSearchII {
 	// cur还没有登上，有待检查能不能登上去的前缀树的节点
 	// 如果找到words中的某个str，就记录在 res里
 	// 返回值，从row,col 出发，一共找到了多少个str
-	public static int process(char[][] board, int row, int col, LinkedList<Character> path, TrieNode cur,
+	public static int process(char[][] board, int row, int col, List<Character> path, TrieNode cur,
 			List<String> res) {
 		char cha = board[row][col];
 		if (cha == 0) { // 这个row col位置是之前走过的位置
@@ -72,12 +72,12 @@ public class Problem_0212_WordSearchII {
 
 		int index = cha - 'a';
 		// 如果没路，或者这条路上最终的字符串之前加入过结果里
-		if (cur.nexts[index] == null || cur.nexts[index].pass == 0) {
+		if (cur.nexts[index] == null || cur.nexts[index].pass == 0) {//非常重要！这个就是为什么process返回值fix要设为从row， col出发一共找到的多少个str的数量int了
 			return 0;
 		}
 		// 没有走回头路且能登上去
 		cur = cur.nexts[index];
-		path.addLast(cha);// 当前位置的字符加到路径里去
+		path.add(cha);// 当前位置的字符加到路径里去
 		int fix = 0; // 从row和col位置出发，后续一共搞定了多少答案
 		// 当我来到row col位置，如果决定不往后走了。是不是已经搞定了某个字符串了
 		if (cur.end > 0) {
@@ -100,12 +100,12 @@ public class Problem_0212_WordSearchII {
 			fix += process(board, row, col + 1, path, cur, res);
 		}
 		board[row][col] = cha;
-		path.pollLast();
+		path.remove(path.size()-1);
 		cur.pass -= fix;
 		return fix;
 	}
 
-	public static String generatePath(LinkedList<Character> path) {
+	public static String generatePath(List<Character> path) {
 		char[] str = new char[path.size()];
 		int index = 0;
 		for (Character cha : path) {

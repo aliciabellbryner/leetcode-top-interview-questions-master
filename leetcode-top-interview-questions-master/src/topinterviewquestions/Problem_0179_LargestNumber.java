@@ -10,7 +10,7 @@ public class Problem_0179_LargestNumber {
 		@Override
 		public int compare(String o1, String o2) {
 			return (o2 + o1).compareTo(o1 + o2);
-		}
+		}//这样排出来的大的在前面
 
 	}
 
@@ -26,7 +26,7 @@ public class Problem_0179_LargestNumber {
 		}
 		String ans = builder.toString();
 		char[] str = ans.toCharArray();
-		int index = -1;
+		int index = -1;//后面的目的是为了排除如果全都是0的情况
 		for (int i = 0; i < str.length; i++) {
 			if (str[i] != '0') {
 				index = i;
@@ -36,4 +36,7 @@ public class Problem_0179_LargestNumber {
 		return index == -1 ? "0" : ans.substring(index);
 	}
 
+	public static void main(String[] args) {
+		System.out.println("abc".compareTo("abd"));
+	}
 }

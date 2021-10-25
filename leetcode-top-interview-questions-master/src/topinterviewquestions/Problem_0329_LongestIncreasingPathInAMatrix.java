@@ -2,6 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0329_LongestIncreasingPathInAMatrix {
 
+	//一定要写出dp不然用brutal force肯定会超时
 	public static int longest(int[][] matrix) {
 		int longest = 0;
 		int[][] dp = new int[matrix.length][matrix[0].length];
@@ -78,6 +79,44 @@ public class Problem_0329_LongestIncreasingPathInAMatrix {
 
 	public static boolean canWalk(int[][] matrix, int i1, int j1, int i2, int j2) {
 		return i2 >= 0 && i2 < matrix.length && j2 >= 0 && j2 < matrix[0].length && matrix[i1][j1] < matrix[i2][j2];
+	}
+
+	public int longestIncreasingPath_j(int[][] matrix) {
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+			return -1;
+		}
+		int M = matrix.length;
+		int N = matrix[0].length;
+		int res = 0;
+		int[][] dp = new int[M+1][N+1];
+		for (int i = 0; i < M; i++) {
+			for (int j = 0; j < N; j++) {
+				res = Math.max(res, process(matrix, i, j, dp));
+			}
+		}
+		return res;
+	}
+	public int process_j(int[][] matrix, int i, int j, int[][] dp) {
+		if (dp[i][j] != 0) {
+			return dp[i][j];
+		}
+		int M = matrix.length;
+		int N = matrix[0].length;
+		int next = 0;
+		if (i+1 >= 0 && i+1 < M && matrix[i+1][j] > matrix[i][j]) {
+			next = process_j(matrix, i+1, j, dp);
+		}
+		if (i-1 >= 0 && i-1 < M && matrix[i-1][j] > matrix[i][j]) {
+			next = Math.max(next, process_j(matrix, i-1, j, dp));
+		}
+		if (j+1 >= 0 && j+1 < N && matrix[i][j+1] > matrix[i][j]) {
+			next = Math.max(next, process_j(matrix, i, j+1, dp));
+		}
+		if (j-1 >= 0 && j-1 < N && matrix[i][j-1] > matrix[i][j]) {
+			next = Math.max(next, process_j(matrix, i, j-1, dp));
+		}
+		dp[i][j] = next+1;
+		return dp[i][j];
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Problem_0131_PalindromePartitioning {
 
+	//Zuo's solution: use dp to store the palindrome info to save a lot of time!
 	public static List<List<String>> partition(String s) {
 		// dp[L][R] -> 是不是回文
 		boolean[][] dp = getdp(s.toCharArray());
@@ -26,7 +27,7 @@ public class Problem_0131_PalindromePartitioning {
 		for (int j = 2; j < N; j++) {
 			int row = 0;
 			int col = j;
-			while (row < N && col < N) {
+			while (col < N) {
 				dp[row][col] = str[row] == str[col] && dp[row + 1][col - 1];
 				row++;
 				col++;
@@ -42,7 +43,7 @@ public class Problem_0131_PalindromePartitioning {
 	public static void process(String s, int index, LinkedList<String> path, 
 			boolean[][] dp, List<List<String>> ans) {
 		if (index == s.length()) {
-			ans.add(copy(path));
+			ans.add(new ArrayList(path));
 		} else {
 			for (int end = index; end < s.length(); end++) {
 				// index..index   
@@ -50,9 +51,9 @@ public class Problem_0131_PalindromePartitioning {
 				// index..index+2
 				// index..end
 				if (dp[index][end]) {
-					path.addLast(s.substring(index, end + 1));
+					path.add(s.substring(index, end + 1));
 					process(s, end + 1, path, dp, ans);
-					path.pollLast();
+					path.remove(path.size()-1);
 				}
 			}
 		}
@@ -66,4 +67,47 @@ public class Problem_0131_PalindromePartitioning {
 		return ans;
 	}
 
+
+	//my solution: didn't use dp, so it will cost much more time to run the ispalindrome everytime
+	public List<List<String>> partition_j(String s) {
+		List<List<String>> res = new ArrayList<>();
+		if (s == null || s.length() == 0) {
+			return res;
+		}
+		// boolean[][] dp = getdp(s.toCharArray());
+		LinkedList<String> path = new LinkedList<>();
+		List<List<String>> ans = new ArrayList<>();
+		process(s, 0, path, ans);
+		return ans;
+	}
+	public void process(String s, int index, LinkedList<String> path,
+						List<List<String>> ans) {
+		if (index == s.length()) {
+			ans.add(new ArrayList(path));
+		} else {
+			for (int end = index; end < s.length(); end++) {
+				if (isPalindrome(s.substring(index, end+1))) {
+					path.addLast(s.substring(index, end + 1));
+					process(s, end + 1, path, ans);
+					path.pollLast();
+				}
+			}
+		}
+	}
+
+	public boolean isPalindrome(String s) {
+		if (s == null || s.length() == 0) {
+			return true;
+		}
+		int l = 0;
+		int r = s.length() - 1;
+		while (l < r) {
+			if (s.charAt(l) != s.charAt(r)) {
+				return false;
+			}
+			l++;
+			r--;
+		}
+		return true;
+	}
 }

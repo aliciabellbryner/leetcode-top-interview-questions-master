@@ -25,7 +25,7 @@ public class Problem_0200_NumberOfIslands {
 		if (i < 0 || i >= N || j < 0 || j >= M || m[i][j] != '1') {
 			return;
 		}
-		m[i][j] = '2';
+		m[i][j] = '2';//改成'0'也行
 		infect(m, i + 1, j, N, M);
 		infect(m, i - 1, j, N, M);
 		infect(m, i, j + 1, N, M);

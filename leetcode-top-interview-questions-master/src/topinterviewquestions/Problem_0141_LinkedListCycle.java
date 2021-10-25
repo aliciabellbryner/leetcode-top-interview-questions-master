@@ -5,6 +5,9 @@ public class Problem_0141_LinkedListCycle {
 	public static class ListNode {
 		int val;
 		ListNode next;
+		public ListNode(int i) {
+			this.val = i;
+		}
 	}
 
 	public static boolean hasCycle(ListNode head) {

@@ -20,11 +20,12 @@ public class Problem_0149_MaxPointsOnALine {
 		// 5 / 9    3
 		// 3 :    (  5 , 4    7, 10,      17 ,  11      )
 		// 5 :    (  7 , 9    9, 3  )
-		Map<Integer, Map<Integer, Integer>> map = new HashMap<Integer, Map<Integer, Integer>>();
+		Map<Integer, Map<Integer, Integer>> map = new HashMap<Integer, Map<Integer, Integer>>();//first Integer put the deltaX, second integer put deltaY, third integer put times of appearance
 		int result = 0;
 		for (int i = 0; i < points.length; i++) {
 			map.clear();
-			int samePosition = 1;
+			//be very careful about the variables's start value!!!
+			int samePosition = 1;//you have to start from 1 cannot be 0 as
 			int sameX = 0;
 			int sameY = 0;
 			int line = 0; // 哪个斜率压中的点最多，把最多的点的数量，赋值给line
@@ -52,6 +53,8 @@ public class Problem_0149_MaxPointsOnALine {
 				}
 			}
 			result = Math.max(result, Math.max(Math.max(sameX, sameY), line) + samePosition);
+			// note samePosition is added not compared who is max as you are in the i loop,
+			// so the sameX, sameY, and line are all counted when you start from the points[i]
 		}
 		return result;
 	}

@@ -80,7 +80,7 @@ public class Problem_0127_WordLadder {
 			HashSet<String> nextSet = new HashSet<>();
 			for (String w : startSet) {
 				for (int j = 0; j < w.length(); j++) {
-					char[] ch = w.toCharArray();
+					char[] ch = w.toCharArray();//这个一定要放在这一层，别放错放在了上一层
 					for (char c = 'a'; c <= 'z'; c++) {
 						if (c != w.charAt(j)) {
 							ch[j] = c;
@@ -96,8 +96,8 @@ public class Problem_0127_WordLadder {
 					}
 				}
 			}
-			startSet = (nextSet.size() < endSet.size()) ? nextSet : endSet;
-			endSet = (startSet == nextSet) ? endSet : nextSet;
+			startSet = (nextSet.size() < endSet.size()) ? nextSet : endSet;//把短的set给startset
+			endSet = (startSet == nextSet) ? endSet : nextSet;//把长的set给endset
 		}
 		return 0;
 	}

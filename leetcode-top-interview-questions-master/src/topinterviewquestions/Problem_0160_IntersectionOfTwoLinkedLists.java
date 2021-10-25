@@ -41,4 +41,37 @@ public class Problem_0160_IntersectionOfTwoLinkedLists {
 		return cur1;
 	}
 
+	//my solution
+	public ListNode getIntersectionNode_j(ListNode headA, ListNode headB) {
+		if (headA == null || headB == null) {
+			return null;
+		}
+		ListNode curA = headA;
+		int lenA = 0;
+		while (curA != null) {
+			lenA++;
+			curA = curA.next;
+		}
+		ListNode curB = headB;
+		int lenB = 0;
+		while (curB != null) {
+			lenB++;
+			curB = curB.next;
+		}
+		ListNode longln = lenA > lenB ? headA : headB;
+		ListNode shortln = longln == headA ? headB : headA;
+		int dif = lenA > lenB ? (lenA - lenB) : (lenB - lenA);
+		while (dif-- > 0) {
+			longln = longln.next;
+		}
+		while (longln != null) {
+			if (longln == shortln) {
+				return longln;
+			}
+			longln = longln.next;
+			shortln = shortln.next;
+		}
+		return null;
+	}
+
 }

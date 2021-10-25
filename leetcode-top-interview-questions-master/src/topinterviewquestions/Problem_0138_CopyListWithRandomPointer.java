@@ -9,8 +9,6 @@ public class Problem_0138_CopyListWithRandomPointer {
 
 		public Node(int val) {
 			this.val = val;
-			this.next = null;
-			this.random = null;
 		}
 	}
 
