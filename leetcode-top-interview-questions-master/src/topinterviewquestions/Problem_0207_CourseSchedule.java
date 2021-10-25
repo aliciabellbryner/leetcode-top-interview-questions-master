@@ -22,6 +22,7 @@ public class Problem_0207_CourseSchedule {
 		}
 	}
 
+	//use topology sort
 	public static boolean canFinish(int numCourses, int[][] prerequisites) {
 		if (prerequisites == null || prerequisites.length == 0) {
 			return true;
