@@ -3,7 +3,7 @@ package topinterviewquestions;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
-
+//左没讲过，他跳过了
 public class Problem_0341_FlattenNestedListIterator {
 
 	// 不要提交这个接头类

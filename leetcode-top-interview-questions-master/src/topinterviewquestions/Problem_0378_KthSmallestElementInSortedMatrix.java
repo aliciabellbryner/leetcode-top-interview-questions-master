@@ -33,7 +33,7 @@ public class Problem_0378_KthSmallestElementInSortedMatrix {
 		PriorityQueue<Node> heap = new PriorityQueue<>(new NodeComparator());
 		boolean[][] set = new boolean[N][M];
 		heap.add(new Node(matrix[0][0], 0, 0));
-		set[0][0] = true;
+		set[0][0] = true;//这个的意义是为了防止把同一行同一列的元素重复加，而不是相同value值的元素重复加，注意区别
 		int count = 0;
 		Node ans = null;
 		while (!heap.isEmpty()) {

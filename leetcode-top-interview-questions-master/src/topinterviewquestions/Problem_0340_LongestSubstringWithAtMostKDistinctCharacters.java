@@ -20,7 +20,7 @@ public class Problem_0340_LongestSubstringWithAtMostKDistinctCharacters {
 			}
 			// R 来到违规的第一个位置
 			ans = Math.max(ans, R - i);
-			diff -= count[str[i]] == 1 ? 1 : 0;
+			diff -= count[str[i]] == 1 ? 1 : 0;//意思是如果str[i]是重复了很多次，那我们不用减这个diff，因为i往右移动一位还是有同样的元素，如果是str[i]只出现一次，那需要减
 			count[str[i]]--;
 		}
 		return ans;

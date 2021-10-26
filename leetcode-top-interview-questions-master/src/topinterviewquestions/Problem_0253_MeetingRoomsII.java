@@ -11,8 +11,8 @@ public class Problem_0253_MeetingRoomsII {
 		for (int i = 0; i < m.length; i++) {
 			lines[i] = new Line(m[i][0], m[i][1]);
 		}
-		Arrays.sort(lines, new StartComparator());
-		PriorityQueue<Line> heap = new PriorityQueue<>(new EndComparator());
+		Arrays.sort(lines, new StartComparator());//这里一定要用start升序排列
+		PriorityQueue<Line> heap = new PriorityQueue<>(new EndComparator());//这里一定要用end升序排列，所以得到的heap的minheap
 		int max = 0;
 		for (int i = 0; i < lines.length; i++) {
 			while (!heap.isEmpty() && heap.peek().end <= lines[i].start) {

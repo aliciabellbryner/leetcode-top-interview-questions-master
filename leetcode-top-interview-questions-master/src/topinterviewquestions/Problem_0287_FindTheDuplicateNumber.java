@@ -20,4 +20,14 @@ public class Problem_0287_FindTheDuplicateNumber {
 		return slow;
 	}
 
+	//from leetcode solution
+	public int findDuplicate_leetcodesolution(int[] nums) {
+		while (nums[0] != nums[nums[0]]) {
+			int nxt = nums[nums[0]];
+			nums[nums[0]] = nums[0];
+			nums[0] = nxt;
+		}
+		return nums[0];
+	}
+
 }

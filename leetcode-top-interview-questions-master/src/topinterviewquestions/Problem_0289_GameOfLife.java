@@ -37,7 +37,7 @@ public class Problem_0289_GameOfLife {
 	}
 
 	public static boolean ok(int[][] board, int i, int j) {
-		return i >= 0 && i < board.length && j >= 0 && j < board[0].length && (board[i][j] & 1) == 1;
+		return i >= 0 && i < board.length && j >= 0 && j < board[0].length && (board[i][j] & 1) == 1;//这个地方一定不能写成board[i][j] == 1
 	}
 
 	public static void set(int[][] board, int i, int j) {
