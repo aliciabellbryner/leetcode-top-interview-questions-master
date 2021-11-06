@@ -24,7 +24,7 @@ public class Problem_0033_SearchInRotatedSortedArray {
 			}
 			// nums[M] != target
 			// [l] [M] [r] 不都一样的情况
-			if (nums[l] != nums[m]) {
+			if (nums[l] != nums[m]) { //[l] != [M] ,  [M]==[r]
 				if (nums[m] > nums[l]) {
 					if (target >= nums[l] && target < nums[m]) {
 						r = m - 1;
