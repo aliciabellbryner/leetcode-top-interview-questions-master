@@ -2,6 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0334_IncreasingTripletSubsequence {
 
+	//跟300一样，你只要找到right值大于等于2，这样的话升序子序列的长度就是3，就可以满足
 	public static boolean increasingTriplet(int[] arr) {
 		if (arr == null || arr.length < 3) {
 			return false;

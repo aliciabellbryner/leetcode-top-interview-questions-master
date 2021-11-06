@@ -11,7 +11,7 @@ public class Problem_0348_DesignTicTacToe {
 		private int N;
 
 		public TicTacToe(int n) {
-			rows = new int[n][3]; //0 1 2
+			rows = new int[n][3]; //0 1 2 0列不用，1，2代表1玩家2玩家
 			cols = new int[n][3];
 			leftUp = new int[3]; //  1 2
 			rightUp = new int[3]; // 1 2
@@ -20,7 +20,7 @@ public class Problem_0348_DesignTicTacToe {
 		}
 
 		public int move(int row, int col, int player) {
-			if (matrix[row][col]) {
+			if (matrix[row][col]) {//下过了，所以没人赢返回0，而且这次下无效
 				return 0;
 			}
 			matrix[row][col] = true;

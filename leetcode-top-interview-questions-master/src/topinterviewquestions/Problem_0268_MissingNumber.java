@@ -8,7 +8,7 @@ public class Problem_0268_MissingNumber {
 		while (l < r) {
 			if (arr[l] == l) {
 				l++;
-			} else if (arr[l] < l || arr[l] >= r || arr[arr[l]] == arr[l]) {
+			} else if (arr[l] == r || arr[arr[l]] == arr[l]) {
 				swap(arr, l, --r);
 			} else {
 				swap(arr, l, arr[l]);

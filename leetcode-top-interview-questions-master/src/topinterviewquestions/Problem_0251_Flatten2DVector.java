@@ -2,23 +2,24 @@ package topinterviewquestions;
 
 public class Problem_0251_Flatten2DVector {
 
+	//zuo's solution: good way to reduce the space complexity. don't use the queue or linkedlist to store the data as it will cost much more space than this
 	public static class Vector2D {
 		private int[][] matrix;
 		private int row;
 		private int col;
-		private boolean curUse;
+		private boolean curUsed;//代表目前的row col用过了没有
 
 		public Vector2D(int[][] v) {
 			matrix = v;
 			row = 0;
 			col = -1;
-			curUse = true;
+			curUsed = true;
 			hasNext();
 		}
 
 		public int next() {
 			int ans = matrix[row][col];
-			curUse = true;
+			curUsed = true;
 			hasNext();
 			return ans;
 		}
@@ -27,7 +28,7 @@ public class Problem_0251_Flatten2DVector {
 			if (row == matrix.length) {
 				return false;
 			}
-			if (!curUse) {
+			if (!curUsed) {
 				return true;
 			}
 			// (row，col)用过了
@@ -37,11 +38,11 @@ public class Problem_0251_Flatten2DVector {
 				col = 0;
 				do {
 					row++;
-				} while (row < matrix.length && matrix[row].length == 0);
+				} while (row < matrix.length && matrix[row].length == 0);//防止是空的array
 			}
 			// 新的(row，col)
 			if (row != matrix.length) {
-				curUse = false;
+				curUsed = false;
 				return true;
 			} else {
 				return false;

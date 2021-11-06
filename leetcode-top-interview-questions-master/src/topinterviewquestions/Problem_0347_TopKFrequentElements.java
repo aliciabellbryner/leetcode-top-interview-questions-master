@@ -21,7 +21,7 @@ public class Problem_0347_TopKFrequentElements {
 		@Override
 		public int compare(Node o1, Node o2) {
 			return o1.count - o2.count;
-		}
+		}//minheap
 
 	}
 
@@ -40,7 +40,7 @@ public class Problem_0347_TopKFrequentElements {
 				heap.add(node);
 			}
 			if (heap.size() > k) {
-				heap.poll();
+				heap.poll();//poll的是最小的元素
 			}
 		}
 		int[] ans = new int[k];

@@ -2,30 +2,8 @@ package topinterviewquestions;
 
 public class Problem_0395_LongestSubstringWithAtLeastKRepeatingCharacters {
 
-	public static int longestSubstring1(String s, int k) {
-		char[] str = s.toCharArray();
-		int N = str.length;
-		int max = 0;
-		for (int i = 0; i < N; i++) {
-			int[] count = new int[256];
-			int collect = 0;
-			int satisfy = 0;
-			for (int j = i; j < N; j++) {
-				if (count[str[j]] == 0) {
-					collect++;
-				}
-				if (count[str[j]] == k - 1) {
-					satisfy++;
-				}
-				count[str[j]]++;
-				if (collect == satisfy) {
-					max = Math.max(max, j - i + 1);
-				}
-			}
-		}
-		return max;
-	}
 
+	//用这个方法，time O（N）
 	public static int longestSubstring2(String s, int k) {
 		char[] str = s.toCharArray();
 		int N = str.length;
@@ -68,6 +46,31 @@ public class Problem_0395_LongestSubstringWithAtLeastKRepeatingCharacters {
 		}
 		return max;
 	}
+	//168ms太慢了，time = O(N^2)用下面的方法
+	public static int longestSubstring1(String s, int k) {
+		char[] str = s.toCharArray();
+		int N = str.length;
+		int max = 0;
+		for (int i = 0; i < N; i++) {
+			int[] count = new int[256];
+			int collect = 0;
+			int satisfy = 0;
+			for (int j = i; j < N; j++) {
+				if (count[str[j]] == 0) {
+					collect++;
+				}
+				count[str[j]]++;
+				if (count[str[j]] == k) {
+					satisfy++;
+				}
+				if (collect == satisfy) {
+					max = Math.max(max, j - i + 1);
+				}
+			}
+		}
+		return max;
+	}
+
 
 	// 会超时，但是思路的确是正确的
 	public static int longestSubstring3(String s, int k) {

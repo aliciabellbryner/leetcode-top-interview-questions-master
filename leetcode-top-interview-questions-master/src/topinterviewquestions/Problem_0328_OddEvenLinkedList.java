@@ -37,7 +37,7 @@ public class Problem_0328_OddEvenLinkedList {
 		if (odd != null) {
 			odd.next = firstEven;
 		}
-		return firstOdd != null ? firstOdd : firstEven;
+		return firstOdd != null ? firstOdd : firstEven;//or you can say "return firstOdd != null ? firstOdd : null;"
 	}
 
 }
