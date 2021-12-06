@@ -16,7 +16,7 @@ public class Problem_0239_SlidingWindowMaximum {
 		Deque<Integer> q = new ArrayDeque<>();
 		for (int i = 0; i < a.length; i++) {
 			// remove numbers out of range k
-			while (!q.isEmpty() && q.peek() < i - k + 1) {
+			while (!q.isEmpty() && q.peek() < i - k + 1) {//q.peek() equals to q.peekFirst()
 				q.poll();//equals to pollFirst
 			}
 			// remove smaller numbers in k range as they are useless
