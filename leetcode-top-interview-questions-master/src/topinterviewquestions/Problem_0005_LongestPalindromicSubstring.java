@@ -5,7 +5,37 @@ import java.util.ArrayList;
 public class Problem_0005_LongestPalindromicSubstring {
 
 
+	//time O(N^2) space O(1)
 	public static String longestPalindrome(String str) {
+		int start = 0;
+		int end = 0;
+		for (int i = 0; i < str.length(); i++) {
+			int len1 = expand(str, i, i);
+			int len2 = expand(str, i, i+1);
+			int len = Math.max(len1, len2);
+			if (len > end - start + 1) {
+				start = i - (len - 1)/2;
+				end = start + len - 1;
+			}
+		}
+		return str.substring(start, end + 1);
+	}
+
+	private static int expand(String str, int l, int r) {
+		int N = str.length();
+		while (l >= 0 && r < N && str.charAt(l) == str.charAt(r)) {
+			l--;
+			r++;
+		}
+		return r - l - 1;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(longestPalindrome("cccddccc"));
+	}
+
+	//time O(N)，space O(N)
+	public static String longestPalindrome_manacher(String str) {
 		if (str == null || str.length() == 0) {
 			return "";
 		}
@@ -15,7 +45,7 @@ public class Problem_0005_LongestPalindromicSubstring {
 		int index = -1;//index是表示当前位置的中点，但mid是表示最大位置的中点，只有当目前的位置回文大于之前的最大值时才需要更新mid
 		//R代表最右的扩成功的位置。这个coding中R的实际意义：最右的扩成功位置的在下一个位置
 		int R = -1;
-		int max = Integer.MIN_VALUE;
+		int max = Integer.MIN_VALUE;//回文半径
 		int mid = 0;
 		for (int i = 0; i != charArr.length; i++) {
 			//i位置扩出来的答案，i位置扩的区域，至少是多大。
