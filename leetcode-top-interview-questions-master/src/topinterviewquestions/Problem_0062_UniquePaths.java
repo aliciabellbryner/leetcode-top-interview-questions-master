@@ -3,6 +3,7 @@ package topinterviewquestions;
 public class Problem_0062_UniquePaths {
 
 	//my solution, dp, but seems not necessary
+	//time O(MN), space O(MN)
 	public int uniquePaths_j(int m, int n) {
 		if (m <= 1 || n <= 1) {
 			return Math.min(m, n);
@@ -21,6 +22,7 @@ public class Problem_0062_UniquePaths {
 
 	//zuo's solution, using math, it is like you can walk m+n-2 steps, and then you only need to choose m-1 to walk down or n-1 to walk right
 	//so choose k from n is (Cn k) = n!/(k!*(n-k)!)
+	//time O(min(M, N)), space O(1)
 	public static int uniquePaths(int m, int n) {
 		int part = n - 1;
 		int all = m + n - 2;

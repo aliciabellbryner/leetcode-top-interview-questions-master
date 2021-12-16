@@ -7,7 +7,7 @@ public class Problem_0041_FirstMissingPositive {
 		while (l < r) {
 			if (arr[l] == l + 1) {
 				l++;
-			} else if (arr[l] <= l || arr[l] > r || arr[arr[l] - 1] == arr[l]) {
+			} else if (arr[l] < l + 1 || arr[l] >= r + 1 || arr[arr[l] - 1] == arr[l]) {
 				//arr[arr[l] - 1] == arr[l] means that the arr[l] - 1 position has already got what he needs, so just put the l value into the last
 				swap(arr,l,--r);
 			} else {
