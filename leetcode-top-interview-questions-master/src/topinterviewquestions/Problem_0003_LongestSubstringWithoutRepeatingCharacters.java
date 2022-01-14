@@ -2,32 +2,39 @@ package topinterviewquestions;
 
 public class Problem_0003_LongestSubstringWithoutRepeatingCharacters {
 
-	public static int lengthOfLongestSubstring(String s) {
-		if (s == null || s.equals("")) {
-			return 0;
-		}
-		// map (a, ?) (b, ?)
-		// a, 17
-		// map[97] = 17
-		int[] map = new int[256];//存放出现的char存放的当前最后一个位置
-		//必须要全部变成-1,如果是0的话只有一个元素的s就会出现计算结果0
-		for (int i = 0; i < 256; i++) {
-			map[i] = -1;
-		}
-		// 收集答案
+	//time O(2N) = O(N) space O(min(m, n)), m is the size of the String s, and n is the size of the charset/alphabet m
+	public int lengthOfLongestSubstring(String s) {
+		int[] cnt = new int[256];
 		int res = 0;
-		int pre = -1; // i-1位置结尾的情况下，往左推，推不动的位置是谁
-		for (int i = 0; i < s.length(); i++) {
-			// i位置结尾的情况下，往左推，推不动的位置是谁
-			// pre (i-1信息) -> pre(i 结尾信息)
-			pre = Math.max(pre, map[s.charAt(i)]);
-			res = Math.max(res, i-pre);
-			map[s.charAt(i)] = i;
+		int l = 0;
+		int r = 0;
+		for (char c : s.toCharArray()) {
+			cnt[c]++;
+			r++;
+			while (cnt[c] > 1) {
+				cnt[s.charAt(l)]--;
+				l++;
+			}
+			res = Math.max(res, r-l);
 		}
 		return res;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(lengthOfLongestSubstring("H"));
-	}
+	 public int lengthOfLongestSubstring2(String s) {
+	     int[] cnts = new int[256];
+	     int l = 0;
+	     int r = 0;
+	     int res = 0;
+	     while (r < s.length()) {
+	         char right = s.charAt(r);
+	         cnts[right]++;
+	         while (cnts[right] > 1) {
+	             cnts[s.charAt(l)]--;
+	             l++;
+	         }
+	         res = Math.max(res, r - l + 1);
+	         r++;
+	     }
+	     return res;
+	 }
 }

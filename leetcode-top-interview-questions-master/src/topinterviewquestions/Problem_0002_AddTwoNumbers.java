@@ -11,8 +11,6 @@ public class Problem_0002_AddTwoNumbers {
 			this.val = value;
 		}
 	}
-
-
 	public static ListNode addTwoNumbers_j(ListNode head1, ListNode head2) {
 		int ca = 0;
 		int n1 = 0;
