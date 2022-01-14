@@ -2,10 +2,10 @@ package topinterviewquestions;
 
 public class Problem_0169_MajorityElement {
 
-	public static int majorityElement(int[] nums) {
-		int cand = 0;
-		int HP = 0;
-		for (int i = 0; i < nums.length; i++) {
+	public int majorityElement(int[] nums) {
+		int cand = nums[0];
+		int HP = 1;
+		for (int i = 1; i < nums.length; i++) {
 			if (HP == 0) {
 				cand = nums[i];
 				HP = 1;

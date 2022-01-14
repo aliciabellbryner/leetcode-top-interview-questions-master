@@ -16,15 +16,6 @@ public class Problem_0347_TopKFrequentElements {
 		}
 	}
 
-	public static class CountComparator implements Comparator<Node> {
-
-		@Override
-		public int compare(Node o1, Node o2) {
-			return o1.count - o2.count;
-		}//minheap
-
-	}
-
 	public static int[] topKFrequent(int[] nums, int k) {
 		HashMap<Integer, Node> map = new HashMap<>();
 		for (int num : nums) {
@@ -34,7 +25,7 @@ public class Problem_0347_TopKFrequentElements {
 				map.get(num).count++;
 			}
 		}
-		PriorityQueue<Node> heap = new PriorityQueue<>(new CountComparator());
+		PriorityQueue<Node> heap = new PriorityQueue<>((n1, n2) -> n1.count - n2.count);
 		for (Node node : map.values()) {
 			if (heap.size() < k || (heap.size() == k && node.count > heap.peek().count)) {
 				heap.add(node);

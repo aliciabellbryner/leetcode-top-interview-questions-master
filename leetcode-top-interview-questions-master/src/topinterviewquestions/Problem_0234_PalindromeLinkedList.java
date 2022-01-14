@@ -19,14 +19,14 @@ public class Problem_0234_PalindromeLinkedList {
 		}
 		n2 = n1.next;
 		n1.next = null;
-		ListNode n3 = null;
+		ListNode next = null;
 		while (n2 != null) {
-			n3 = n2.next;
+			next = n2.next;
 			n2.next = n1;
 			n1 = n2;
-			n2 = n3;
+			n2 = next;
 		}
-		n3 = n1;
+		next = n1;
 		n2 = head;
 		boolean res = true;
 		while (n1 != null && n2 != null) {
@@ -37,12 +37,12 @@ public class Problem_0234_PalindromeLinkedList {
 			n1 = n1.next;
 			n2 = n2.next;
 		}
-		n1 = n3.next;
-		n3.next = null;
+		n1 = next.next;
+		next.next = null;
 		while (n1 != null) {
 			n2 = n1.next;
-			n1.next = n3;
-			n3 = n1;
+			n1.next = next;
+			next = n1;
 			n1 = n2;
 		}
 		return res;
