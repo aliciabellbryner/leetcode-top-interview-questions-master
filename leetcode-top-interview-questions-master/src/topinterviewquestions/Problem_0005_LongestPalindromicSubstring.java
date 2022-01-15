@@ -4,26 +4,24 @@ import java.util.ArrayList;
 
 public class Problem_0005_LongestPalindromicSubstring {
 
-
 	//time O(N^2) space O(1)
-	public static String longestPalindrome(String str) {
-		int start = 0;
-		int end = 0;
-		for (int i = 0; i < str.length(); i++) {
-			int len1 = expand(str, i, i);
-			int len2 = expand(str, i, i+1);
-			int len = Math.max(len1, len2);
-			if (len > end - start + 1) {
-				start = i - (len - 1)/2;
-				end = start + len - 1;
+	public static String longestPalindrome(String s) {
+		int start = 0, end = 0, len1 = 0, len2 = 0, len = 0;
+		for (int i = 0; i < s.length(); i++) {
+			len1 = getLen(s, i, i);
+			len2 = getLen(s, i, i+1);
+			len = Math.max(len1, len2);
+			if (len > end - start) {
+				start = i - (len-1)/2;
+				end = start + len;
 			}
 		}
-		return str.substring(start, end + 1);
+		return s.substring(start, end);
 	}
 
-	private static int expand(String str, int l, int r) {
-		int N = str.length();
-		while (l >= 0 && r < N && str.charAt(l) == str.charAt(r)) {
+	private static int getLen(String s, int l, int r) {
+		int N = s.length();
+		while (l >= 0 && r < N && s.charAt(l) == s.charAt(r)) {
 			l--;
 			r++;
 		}

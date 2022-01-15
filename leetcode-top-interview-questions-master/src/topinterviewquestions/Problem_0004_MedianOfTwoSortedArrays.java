@@ -2,6 +2,42 @@ package topinterviewquestions;
 
 public class Problem_0004_MedianOfTwoSortedArrays {
 
+
+	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+		int m = nums1.length;
+		int n = nums2.length;
+		int l = (m + n + 1)/2;
+		int r = (m + n + 2)/2;
+		return (getkth(nums1, 0, nums2, 0, l) + getkth(nums1, 0, nums2, 0, r))/2.0;
+	}
+	public int getkth(int[] A, int sa, int[] B, int sb, int k) {//return the kth large number in A (index from [sa, A.length-1]) + B(index from [sb, B.length-1]) combined array
+		if (sa > A.length - 1) {//sa already used all the numbers
+			return B[sb + k - 1];
+		}
+		if (sb > B.length - 1) {
+			return A[sa + k - 1];
+		}
+		if (k == 1) {
+			return Math.min(A[sa], B[sb]);
+		}
+		int aMid = Integer.MAX_VALUE;
+		int bMid = Integer.MAX_VALUE;
+		if (sa + k/2 - 1 < A.length) {
+			aMid = A[sa + k/2 - 1];//get the (k/2)th number in A
+		}
+		if (sb + k/2 - 1 < B.length) {
+			bMid = B[sb + k/2 - 1];//get the (k/2)th number in B
+		}
+		if (aMid > bMid) {//if aMid > bMid means the kth in the AB combined array must not be in the first half of B, so we reduce the B's first half
+			return getkth(A, sa, B, sb + k/2, k - k/2);
+		} else {//if aMid <= bMid means the kth in the AB combined array must not be in the first half of A, so we reduce the A's first half
+			return getkth(A, sa + k/2, B, sb, k - k/2);
+		}
+	}
+
+
+
+
 	//求两个升序数组的median,即如果两个相加数组(重新排好序)长度是奇数,则返回最中间的数,如果长度是偶数,则返回中间两个数的平均数
 	//思路是:
 	// 1. 首先我们可以写出getupmedian,来算两个等长数组的upmedian,
@@ -9,14 +45,14 @@ public class Problem_0004_MedianOfTwoSortedArrays {
 	// 3. 最后主函数我们就需要判断两个数组的是否为空数组以及数组长度和是奇数还是偶数来调用我们第二部写出来的函数
 	//时间复杂度是O(logM)
 	//M是nums1和nums2中长度短的长度,因为我们用的getupmedian每次缩小范围一半
-	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+	public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
 		int size = nums1.length + nums2.length;
 		boolean even = (size & 1) == 0;
 		if (nums1.length != 0 && nums2.length != 0) {
 			if (even) {
-				return (double) (findKthNum(nums1, nums2, size / 2) + findKthNum(nums1, nums2, size / 2 + 1)) / 2D;
+				return (double) (findKthNum2(nums1, nums2, size / 2) + findKthNum2(nums1, nums2, size / 2 + 1)) / 2D;
 			} else {
-				return findKthNum(nums1, nums2, size / 2 + 1);
+				return findKthNum2(nums1, nums2, size / 2 + 1);
 			}
 		} else if (nums1.length != 0) {
 			if (even) {
@@ -36,7 +72,7 @@ public class Problem_0004_MedianOfTwoSortedArrays {
 	}
 
 	//这个函数的目的是为了求出任意两个升序数组组合之后的第k个数,注意k是从1开始算起
-	public static int findKthNum(int[] arr1, int[] arr2, int kth) {
+	public static int findKthNum2(int[] arr1, int[] arr2, int kth) {
 		int[] longs = arr1.length >= arr2.length ? arr1 : arr2;
 		int[] shorts = arr1.length < arr2.length ? arr1 : arr2;
 		int l = longs.length;
