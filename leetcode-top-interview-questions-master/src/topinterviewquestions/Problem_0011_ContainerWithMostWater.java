@@ -2,13 +2,13 @@ package topinterviewquestions;
 
 public class Problem_0011_ContainerWithMostWater {
 
-	public static int maxArea(int[] h) {
+	public static int maxArea(int[] height) {
 		int max = 0;
 		int l = 0;
-		int r = h.length - 1;
+		int r = height.length - 1;
 		while (l < r) {
-			max = Math.max(max, Math.min(h[l], h[r]) * (r - l));
-			if (h[l] > h[r]) {
+			max = Math.max(max, Math.min(height[l], height[r]) * (r - l));
+			if (height[l] > height[r]) {
 				r--;
 			} else {
 				l++;
