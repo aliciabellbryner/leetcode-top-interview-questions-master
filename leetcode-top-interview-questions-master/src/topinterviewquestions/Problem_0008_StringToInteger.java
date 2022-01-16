@@ -2,7 +2,7 @@ package topinterviewquestions;
 
 public class Problem_0008_StringToInteger {
 
-	public int myAtoi(String s) {
+	public static int myAtoi(String s) {
 		String str = s.trim();
 		if (str.isEmpty()) {
 			return 0;
