@@ -67,8 +67,8 @@ public class Problem_0010_RegularExpressionMatching {
 				if(curS == curP || curP == '.'){
 					M[i][j] = M[i - 1][j - 1];
 				}else if(curP == '*'){
-					char preCurP = p.charAt(j - 2);
-					if(preCurP != '.' && preCurP != curS){
+					char preP = p.charAt(j - 2);
+					if(preP != '.' && preP != curS){
 						M[i][j] = M[i][j - 2];
 					}else{
 						M[i][j] = (M[i][j - 2] || M[i - 1][j - 2] || M[i - 1][j]);
