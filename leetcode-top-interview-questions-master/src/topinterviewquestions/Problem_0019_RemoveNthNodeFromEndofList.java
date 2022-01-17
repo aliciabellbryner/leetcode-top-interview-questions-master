@@ -10,6 +10,7 @@ public class Problem_0019_RemoveNthNodeFromEndofList {
 		}
 	}
 
+	//one-pass
 	public static ListNode removeNthFromEnd(ListNode head, int n) {
 		ListNode cur = head;
 		ListNode pre = null;

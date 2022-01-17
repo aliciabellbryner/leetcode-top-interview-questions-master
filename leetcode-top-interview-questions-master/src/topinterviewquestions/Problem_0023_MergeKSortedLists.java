@@ -13,14 +13,6 @@ public class Problem_0023_MergeKSortedLists {
 		}
 	}
 
-	public static class ListNodeComparator implements Comparator<ListNode> {
-
-		@Override
-		public int compare(ListNode o1, ListNode o2) {
-			return o1.val - o2.val;
-		}
-
-	}
 
 	//time complexity = O(NlogM)
 	//N is the total elements of all the ListNode in lists
@@ -30,7 +22,7 @@ public class Problem_0023_MergeKSortedLists {
 		if (lists == null) {
 			return null;
 		}
-		PriorityQueue<ListNode> heap = new PriorityQueue<>(new ListNodeComparator());
+		PriorityQueue<ListNode> heap = new PriorityQueue<>((o1, o2) -> o1.val - o2.val);
 		for (int i = 0; i < lists.length; i++) {
 			if (lists[i] != null) {
 				heap.add(lists[i]);
@@ -55,4 +47,12 @@ public class Problem_0023_MergeKSortedLists {
 		return head;
 	}
 
+//	public static class ListNodeComparator implements Comparator<ListNode> {
+//
+//		@Override
+//		public int compare(ListNode o1, ListNode o2) {
+//			return o1.val - o2.val;
+//		}
+//
+//	}
 }

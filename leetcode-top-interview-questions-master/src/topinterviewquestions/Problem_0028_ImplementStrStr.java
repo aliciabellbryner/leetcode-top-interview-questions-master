@@ -5,6 +5,20 @@ import java.util.Arrays;
 public class Problem_0028_ImplementStrStr {
 
 	//time O(mn): m is the length of s, n is the length of m, space O(1)
+	public int strStr(String haystack, String needle) {
+		if(needle.equals("")) {
+			return 0;
+		}
+		int L = needle.length();
+		for(int i=0; i<=haystack.length()-L; i++) {
+			if(haystack.substring(i,i+L).equals(needle)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	//time O(mn): m is the length of s, n is the length of m, space O(1), time limit exceeded, dont use!!!
 	public static int getIndexOf(String haystack, String needle) {
 		for (int i = 0; ; i++) {
 			for (int j = 0; ; j++) {
@@ -23,7 +37,7 @@ public class Problem_0028_ImplementStrStr {
 
 
 
-	public static int strStr(String haystack, String needle) {
+	public static int strStr1(String haystack, String needle) {
 		return getIndexOf_KMP(haystack, needle);
 	}
 

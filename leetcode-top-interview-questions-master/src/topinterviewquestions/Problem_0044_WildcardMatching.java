@@ -2,6 +2,31 @@ package topinterviewquestions;
 
 public class Problem_0044_WildcardMatching {
 
+
+	// 最终做的化简
+	public static boolean isMatch(String str, String pattern) {
+		char[] s = str.toCharArray();
+		char[] p = pattern.toCharArray();
+		int N = s.length;
+		int M = p.length;
+		boolean[][] dp = new boolean[N + 1][M + 1];
+		dp[N][M] = true;
+		for (int pi = M - 1; pi >= 0; pi--) {
+			dp[N][pi] = p[pi] == '*' && dp[N][pi + 1];
+		}
+		for (int si = N - 1; si >= 0; si--) {
+			for (int pi = M - 1; pi >= 0; pi--) {
+				if (p[pi] != '*') {
+					dp[si][pi] = (p[pi] == '?' || s[si] == p[pi]) && dp[si + 1][pi + 1];
+				} else {// p[pi] == '*'
+					dp[si][pi] = dp[si][pi + 1] || dp[si + 1][pi];
+				}
+			}
+		}
+		return dp[0][0];
+	}
+
+	//TLE!!!
 	public static boolean isMatch1(String str, String pattern) {
 		char[] s = str.toCharArray();
 		char[] p = pattern.toCharArray();
@@ -9,7 +34,7 @@ public class Problem_0044_WildcardMatching {
 	}
 
 	// s[si....] 能否被 p[pi....] 匹配出来
-	public static boolean process1(char[] s, char[] p, int si, int pi) {
+	public static boolean process1(char[] s, char[] p, int si, int pi) {//si is the start idx of s, pi is the start idx of p
 		if (si == s.length) { // s -> ""
 			if (pi == p.length) { // p -> ""
 				return true;
@@ -67,27 +92,6 @@ public class Problem_0044_WildcardMatching {
 		return dp[0][0];
 	}
 
-	// 最终做的化简
-	public static boolean isMatch3(String str, String pattern) {
-		char[] s = str.toCharArray();
-		char[] p = pattern.toCharArray();
-		int N = s.length;
-		int M = p.length;
-		boolean[][] dp = new boolean[N + 1][M + 1];
-		dp[N][M] = true;
-		for (int pi = M - 1; pi >= 0; pi--) {
-			dp[N][pi] = p[pi] == '*' && dp[N][pi + 1];
-		}
-		for (int si = N - 1; si >= 0; si--) {
-			for (int pi = M - 1; pi >= 0; pi--) {
-				if (p[pi] != '*') {
-					dp[si][pi] = (p[pi] == '?' || s[si] == p[pi]) && dp[si + 1][pi + 1];
-				} else {
-					dp[si][pi] = dp[si][pi + 1] || dp[si + 1][pi];
-				}
-			}
-		}
-		return dp[0][0];
-	}
+
 
 }

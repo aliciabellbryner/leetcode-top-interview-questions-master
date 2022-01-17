@@ -1,6 +1,23 @@
 package topinterviewquestions;
 
 public class Problem_0029_DivideTwoIntegers {
+	//from leetcode discussion: https://leetcode.com/problems/divide-two-integers/discuss/142849/C%2B%2BJavaPython-Should-Not-Use-%22long%22-Int
+
+	public int divide(int A, int B) {
+		if (A == 1 << 31 && B == -1) {
+			return (1 << 31) - 1;
+		}
+		int a = Math.abs(A), b = Math.abs(B), res = 0;
+		for (int x = 31; x >= 0; x--) {
+			if ((a >>> x) - b >= 0) {
+				res += 1 << x;
+				a -= b << x;
+			}
+		}
+		return (A > 0) == (B > 0) ? res : -res;
+	}
+
+
 
 	public static int add(int a, int b) {
 		int sum = a;
@@ -49,7 +66,7 @@ public class Problem_0029_DivideTwoIntegers {
 		return isNeg(a) ^ isNeg(b) ? negNum(res) : res;
 	}
 
-	public static int divide(int dividend, int divisor) {
+	public static int divide2(int dividend, int divisor) {
 		if (divisor == Integer.MIN_VALUE) {
 			return dividend == Integer.MIN_VALUE ? 1 : 0;
 		}

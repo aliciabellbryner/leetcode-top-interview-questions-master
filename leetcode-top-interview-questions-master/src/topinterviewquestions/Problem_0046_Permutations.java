@@ -1,11 +1,76 @@
 package topinterviewquestions;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Problem_0046_Permutations {
+
+	public static List<List<Integer>> permute(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (nums == null || nums.length == 0) {
+			return res;
+		}
+		permute(nums, res, new ArrayList<Integer>(), 0);
+		return res;
+	}
+
+	private static void permute(int[] nums, List<List<Integer>> res, List<Integer> path, int pos) {
+		if (pos == nums.length) {
+			res.add(new ArrayList(path));
+			return;
+		}
+
+		for (int i = pos; i < nums.length; i++) {
+			path.add(nums[i]);
+			swap(nums, pos, i);
+			permute(nums, res, path,pos+1);
+			swap(nums, pos, i);
+			path.remove(path.size() - 1);
+		}
+		return;
+	}
+
+
+	//follow up: if nums has duplicate elements
+	public static List<List<Integer>> permuteUnique(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (nums == null || nums.length == 0) {
+			return res;
+		}
+		Arrays.sort(nums);
+		helper(nums,res,new ArrayList<>(), new boolean[nums.length]);
+		return res;
+	}
+
+	private static void helper(int[] nums, List<List<Integer>> res, List<Integer> path, boolean[] visited) {
+		if (path.size() == nums.length) {
+			res.add(new ArrayList(path));
+			return;
+		}
+
+		for (int i = 0; i < nums.length; i++) {
+			if (visited[i] || (i != 0 && nums[i] == nums[i-1] && visited[i-1])) {
+				continue;
+			}
+			path.add(nums[i]);
+			visited[i] = true;
+			helper(nums, res, path, visited);
+			path.remove(path.size() - 1);
+			visited[i] = false;
+		}
+	}
+
+	private static void swap(int[] nums, int f, int s) {
+		int temp = nums[f];
+		nums[f] = nums[s];
+		nums[s] = temp;
+	}
+
+
+	public static void main(String[] args) {
+		int[] test = new int[]{1,2,1};
+		int[] test2 = new int[]{1,1,3};
+		System.out.println(permuteUnique(test));
+	}
 
 	public static List<List<Integer>> onClass(int[] nums) {//不是很好的办法，不推荐，看下面的用queue实现的bfs方法
 		List<List<Integer>> ans = new ArrayList<>();
@@ -38,77 +103,5 @@ public class Problem_0046_Permutations {
 		return clone;
 	}
 
-	public static List<List<Integer>> permute(int[] nums) {
-		List<List<Integer>> ans = new ArrayList<>();
-		process(nums, 0, ans);
-		return ans;
-	}
-
-	public static void process(int[] nums, int index, List<List<Integer>> ans) {//nums中没有重复的元素
-		if (index == nums.length) {
-			ArrayList<Integer> cur = new ArrayList<>();
-			for (int num : nums) {
-				cur.add(num);
-			}
-			ans.add(cur);
-		} else {
-			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
-				swap(nums, index, j);
-				process(nums, index + 1, ans);
-				swap(nums, index, j);
-			}
-		}
-	}
-
-	//follow up: if nums has duplicate elements, how get the permutation
-	public static List<List<Integer>> permuteWithDup(int[] nums) {
-		List<List<Integer>> ans = new ArrayList<>();
-		processWithDup(nums, 0, ans);
-		return ans;
-	}
-
-	public static void processWithDup(int[] nums, int index, List<List<Integer>> ans) {//nums中没有重复的元素
-		if (index == nums.length) {
-			ArrayList<Integer> cur = new ArrayList<>();
-			for (int num : nums) {
-				cur.add(num);
-			}
-			ans.add(cur);
-			return;
-		} else {
-//			HashSet<Integer> visited = new HashSet<>();//HashSet<Integer> visited
-//			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
-//				if (!visited.contains(nums[j])) {
-//					visited.add(nums[j]);
-//					swap(nums, index, j);
-//					processWithDup(nums, index + 1, ans);
-//					swap(nums, index, j);
-//				}
-//			}
-
-			boolean[] visited = new boolean[256];// boolean[] visited, it is the same
-			for (int j = index; j < nums.length; j++) {//j must to start from index, which mean its original seq
-				if (!visited[nums[j]]) {
-					visited[nums[j]] = true;
-					swap(nums, index, j);
-					processWithDup(nums, index + 1, ans);
-					swap(nums, index, j);
-				}
-			}
-		}
-	}
-
-
-	public static void swap(int[] nums, int i, int j) {
-		int tmp = nums[i];
-		nums[i] = nums[j];
-		nums[j] = tmp;
-	}
-
-	public static void main(String[] args) {
-		int[] test = new int[]{1,2,1};
-		int[] test2 = new int[]{1,1,3};
-		System.out.println(permuteWithDup(test));
-	}
 
 }
