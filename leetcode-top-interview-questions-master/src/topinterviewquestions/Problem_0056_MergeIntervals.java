@@ -4,6 +4,28 @@ import java.util.*;
 
 public class Problem_0056_MergeIntervals {
 
+	//time O(nlogn): Other than the sort invocation, we do a simple linear scan of the list, so the runtime is dominated by the O(nlogn) complexity of sorting.
+	//space O(logn): the quick sort itself takes O(logn) space
+	public int[][] merge(int[][] intervals) {
+		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));//sort the intervals using the [0] element
+		LinkedList<int[]> res = new LinkedList<>();
+		for (int[] interval : intervals) {
+			// if the list of res intervals is empty or if the current
+			// interval does not overlap with the previous, simply append it.
+			if (res.isEmpty() || res.getLast()[1] < interval[0]) {
+				res.add(interval);
+			}
+			// otherwise, there is overlap, so we merge the current and previous
+			// intervals.
+			else {
+				res.getLast()[1] = Math.max(res.getLast()[1], interval[1]);
+			}
+		}
+		return res.toArray(new int[res.size()][]);
+	}
+
+
+	//bad solutions, don't use
 	//this is my own way using priorityqueue, the zuo's solution is simpler just using an array
 	public class Line {
 		int start;
@@ -13,17 +35,12 @@ public class Problem_0056_MergeIntervals {
 			this.end = e;
 		}
 	}
-	public class lineComparator implements Comparator<Line> {
-		@Override
-		public int compare(Line l1, Line l2) {
-			return l1.start - l2.start;
-		}
-	}
+
 	public int[][] merge_j(int[][] intervals) {
 		if (intervals == null || intervals.length == 0) {
 			return null;
 		}
-		PriorityQueue<Line> heap = new PriorityQueue<>(new lineComparator());
+		PriorityQueue<Line> heap = new PriorityQueue<>((l1, l2) -> l1.start - l2.start);
 		for (int[] interval : intervals) {
 			heap.add(new Line(interval[0], interval[1]));
 		}
@@ -74,7 +91,7 @@ public class Problem_0056_MergeIntervals {
 	}
 
 	// intervals  N * 2
-	public static int[][] merge(int[][] intervals) {
+	public static int[][] merge1(int[][] intervals) {
 		if (intervals.length == 0) {
 			return new int[0][0];
 		}

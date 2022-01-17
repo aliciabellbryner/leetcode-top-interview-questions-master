@@ -2,7 +2,30 @@ package topinterviewquestions;
 
 public class Problem_0064_MinimumPathSum {
 
-	public static int minPathSum(int[][] grid) {
+	//Time complexity : O(mn). We traverse the entire matrix once.
+	//Space complexity : O(1). No extra space is used.
+		public static int minPathSum(int[][] grid) {
+			if (grid == null || grid[0] == null) {
+				return 0;
+			}
+			int N = grid.length;
+			int M = grid[0].length;
+			for (int i = N - 1; i >= 0; i--) {
+				for (int j = M - 1; j >= 0; j--) {
+					if (i == N -1 && j != M - 1) {//the bottom row, except the bottom right element
+						grid[i][j] += grid[i][j+1];
+					} else if (i != N - 1 && j == M - 1) {//the rightest col, except the bottom right element
+						grid[i][j] += grid[i+1][j];
+					} else if (i != N - 1 && j != M - 1) {
+						grid[i][j] += Math.min(grid[i+1][j], grid[i][j+1]);
+					}
+				}
+			}
+			return grid[0][0];
+		}
+	//time O(MN)
+	//space O(M): M is the row number
+	public static int minPathSum1(int[][] grid) {
 		if (grid == null || grid[0] == null) {
 			return 0;
 		}
@@ -18,8 +41,7 @@ public class Problem_0064_MinimumPathSum {
 				if (i == 0 && j == 0) {
 					dp[j] = grid[i][j];
 				} else {
-					dp[j] = Math.min((i > 0 ? dp[j] : Integer.MAX_VALUE), (j > 0 ? dp[j - 1] : Integer.MAX_VALUE))
-							+ grid[i][j];
+					dp[j] = Math.min((i > 0 ? dp[j] : Integer.MAX_VALUE), (j > 0 ? dp[j - 1] : Integer.MAX_VALUE)) + grid[i][j];
 				}
 
 			}
