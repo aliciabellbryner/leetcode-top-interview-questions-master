@@ -1,6 +1,7 @@
 package topinterviewquestions;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Problem_0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
@@ -14,6 +15,11 @@ public class Problem_0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 		}
 	}
 
+	//recursive
+	//Time complexity : O(N) as each node will be visited once
+	//Building the hashmap takes O(N) time, as there are N nodes to add, and adding items to a hashmap has a cost of O(1), so we get N*O(1)=O(N).
+	//Building the tree also takes O(N) time. The recursive helper method has a cost of O(1) for each call (it has no loops), and it is called once for each of the N nodes, giving a total of O(N).Taking both into consideration, the time complexity is O(N)O(N).
+	//Space complexity : O(N) Building the hashmap and storing the entire tree each requires O(N) memory. The size of the implicit system stack used by recursion calls depends on the height of the tree, which is O(N) in the worst case and O(logN) on average. Taking both into consideration, the space complexity is O(N).
 	public static TreeNode buildTree(int[] preorder, int[] inorder) {
 		HashMap<Integer, Integer> map = new HashMap<>();
 		for (int i = 0; i < inorder.length; i++) {
@@ -34,6 +40,35 @@ public class Problem_0105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 		head.left = f(pre, L1 + 1, L1 + findIndex - L2, in, L2, findIndex - 1, map);
 		head.right = f(pre, L1 + findIndex - L2 + 1, R1, in, findIndex + 1, R2, map);
 		return head;
+	}
+
+	// Iterative.
+	// Simulate the preorder traversal, backtrack with inorder.
+	// In preorder traversal, we start from root, go left until reaching left most node
+	// (and we pushing nodes to stack along the path), and then backtrack to the first node with not null right child,
+	// go to its right child and repeat. Note the backtracking is entirely following the inorder,
+	// which gives us a way to locate the first node with not null right child, i.e. keep poping stack top
+	// if it's equal to next inorder value, the next preorder val is just the right child of last poped node.
+	public TreeNode buildTree2(int[] preorder, int[] inorder) {
+		if (preorder.length == 0) return null;
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode root = new TreeNode(preorder[0]), cur = root;
+		for (int i = 1, j = 0; i < preorder.length; i++) {
+			if (cur.val != inorder[j]) {//从root出发，找到最左的node： In preorder traversal, we start from root, go left until reaching left most node
+				cur.left = new TreeNode(preorder[i]);
+				stack.push(cur);//每次找的过程中把经过的node依次放进stack里：we pushing nodes to stack along the path
+				cur = cur.left;
+			} else {
+				j++;
+				while (!stack.empty() && stack.peek().val == inorder[j]) {//当stack中的top元素等于inorder的下一个元素时，就把这个top元素pop出，赋值给cur，backtrack to the first node with not null right child, i.e. keep poping stack top if it's equal to next inorder value
+					cur = stack.pop();
+					j++;
+				}
+				cur.right = new TreeNode(preorder[i]);//那上面的这个top元素的右子节点就是preorder的下一个元素the next preorder val is just the right child of last poped node
+				cur = cur.right;
+			}
+		}
+		return root;
 	}
 
 }

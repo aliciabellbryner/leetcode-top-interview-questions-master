@@ -17,6 +17,39 @@ public class Problem_0116_PopulatingNextRightPointersInEachNode {
 	}
 
 
+	//my solution: this is not as good as Zuo's solution as if you use the system's LinkedList class, you will waste space as that class has many methods, variables
+	//Time Complexity: O(N) since we process each node exactly once.
+	//Space Complexity: O(N). This is a perfect binary tree which means the last level contains N/2 nodes. The space complexity for breadth first traversal is the space occupied by the queue which is dependent upon the maximum number of nodes in particular level.
+	// So, in this case, the space complexity would be O(N)O(N).
+	public static Node connect_j(Node root) {
+		if (root == null) {
+			return root;
+		}
+		Queue<Node> queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			// 第一个弹出的节点
+			Node pre = null;
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node cur = queue.poll();
+				if (cur.left != null) {
+					queue.offer(cur.left);
+				}
+				if (cur.right != null) {
+					queue.offer(cur.right);
+				}
+				if (pre != null) {
+					pre.next = cur;
+				}
+				pre = cur;
+			}
+		}
+		return root;
+	}
+
+
+	//followup: how to improve
 	//Zuo's solution, write a new simple class to save space
 
 	public static class MyQueue {
@@ -81,37 +114,5 @@ public class Problem_0116_PopulatingNextRightPointersInEachNode {
 		}
 		return root;
 	}
-
-
-	//my solution: this is not as good as Zuo's solution as if you use the system's LinkedList class, you will waste space as that class has many methods, variables
-	public static Node connect_j(Node root) {
-		if (root == null) {
-			return root;
-		}
-		Queue<Node> queue = new LinkedList<>();
-		queue.offer(root);
-		while (!queue.isEmpty()) {
-			// 第一个弹出的节点
-			Node pre = null;
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				Node cur = queue.poll();
-				if (cur.left != null) {
-					queue.offer(cur.left);
-				}
-				if (cur.right != null) {
-					queue.offer(cur.right);
-				}
-				if (pre != null) {
-					pre.next = cur;
-				}
-				pre = cur;
-			}
-		}
-		return root;
-	}
-
-
-
 
 }

@@ -1,6 +1,30 @@
 package topinterviewquestions;
 
 public class Problem_0125_ValidPalindrome {
+	//my solution
+	public boolean isPalindrome_j(String s) {
+		if (s == null) {
+			return true;
+		}
+		int l = 0;
+		int r = s.length()-1;
+		while (l < r) {
+			if ((Character.toLowerCase(s.charAt(l)) > 'z' || Character.toLowerCase(s.charAt(l)) < 'a') && (s.charAt(l) > '9' || s.charAt(l) < '0')) {
+				l++;
+				continue;
+			}//s.charAt(l)不是字母或数字，则跳过
+			if ((Character.toLowerCase(s.charAt(r)) > 'z' || Character.toLowerCase(s.charAt(r)) < 'a') && (s.charAt(r) > '9' || s.charAt(r) < '0')) {
+				r--;
+				continue;
+			}//s.charAt(r)不是字母或数字，则跳过
+			if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) {
+				return false;
+			}
+			l++;
+			r--;
+		}
+		return true;
+	}
 
 	public static boolean isPalindrome(String s) {
 		if (s == null || s.length() == 0) {
@@ -43,30 +67,7 @@ public class Problem_0125_ValidPalindrome {
 		return (c >= '0' && c <= '9');
 	}
 
-	//my solution
-	public boolean isPalindrome_j(String s) {
-		if (s == null) {
-			return true;
-		}
-		int l = 0;
-		int r = s.length()-1;
-		while (l < r) {
-			if ((Character.toLowerCase(s.charAt(l)) > 'z' || Character.toLowerCase(s.charAt(l)) < 'a') && (s.charAt(l) > '9' || s.charAt(l) < '0')) {
-				l++;
-				continue;
-			}
-			if ((Character.toLowerCase(s.charAt(r)) > 'z' || Character.toLowerCase(s.charAt(r)) < 'a') && (s.charAt(r) > '9' || s.charAt(r) < '0')) {
-				r--;
-				continue;
-			}
-			if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) {
-				return false;
-			}
-			l++;
-			r--;
-		}
-		return true;
-	}
+
 
 	public static void main(String[] args) {
 		System.out.println(Character.toLowerCase('9'));

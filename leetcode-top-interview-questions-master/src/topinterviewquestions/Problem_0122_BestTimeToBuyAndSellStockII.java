@@ -12,5 +12,4 @@ public class Problem_0122_BestTimeToBuyAndSellStockII {
 		}
 		return ans;
 	}
-	
 }

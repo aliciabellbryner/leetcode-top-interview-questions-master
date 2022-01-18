@@ -14,38 +14,34 @@ public class Problem_0114_FlattenBinaryTreeToLinkedList {
 		}
 	}
 
+	//using morris traverse
+	//time O(N) space O(1)
 	public void flatten_leetcode(TreeNode root) {
 
 		// Handle the null scenario
 		if (root == null) {
 			return;
 		}
-
 		TreeNode node = root;
-
 		while (node != null) {
-
 			// If the node has a left child
 			if (node.left != null) {
-
 				// Find the rightmost node
 				TreeNode rightmost = node.left;
 				while (rightmost.right != null) {
 					rightmost = rightmost.right;
 				}
-
 				// rewire the connections
 				rightmost.right = node.right;
 				node.right = node.left;
 				node.left = null;
 			}
-
 			// move on to the right side of the tree
 			node = node.right;
 		}
 	}
 
-	public static void flatten(TreeNode root) {
+	public static void flatten_zcy(TreeNode root) {
 		if (root == null) {
 			return;
 		}
@@ -96,7 +92,7 @@ public class Problem_0114_FlattenBinaryTreeToLinkedList {
 		head.right.left = new TreeNode(6);
 		head.right.right = new TreeNode(7);
 
-		flatten(head);
+		flatten_zcy(head);
 
 		while (head != null) {
 			System.out.println(head.val);
