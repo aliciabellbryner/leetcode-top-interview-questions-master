@@ -2,7 +2,35 @@ package topinterviewquestions;
 
 public class Problem_0072_EditDistance {
 
+
+	//Time complexity : O(mn) as it follows quite straightforward for the inserted loops.
+	//Space complexity : O(mn) since at each step we keep the results of all previous computations.
 	public int minDistance(String word1, String word2) {
+		int M = word1.length(), N = word2.length();
+		int[][] dp = new int[M+1][N+1];
+		for(int i = 0;i<=M;i++) {
+			dp[i][0] = i;
+		}//change word1[0...i] to "" by deleting
+		for(int j = 0;j<=N;j++) {
+			dp[0][j] = j;
+		}//change "" to word2[0...j] by adding
+		for(int i = 0;i<M;i++){
+			for(int j = 0;j<N;j++){
+				if(word1.charAt(i) == word2.charAt(j)) {
+					dp[i+1][j+1] = dp[i][j];
+				}
+				else {
+					dp[i+1][j+1] = Math.min(dp[i][j],Math.min(dp[i+1][j],dp[i][j+1])) + 1;//+1 means adding the current element
+				}
+			}
+		}
+		return dp[M][N];
+	}
+
+
+
+
+	public int minDistance2(String word1, String word2) {
 		return minDistance(word1, word2, 1, 1, 1);
 	}
 
