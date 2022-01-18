@@ -1,5 +1,6 @@
 package topinterviewquestions;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -15,7 +16,7 @@ public class Problem_0094_BinaryTreeInorderTraversal {
 		}
 	}
 
-	//dont use stack: zuo's solution
+	//dont use stack: zuo's solution //use Morris Traversal
 	public static List<Integer> inorderTraversal(TreeNode root) {
 		List<Integer> ans = new ArrayList<>();
 		if (root == null) {
@@ -43,6 +44,7 @@ public class Problem_0094_BinaryTreeInorderTraversal {
 		return ans;
 	}
 
+	//use Morris Traversal
 	public static List<Integer> preTraversal(TreeNode root) {
 		List<Integer> ans = new ArrayList<>();
 		if (root == null) {
@@ -124,6 +126,8 @@ public class Problem_0094_BinaryTreeInorderTraversal {
 	}
 
 	//use stack
+	//Time complexity: O(n)
+	//Space complexity: O(n)
 	public List<Integer> inorderTraversal_2(TreeNode root) {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -141,6 +145,25 @@ public class Problem_0094_BinaryTreeInorderTraversal {
 		}
 
 		return list;
+	}
+
+	//recursive way:
+	//Time complexity: O(n)
+	//The time complexity is O(n) because the recursive function is T(n) = 2*T(n/2)+1T(n)=2⋅T(n/2)+1.
+	//Space complexity: O(n)
+	//The worst case space required is O(n), and in the average case it's O(\log n)O(logn) where n is number of nodes.
+	public List<Integer> inorderTraversal3(TreeNode root) {
+		List<Integer> res = new ArrayList<>();
+		helper3(root, res);
+		return res;
+	}
+
+	public void helper3(TreeNode root, List<Integer> res) {
+		if (root != null) {
+			helper3(root.left, res);
+			res.add(root.val);
+			helper3(root.right, res);
+		}
 	}
 
 	public static void main(String[] args) {
