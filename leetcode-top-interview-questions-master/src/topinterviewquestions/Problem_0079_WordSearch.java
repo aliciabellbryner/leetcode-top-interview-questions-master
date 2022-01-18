@@ -2,8 +2,45 @@ package topinterviewquestions;
 
 public class Problem_0079_WordSearch {
 
+	//Time Complexity:O(MN3^L) where MN is the number of row and col in the board and L is the length of the word to be matched.
+	//For the backtracking function, initially we could have at most 4 directions to explore, but further the choices are reduced into 3 (since we won't go back to where we come from).
+	//space The main consumption of the memory lies in the recursion call of the backtracking function. The maximum length of the call stack would be the length of the word. Therefore, the space complexity of the algorithm is O(L).
+	public boolean exist(char[][] board, String word) {
+		if (board == null || board.length == 0 || board[0].length == 0) {
+			return false;
+		}
+		int M = board.length;
+		int N = board[0].length;
+		for (int i = 0; i < M; i++) {
+			for (int j = 0; j < N; j++) {
+				if (board[i][j] == word.charAt(0)) {
+					if (process(board, i, j, 0, word)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	private boolean process(char[][] board, int i, int j, int index, String word) {
+		int M = board.length;
+		int N = board[0].length;
+		if (index == word.length()) {
+			return true;
+		} else {
+			if (i < 0 || i >= M || j < 0 || j >= N || word.charAt(index) != board[i][j]) {
+				return false;
+			}
+			board[i][j] ^= 256;//use 256 as all the letter is in the range of [0, 256), so the 9th is 0, by doing a xor ^异或，the 9th will definitely change to 1, which will never be similiar with other elements
+			boolean res = process(board, i+1, j, index+1, word) || process(board, i-1, j, index+1, word) || process(board, i, j+1, index+1, word) || process(board, i, j-1, index+1, word);
+			board[i][j] ^= 256;//doing this second to recover the element to its original value
+			return res;
+		}
+	}
+
+
 	//不要用这个办法，time cost too much because of the line 33-36 recursion cost too much, use the prefix tree method in problem 212
-	public static boolean exist(char[][] board, String word) {
+	public static boolean exist1(char[][] board, String word) {
 		char[] w = word.toCharArray();
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
