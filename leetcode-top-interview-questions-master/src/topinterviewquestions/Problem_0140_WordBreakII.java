@@ -1,9 +1,76 @@
 package topinterviewquestions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Problem_0140_WordBreakII {
+
+
+	//https://leetcode.com/problems/word-break-ii/discuss/44167/My-concise-JAVA-solution-based-on-memorized-DFS/808237
+	//Time Complexity: O(N ^ 2 + 2^N + W), Let N be the length of the input string and W be the number of words in the dictionary.
+	//Space Complexity: O(2 ^ N * N + W)
+	int maxLen = 0;
+	public List<String> wordBreak(String s, List<String> wordDict) {
+		Set<String> set = new HashSet<>(wordDict);
+		for(String str: wordDict){
+			if(str.length() > maxLen) maxLen = str.length();
+		}
+		HashMap<Integer,List<String>> map = new HashMap<>();
+		return backtrack(s,set,0, map);
+	}
+	private List<String> backtrack(String s, Set<String> set,int start, HashMap<Integer,List<String>> map){
+		if(map.containsKey(start)) {
+			return map.get(start);
+		}
+		if(start == s.length()){
+			List<String> list = new LinkedList<>();
+			list.add("");
+			map.put(start,list);
+			return list;
+		}
+		List<String> list = new LinkedList<>();
+		for(int i = start;i<Math.min(s.length(),start+maxLen);i++){
+			String tempStr = s.substring(start,i+1);
+			if(set.contains(tempStr)){
+				for(String str: backtrack(s,set,i+1,map)){
+					if(str.length() == 0){
+						list.add(tempStr);
+					}else list.add(tempStr+" "+str);
+				}
+			}
+		}
+		map.put(start,list);
+		return list;
+	}
+
+
+
+	//https://leetcode.com/problems/word-break-ii/discuss/44167/My-concise-JAVA-solution-based-on-memorized-DFS
+	//simpler solution used HashMap to save the previous results to prune duplicated branches
+	//Time complexity is O(len(wordDict) ^ len(s / minWordLenInDict)), because there're len(wordDict) possibilities for each cut
+	public List<String> wordBreak1(String s, List<String> wordDict) {
+		return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
+	}
+
+	// DFS function returns an array including all substrings derived from s.
+	List<String> DFS(String s, List<String> wordDict, HashMap<String, LinkedList<String>>map) {
+		if (map.containsKey(s))
+			return map.get(s);
+
+		LinkedList<String>res = new LinkedList<String>();
+		if (s.length() == 0) {
+			res.add("");
+			return res;
+		}
+		for (String word : wordDict) {
+			if (s.startsWith(word)) {
+				List<String> sublist = DFS(s.substring(word.length()), wordDict, map);
+				for (String sub : sublist)
+					res.add(word + (sub.isEmpty() ? "" : " ") + sub);
+			}
+		}
+		map.put(s, res);
+		return res;
+	}
 
 	public static class Node {
 		public String path;
@@ -17,7 +84,7 @@ public class Problem_0140_WordBreakII {
 		}
 	}
 
-	public static List<String> wordBreak(String s, List<String> wordDict) {
+	public static List<String> wordBreak2(String s, List<String> wordDict) {
 		char[] str = s.toCharArray();
 		Node root = gettrie(wordDict);
 		boolean[] dp = getdp(s, root);

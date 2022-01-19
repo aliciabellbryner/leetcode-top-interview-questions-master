@@ -4,6 +4,8 @@ import java.util.Stack;
 
 public class Problem_0150_EvaluateReversePolishNotation {
 
+	//time O(N)
+	//space O(N)
 	public static int evalRPN(String[] tokens) {
 		Stack<Integer> stack = new Stack<>();
 		for (String str : tokens) {

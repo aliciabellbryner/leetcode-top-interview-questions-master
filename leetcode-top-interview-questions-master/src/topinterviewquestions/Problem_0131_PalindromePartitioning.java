@@ -6,8 +6,78 @@ import java.util.List;
 
 public class Problem_0131_PalindromePartitioning {
 
+
+	//Approach 1: Backtracking
+	//https://leetcode.com/problems/palindrome-partitioning/solution/
+	//Time Complexity : O(N*2^N) where N is the length of string ss. This is the worst-case time complexity when all the possible substrings are palindrome.
+	//Hence, there could be 2^N possible substrings in the worst case. For each substring, it takes O(N) time to generate substring and determine if it a palindrome or not.
+	// This gives us time complexity as O(N*2^N)
+	//Space Complexity: O(N), where N is the length of the string ss. This space will be used to store the recursion stack.
+	// For s = aaa, the maximum depth of the recursive call stack is 3 which is equivalent to N.
+	public List<List<String>> partition(String s) {
+		List<List<String>> res = new ArrayList<>();
+		dfs(0, res, new ArrayList<>(), s);
+		return res;
+	}
+
+	void dfs(int start, List<List<String>> result, List<String> path, String s) {
+		if (start == s.length()) {
+			result.add(new ArrayList<>(path));
+		}
+		for (int end = start; end < s.length(); end++) {
+			if (isPalindrome(s, start, end)) {
+				// add current substring in the path
+				path.add(s.substring(start, end + 1));
+				dfs(end + 1, result, path, s);
+				// backtrack and remove the current substring from path
+				path.remove(path.size() - 1);
+			}
+		}
+	}
+
+	boolean isPalindrome(String s, int low, int high) {
+		while (low < high) {
+			if (s.charAt(low++) != s.charAt(high--)) return false;
+		}
+		return true;
+	}
+
+
+
+	//time same as 1, space worse than 1
+	//Approach 2: Backtracking with Dynamic Programming
+	//leetcode solution: https://leetcode.com/problems/palindrome-partitioning/solution/
+	//Time Complexity : O(N*2^N) where N is the length of string s. In the worst case,
+	// there could be 2^N possible substrings and it will take O(N) to generate each substring using substring().
+	// However, we are eliminating one additional iteration to check if substring is a palindrome or not.
+	//Space Complexity: )O(N*N), where N is the length of the string s. The recursive call stack would require N space.
+	//Additionally we also use 2 dimensional array dp of size N*N . This gives us total space complexity as O(N*N) + O(N) = O(N*N)
+	public List<List<String>> partition22(String s) {
+		int len = s.length();
+		boolean[][] dp = new boolean[len][len];
+		List<List<String>> res = new ArrayList<>();
+		dfs22(res, s, 0, new ArrayList<>(), dp);
+		return res;
+	}
+
+	void dfs22(List<List<String>> res, String s, int start, List<String> path, boolean[][] dp) {
+		if (start >= s.length()) {
+			res.add(new ArrayList<>(path));
+		}
+		for (int end = start; end < s.length(); end++) {
+			if (s.charAt(start) == s.charAt(end) && (end - start <= 2 || dp[start + 1][end - 1])) {
+				dp[start][end] = true;
+				path.add(s.substring(start, end + 1));//put s[start, end] into path
+				dfs22(res, s, end + 1, path, dp);
+				path.remove(path.size() - 1);
+			}
+		}
+	}
+
+
+
 	//Zuo's solution: use dp to store the palindrome info to save a lot of time!
-	public static List<List<String>> partition(String s) {
+	public static List<List<String>> partition2(String s) {
 		// dp[L][R] -> 是不是回文
 		boolean[][] dp = getdp(s.toCharArray());
 		LinkedList<String> path = new LinkedList<>();

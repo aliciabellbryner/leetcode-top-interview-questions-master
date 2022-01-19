@@ -11,9 +11,9 @@ public class Problem_0134_GasStation {
 		int tank = 0;
 		for(int i = 0; i < gas.length; i++)
 			tank += gas[i] - cost[i];
-		if(tank < 0)
-			return - 1;
-
+		if(tank < 0) {
+			return -1;
+		}
 		int start = 0;
 		int accumulate = 0;
 		//we don't need to go from the tail to head again once we find the start, as per the problem description, there will be only one answer
@@ -23,13 +23,13 @@ public class Problem_0134_GasStation {
 		// which contradict the only one answer statement, so we can know for sure the start is the answer
 		for(int i = 0; i < gas.length; i++){
 			int curGain = gas[i] - cost[i];
-			if(accumulate + curGain < 0){
+			if(accumulate + curGain < 0){//means cur job failed. you have to start from i+1
 				start = i + 1;
 				accumulate = 0;
+			} else {
+				accumulate += curGain;
 			}
-			else accumulate += curGain;
 		}
-
 		return start;
 	}
 
