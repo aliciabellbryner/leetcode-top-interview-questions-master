@@ -39,7 +39,14 @@ public class Problem_0190_ReverseBits {
 	
 	public static int reverseBits(int n) {
 		// n
-		n = (n >>> 16) | (n << 16);
+		//>>>不带符号右移
+		//Approach 3: Mask and Shift
+		//https://leetcode.com/problems/reverse-bits/solution/
+		//1). First, we break the original 32-bit into 2 blocks of 16 bits, and switch them.
+		//2). We then break the 16-bits block into 2 blocks of 8 bits. Similarly, we switch the position of the 8-bits blocks
+		//3). We then continue to break the blocks into smaller blocks, until we reach the level with the block of 1 bit.
+		//4). At each of the above steps, we merge the intermediate results into a single integer which serves as the input for the next step.
+		n = (n >>> 16) | (n << 16);//是把n左边16位，和n右边16位交换
 		n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);//f:1111
 		n = ((n & 0xf0f0f0f0) >>> 4) | ((n & 0x0f0f0f0f) << 4);
 		n = ((n & 0xcccccccc) >>> 2) | ((n & 0x33333333) << 2);//c: 1100, 3: 0011
@@ -47,6 +54,17 @@ public class Problem_0190_ReverseBits {
 		return n;
 	}
 
+
+	//简单版本，但时间空间复杂度一样都是O（1）
+	public int reverseBits2(int n) {
+		int ans = 0;
+		for (int i = 0; i < 32; i++) {
+			ans <<= 1;
+			ans = ans | (n & 1);
+			n >>= 1;
+		}
+		return ans;
+	}
 	public static void main(String[] args) {
 		System.out.println(0xa);
 	}

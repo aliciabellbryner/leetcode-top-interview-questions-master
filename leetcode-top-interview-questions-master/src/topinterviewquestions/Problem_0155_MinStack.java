@@ -16,6 +16,7 @@ public class Problem_0155_MinStack {
 		min = new Stack<>();
 	}
 
+	//用两个stack，data所有的数据push的时候都放进去，min放min的头元素和x相对小的那个值
 	public void push(int x) {
 		data.push(x);
 		if (min.isEmpty()) {

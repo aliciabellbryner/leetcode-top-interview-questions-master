@@ -10,11 +10,14 @@ public class Problem_0198_HouseRobber {
 			return nums[0];
 		}
 		int N = nums.length;
-		int[] dp = new int[N];
+		int[] dp = new int[N];//dp[i] means if the robber goes to nums[i],
+		// the maximum he can get no matter he rob nums[i] or not
 		dp[0] = nums[0];
 		dp[1] = Math.max(nums[0], nums[1]);
 		for (int i = 2; i < N; i++) {
 			dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
+			//dp[i - 1] means he didn't rob nums[i]
+			//nums[i] + dp[i - 2] means he rob nums[i] and didn't rob nums[i-1]
 		}
 		return dp[N - 1];
 	}

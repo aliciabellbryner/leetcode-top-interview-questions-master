@@ -1,20 +1,33 @@
 package topinterviewquestions;
 
 public class Problem_0191_NumberOf1Bits {
-    
-	
-	public static int hammingWeight1(int n) {
-		int bits = 0;
-		int rightOne = 0;
-		while(n != 0) {
-			bits++;
-			rightOne = n & (-n);
-			n ^= rightOne;	
+
+//https://leetcode.com/problems/number-of-1-bits/solution/
+
+	//Approach 1
+	public int hammingWeight(int n) {
+		int res = 0;
+		int mask = 1;
+		for (int i = 0; i < 32; i++) {
+			if ((n & mask) != 0) {
+				res++;
+			}
+			mask <<= 1;
 		}
-		return bits;
+		return res;
 	}
 
-	public static int hammingWeight2(int n) {
+	//Approach 2
+	public int hammingWeight2(int n) {
+		int sum = 0;
+		while (n != 0) {
+			sum++;
+			n &= (n - 1);
+		}
+		return sum;
+	}
+
+	public static int hammingWeight3(int n) {
 		n = (n & 0x55555555) + ((n >>> 1) & 0x55555555);
 		n = (n & 0x33333333) + ((n >>> 2) & 0x33333333);
 		n = (n & 0x0f0f0f0f) + ((n >>> 4) & 0x0f0f0f0f);

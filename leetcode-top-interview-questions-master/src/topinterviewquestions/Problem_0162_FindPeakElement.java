@@ -2,7 +2,28 @@ package topinterviewquestions;
 
 public class Problem_0162_FindPeakElement {
 
-	public static int findPeakElement(int[] nums) {
+
+	//Approach 3: Iterative Binary Search
+	//https://leetcode.com/problems/find-peak-element/solution/
+	//Time complexity : O(log_2(n))
+	// Space O(1)
+	public int findPeakElement(int[] nums) {
+		int l = 0, r = nums.length - 1;
+		while (l < r) {
+			int mid = r + ((l - r) >> 1);
+			if (nums[mid] > nums[mid + 1]) {
+				r = mid;
+			} else {
+				l = mid + 1;
+			}
+		}
+		return l;
+	}
+
+
+
+	//zuo's solution: too long and slow
+	public static int findPeakElement2(int[] nums) {
 		int N = nums.length;
 		if (N < 2) {
 			return 0;

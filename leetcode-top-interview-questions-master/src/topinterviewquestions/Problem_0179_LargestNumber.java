@@ -5,35 +5,25 @@ import java.util.Comparator;
 
 public class Problem_0179_LargestNumber {
 
-	public static class MyComparator implements Comparator<String> {
-
-		@Override
-		public int compare(String o1, String o2) {
-			return (o2 + o1).compareTo(o1 + o2);
-		}//这样排出来的大的在前面
-
-	}
-
 	public String largestNumber(int[] nums) {
 		String[] strs = new String[nums.length];
 		for (int i = 0; i < nums.length; i++) {
 			strs[i] = String.valueOf(nums[i]);
 		}
-		Arrays.sort(strs, new MyComparator());
-		StringBuilder builder = new StringBuilder();
+		Arrays.sort(strs, (s1, s2) -> (s2 + s1).compareTo(s1 + s2));////这样排出来的大的在前面
+		StringBuilder sb = new StringBuilder();
 		for (String str : strs) {
-			builder.append(str);
+			sb.append(str);
 		}
-		String ans = builder.toString();
-		char[] str = ans.toCharArray();
-		int index = -1;//后面的目的是为了排除如果全都是0的情况
-		for (int i = 0; i < str.length; i++) {
-			if (str[i] != '0') {
-				index = i;
+		String res = sb.toString();
+		int startIdx = -1;//后面的目的是为了排除如果全都是0的情况
+		for (int i = 0; i < res.length(); i++) {
+			if (res.charAt(i) != '0') {
+				startIdx = i;
 				break;
 			}
 		}
-		return index == -1 ? "0" : ans.substring(index);
+		return startIdx == -1 ? "0" : res.substring(startIdx);
 	}
 
 	public static void main(String[] args) {
