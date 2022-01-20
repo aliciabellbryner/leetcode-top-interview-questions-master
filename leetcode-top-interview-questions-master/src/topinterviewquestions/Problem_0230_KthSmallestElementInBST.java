@@ -43,6 +43,8 @@ public class Problem_0230_KthSmallestElementInBST {
 	}
 
 	//recursive
+	//Time complexity : O(N) to build a traversal.
+	//Space complexity : O(N) to keep an inorder traversal.
 	int count = 0;
 	int result = Integer.MIN_VALUE;
 
@@ -61,9 +63,11 @@ public class Problem_0230_KthSmallestElementInBST {
 
 
 	//iterative
-	// the time complex for the iterative solution should be O(n) because each node is visited
-	// at least twice (push and pop) for the worst case k==N. However, if we were given that k<<N and the tree is balanced,
-	// the time complexity would be O(log(n)) since we shrink the tree by half after every step.
+	// Time complexity: O(H+k), where H is a tree height. This complexity is defined by the stack,
+	// which contains at least H+k elements, since before starting to pop out one has to go down to a leaf.
+	// This results in O(logN+k) for the balanced tree and O(N+k) for completely unbalanced tree with all the nodes in the left subtree.
+	//Space complexity: O(H) to keep the stack, where HH is a tree height. That makes O(N) in the worst case of the skewed tree, and
+	// O(logN) in the average case of the balanced tree.
 	public int kthSmallest3(TreeNode root, int k) {
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		TreeNode cur = root;
@@ -73,10 +77,11 @@ public class Problem_0230_KthSmallestElementInBST {
 			if(cur != null) {
 				stack.push(cur);  // Just like recursion
 				cur = cur.left;
-
 			} else {
 				TreeNode node = stack.pop();
-				if(++count == k) return node.val;
+				if(++count == k) {
+					return node.val;
+				}
 				cur = node.right;
 			}
 		}
