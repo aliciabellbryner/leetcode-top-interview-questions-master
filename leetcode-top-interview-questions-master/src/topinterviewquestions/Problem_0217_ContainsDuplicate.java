@@ -1,10 +1,28 @@
 package topinterviewquestions;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Problem_0217_ContainsDuplicate {
+	//solution1 use quicksort
+	//用系统自带的排序（quicksort）time O(nlogn), space O(logn) for quick sort, if you use heapsort, time O(nlogn), space O(1)
+	public boolean containsDuplicate(int[] nums) {
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length - 1; ++i) {
+			if (nums[i] == nums[i + 1]) return true;
+		}
+		return false;
+	}
 
-	public boolean containsDuplicate1(int[] nums) {
+	public static void swap(int[] arr, int i, int j) {
+		int tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
+	}
+
+	////solution2： use heapsort
+	//time O(nlogn), space O(1)
+	public boolean containsDuplicate_heapsort(int[] nums) {
 		if (nums == null || nums.length < 2) {
 			return false;
 		}
@@ -46,12 +64,10 @@ public class Problem_0217_ContainsDuplicate {
 		}
 	}
 
-	public static void swap(int[] arr, int i, int j) {
-		int tmp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = tmp;
-	}
 
+	//solution3
+	// use hashset
+	//time O(N) space O(N)
 	public boolean containsDuplicate2(int[] nums) {
 		if (nums == null || nums.length < 2) {
 			return false;
@@ -65,5 +81,6 @@ public class Problem_0217_ContainsDuplicate {
 		}
 		return false;
 	}
+
 
 }

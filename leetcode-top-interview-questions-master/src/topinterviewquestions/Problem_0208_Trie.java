@@ -7,7 +7,7 @@ package topinterviewquestions;
 public class Problem_0208_Trie {
 
 	public static class Node {
-		public boolean end;
+		public boolean end;//if end = true, means it has a word that end here
 		public Node[] nexts;
 
 		public Node() {
@@ -26,11 +26,10 @@ public class Problem_0208_Trie {
 		if (word == null) {
 			return;
 		}
-		char[] str = word.toCharArray();
 		Node node = root;
-		int path = 0;
-		for (int i = 0; i < str.length; i++) {
-			path = str[i] - 'a';
+		int path;
+		for (int i = 0; i < word.length(); i++) {
+			path = word.charAt(i) - 'a';
 			if (node.nexts[path] == null) {
 				node.nexts[path] = new Node();
 			}
@@ -43,11 +42,10 @@ public class Problem_0208_Trie {
 		if (word == null) {
 			return false;
 		}
-		char[] chs = word.toCharArray();
 		Node node = root;
-		int index = 0;
-		for (int i = 0; i < chs.length; i++) {
-			index = chs[i] - 'a';
+		int index;
+		for (int i = 0; i < word.length(); i++) {
+			index = word.charAt(i) - 'a';
 			if (node.nexts[index] == null) {
 				return false;
 			}
@@ -60,11 +58,10 @@ public class Problem_0208_Trie {
 		if (pre == null) {
 			return false;
 		}
-		char[] chs = pre.toCharArray();
 		Node node = root;
-		int index = 0;
-		for (int i = 0; i < chs.length; i++) {
-			index = chs[i] - 'a';
+		int index;
+		for (int i = 0; i < pre.length(); i++) {
+			index = pre.charAt(i) - 'a';
 			if (node.nexts[index] == null) {
 				return false;
 			}

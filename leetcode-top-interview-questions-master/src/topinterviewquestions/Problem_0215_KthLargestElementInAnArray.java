@@ -9,7 +9,8 @@ public class Problem_0215_KthLargestElementInAnArray {
 		return minKth(nums, nums.length + 1 - k);
 	}
 
-	//time O(N)
+	//Time complexity : O(N) in the average case, O(N^2) in the worst case.
+	//Space complexity : O(1).
 	public static int minKth(int[] arr, int k) {
 		return process(arr, 0, arr.length - 1, k - 1);
 	}
@@ -19,7 +20,7 @@ public class Problem_0215_KthLargestElementInAnArray {
 			return arr[L];
 		}
 		int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
-		int[] range = partition(arr, L, R, pivot);
+		int[] range = partition(arr, L, R, pivot);//range[0]是arr中开始等于pivot的index起点，range[1]是终点
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
 		} else if (index < range[0]) {
@@ -29,7 +30,8 @@ public class Problem_0215_KthLargestElementInAnArray {
 		}
 	}
 
-	public static int[] partition(int[] arr, int L, int R, int pivot) {
+	public static int[] partition(int[] arr, int L, int R, int pivot) {//返回的是arr数组中值等于pivot的区间的index范围，
+		// 这个pivot等值区间的左边都是小于pivot的值，但是他们彼此并不sorting，右边都是大于pivot的值，但彼此也不sorting
 		int less = L - 1;
 		int more = R + 1;
 		int cur = L;
@@ -52,27 +54,21 @@ public class Problem_0215_KthLargestElementInAnArray {
 	}
 
 	//也可以用priorityqueue的方法，但是时间复杂度要差一些
-	// 利用大根堆，时间复杂度O(N*logK)
-	public static int minKth1(int[] arr, int k) {
-		PriorityQueue<Integer> minHeap = new PriorityQueue<>(new MinHeapComparator());
-		for (int i = 0; i < k; i++) {
-			minHeap.add(arr[i]);
-		}
-		for (int i = k; i < arr.length; i++) {
-			if (arr[i] > minHeap.peek()) {
+	// 利用小根堆，时间复杂度O(N*logK)
+	//Time complexity : O(Nlogk).
+	//Space complexity : O(k) to store the heap elements.
+	public int findKthLargest2(int[] nums, int k) {
+		// init minHeap 'the smallest element first'
+		PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
+
+		// keep k largest elements in the minHeap
+		for (int n: nums) {
+			minHeap.add(n);
+			if (minHeap.size() > k)
 				minHeap.poll();
-				minHeap.add(arr[i]);
-			}
-		}
-		return minHeap.peek();
-	}
-
-	public static class MinHeapComparator implements Comparator<Integer> {
-
-		@Override
-		public int compare(Integer o1, Integer o2) {
-			return o1 - o2;
 		}
 
+		// output
+		return minHeap.poll();
 	}
 }

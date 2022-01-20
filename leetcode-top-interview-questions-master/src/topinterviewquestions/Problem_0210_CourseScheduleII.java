@@ -7,6 +7,15 @@ import java.util.Queue;
 
 public class Problem_0210_CourseScheduleII {
 
+	//same as 207 CourseSchedule
+	//	//Time Complexity: O(∣E∣+∣V∣) where |V| is the number of courses, and |E| is the number of dependencies.
+	//		//As in the previous algorithm, it would take us |E|∣E∣ time complexity to build a graph in the first step.
+	//		//Similar with the above postorder DFS traversal, we would visit each vertex and each edge once and only once in the worst case, i.e. ∣E∣+∣V∣.
+	//		//As a result, the overall time complexity of the algorithm would be O(2⋅∣E∣+∣V∣)=O(∣E∣+∣V∣).
+	//	//Space Complexity: O(∣E∣+∣V∣) where |V| is the number of courses, and |E| is the number of dependencies.
+	//		//	We built a graph data structure in the algorithm, which would consume |E| + |V|∣E∣+∣V∣ space.
+	//		//In addition, we use a container to keep track of the courses that have no prerequisite, and the size of the container would be bounded by ∣V∣.
+	//		//As a result, the overall space complexity of the algorithm would be  O(∣E∣+2⋅∣V∣)=O(∣E∣+∣V∣).
 	public static class Info {
 		public int name;
 		public int in;
@@ -20,12 +29,12 @@ public class Problem_0210_CourseScheduleII {
 	}
 
 	public int[] findOrder(int numCourses, int[][] prerequisites) {
-		int[] ans = new int[numCourses];
+		int[] res = new int[numCourses];
 		for (int i = 0; i < numCourses; i++) {
-			ans[i] = i;
+			res[i] = i;
 		}
 		if (prerequisites == null || prerequisites.length == 0) {
-			return ans;
+			return res;
 		}
 		HashMap<Integer, Info> nodes = new HashMap<>();
 		for (int[] arr : prerequisites) {
@@ -46,10 +55,10 @@ public class Problem_0210_CourseScheduleII {
 		Queue<Info> zeroInQueue = new LinkedList<>();
 		for (int i = 0; i < numCourses; i++) {
 			if (!nodes.containsKey(i)) {
-				ans[index++] = i;
+				res[index++] = i;//把没有依赖关系可以独立上完的课放进去
 			} else {
 				if (nodes.get(i).in == 0) {
-					zeroInQueue.add(nodes.get(i));
+					zeroInQueue.add(nodes.get(i));//再把indegree是0的放进去
 				}
 			}
 		}
@@ -57,7 +66,7 @@ public class Problem_0210_CourseScheduleII {
 		int count = 0;
 		while (!zeroInQueue.isEmpty()) {
 			Info cur = zeroInQueue.poll();
-			ans[index++] = cur.name;
+			res[index++] = cur.name;
 			count++;
 			for (Info next : cur.nexts) {
 				if (--next.in == 0) {
@@ -65,7 +74,7 @@ public class Problem_0210_CourseScheduleII {
 				}
 			}
 		}
-		return count == needPrerequisiteNums ? ans : new int[0];
+		return count == needPrerequisiteNums ? res : new int[0];
 	}
 
 }

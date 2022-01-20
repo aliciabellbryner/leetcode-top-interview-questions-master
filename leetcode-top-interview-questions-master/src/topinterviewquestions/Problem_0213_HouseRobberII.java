@@ -13,22 +13,24 @@ public class Problem_0213_HouseRobberII {
 		if (nums.length == 2) {
 			return Math.max(nums[0], nums[1]);
 		}
-		int pre2 = nums[0];
-		int pre1 = Math.max(nums[0], nums[1]);
+		//算抢nums[0]能得到的最大值
+		int pre1 = nums[0];
+		int pre2 = Math.max(nums[0], nums[1]);
 		for (int i = 2; i < nums.length - 1; i++) {
-			int tmp = Math.max(pre1, nums[i] + pre2);
-			pre2 = pre1;
-			pre1 = tmp;
+			int tmp = Math.max(pre2, nums[i] + pre1);
+			pre1 = pre2;
+			pre2 = tmp;
 		}
-		int ans1 = pre1;
-		pre2 = nums[1];
-		pre1 = Math.max(nums[1], nums[2]);
+		int ans1 = pre2;
+		//接下来算不抢nums[0]能得到的最大值
+		pre1 = nums[1];
+		pre2 = Math.max(nums[1], nums[2]);
 		for (int i = 3; i < nums.length; i++) {
-			int tmp = Math.max(pre1, nums[i] + pre2);
-			pre2 = pre1;
-			pre1 = tmp;
+			int tmp = Math.max(pre2, nums[i] + pre1);
+			pre1 = pre2;
+			pre2 = tmp;
 		}
-		int ans2 = pre1;
+		int ans2 = pre2;
 		return Math.max(ans1, ans2);
 	}
 

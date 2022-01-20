@@ -21,7 +21,7 @@ public class Problem_0212_WordSearchII {
 
 	public static List<String> findWords(char[][] board, String[] words) {
 		TrieNode head = new TrieNode(); // 前缀树最顶端的头
-		HashSet<String> set = new HashSet<>();
+		HashSet<String> set = new HashSet<>();//to avoid duplicate
 		for (String word : words) {
 			if (!set.contains(word)) {
 				fillWord(head, word);
@@ -44,10 +44,9 @@ public class Problem_0212_WordSearchII {
 
 	public static void fillWord(TrieNode node, String word) {
 		node.pass++;
-		char[] chs = word.toCharArray();
 		int index = 0;
-		for (int i = 0; i < chs.length; i++) {
-			index = chs[i] - 'a';
+		for (int i = 0; i < word.length(); i++) {
+			index = word.charAt(i) - 'a';
 			if (node.nexts[index] == null) {
 				node.nexts[index] = new TrieNode();
 			}
@@ -62,14 +61,12 @@ public class Problem_0212_WordSearchII {
 	// cur还没有登上，有待检查能不能登上去的前缀树的节点
 	// 如果找到words中的某个str，就记录在 res里
 	// 返回值，从row,col 出发，一共找到了多少个str
-	public static int process(char[][] board, int row, int col, List<Character> path, TrieNode cur,
-			List<String> res) {
+	public static int process(char[][] board, int row, int col, List<Character> path, TrieNode cur, List<String> res) {
 		char cha = board[row][col];
 		if (cha == 0) { // 这个row col位置是之前走过的位置
 			return 0;
 		}
 		// (row,col) 不是回头路
-
 		int index = cha - 'a';
 		// 如果没路，或者这条路上最终的字符串之前加入过结果里
 		if (cur.nexts[index] == null || cur.nexts[index].pass == 0) {//非常重要！这个就是为什么process返回值fix要设为从row， col出发一共找到的多少个str的数量int了
@@ -86,7 +83,7 @@ public class Problem_0212_WordSearchII {
 			fix++;
 		}
 		// 往上、下、左、右，四个方向尝试
-		board[row][col] = 0;
+		board[row][col] = 0;//把它变成其他的值
 		if (row > 0) {
 			fix += process(board, row - 1, col, path, cur, res);
 		}
@@ -99,9 +96,9 @@ public class Problem_0212_WordSearchII {
 		if (col < board[0].length - 1) {
 			fix += process(board, row, col + 1, path, cur, res);
 		}
-		board[row][col] = cha;
+		board[row][col] = cha;//backtracking recovering//把它变回原先的值
 		path.remove(path.size()-1);
-		cur.pass -= fix;
+		cur.pass -= fix;//这个非常重要，把fix减去之后然后在上面line72判断pass是不是等于0才可以判断前面的string串是否以及用完，如果pass=0那么就直接返回0
 		return fix;
 	}
 

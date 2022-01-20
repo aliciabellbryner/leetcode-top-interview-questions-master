@@ -10,10 +10,18 @@ public class Problem_0207_CourseSchedule {
 	// 一个info，就是一个课程
 	// name是课程的编号
 	// in是课程的入度
+	//Time Complexity: O(∣E∣+∣V∣) where |V| is the number of courses, and |E| is the number of dependencies.
+		//As in the previous algorithm, it would take us |E|∣E∣ time complexity to build a graph in the first step.
+		//Similar with the above postorder DFS traversal, we would visit each vertex and each edge once and only once in the worst case, i.e. ∣E∣+∣V∣.
+		//As a result, the overall time complexity of the algorithm would be O(2⋅∣E∣+∣V∣)=O(∣E∣+∣V∣).
+	//Space Complexity: O(∣E∣+∣V∣) where |V| is the number of courses, and |E| is the number of dependencies.
+		//	We built a graph data structure in the algorithm, which would consume |E| + |V|∣E∣+∣V∣ space.
+		//In addition, we use a container to keep track of the courses that have no prerequisite, and the size of the container would be bounded by ∣V∣.
+		//As a result, the overall space complexity of the algorithm would be  O(∣E∣+2⋅∣V∣)=O(∣E∣+∣V∣).
 	public static class Info {
 		public int name;
-		public int in;
-		public ArrayList<Info> nexts;
+		public int in;//indegree：代表要上这个课需要提前修多少们课
+		public ArrayList<Info> nexts;//代表上完这个课继续可以qualify上的课
 
 		public Info(int n) {
 			name = n;
@@ -27,7 +35,7 @@ public class Problem_0207_CourseSchedule {
 		if (prerequisites == null || prerequisites.length == 0) {
 			return true;
 		}
-		HashMap<Integer, Info> nodes = new HashMap<>();
+		HashMap<Integer, Info> nodes = new HashMap<>();//存放所有的课对应的node信息，key是课的数字编号，value是对应的具有in、nexts信息的node
 		for (int[] arr : prerequisites) {
 			int to = arr[0];
 			int from = arr[1];
@@ -42,14 +50,14 @@ public class Problem_0207_CourseSchedule {
 			f.nexts.add(t);
 			t.in++;
 		}
-		int needPrerequisiteNums = nodes.size();
+		int needPrerequisiteNums = nodes.size();//代表所有需要预修课才能上的课的总数
 		Queue<Info> zeroInQueue = new LinkedList<>();
 		for (Info info : nodes.values()) {
 			if (info.in == 0) {
 				zeroInQueue.add(info);
 			}
 		}
-		int count = 0;
+		int count = 0;//代表每次剥离一门课，然后一层一层找indegree=0的课的个数
 		while (!zeroInQueue.isEmpty()) {
 			Info cur = zeroInQueue.poll();
 			count++;
