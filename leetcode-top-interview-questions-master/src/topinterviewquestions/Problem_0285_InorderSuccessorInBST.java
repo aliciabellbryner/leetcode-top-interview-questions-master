@@ -1,5 +1,5 @@
 package topinterviewquestions;
-
+//是求p节点的后一个
 public class Problem_0285_InorderSuccessorInBST {
 
 	public static class TreeNode {
@@ -8,6 +8,9 @@ public class Problem_0285_InorderSuccessorInBST {
 		public TreeNode right;
 	}
 
+	//using Morris traverse
+	//time O(N)
+	//space O(1)
 	public static TreeNode inorderSuccessor(TreeNode head, TreeNode p) {
 		if (head == null) {
 			return null;
@@ -37,6 +40,24 @@ public class Problem_0285_InorderSuccessorInBST {
 			cur = cur.right;
 		}
 		return null;
+	}
+
+	//Approach 2: Using BST properties
+	//https://leetcode.com/problems/inorder-successor-in-bst/solution/
+	//time O(N)
+	//space O(1)
+	public TreeNode inorderSuccessor2(TreeNode root, TreeNode p) {
+		TreeNode res = null;
+		while (root != null) {
+			if (root.val <= p.val) {
+				root = root.right;
+			} else {
+				res = root;
+				root = root.left;
+			}
+		}
+
+		return res;
 	}
 
 }

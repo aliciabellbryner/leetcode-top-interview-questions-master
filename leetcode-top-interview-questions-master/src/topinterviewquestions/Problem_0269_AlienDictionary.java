@@ -7,40 +7,45 @@ import java.util.Queue;
 
 public class Problem_0269_AlienDictionary {
 
+	//time and space:https://leetcode.com/problems/alien-dictionary/solution/
+	//Time complexity : O(C).  C be the total length of all the words in the input list, added together.
+	//Space complexity : O(1) or O(U + min(U^2, N)),  U is the total number of unique letters in the alien alphabet. N is the total number of strings in the input list.
 	public static String alienOrder(String[] words) {
 		if (words == null || words.length == 0) {
 			return "";
 		}
 		int N = words.length;
-		HashMap<Character, Integer> indegree = new HashMap<>();//入度多少，可以参考Code03_TopologySort
-		for (int i = 0; i < N; i++) {
+		HashMap<Character, Integer> indegree = new HashMap<>();//key是letter，value是入度多少
+		for (int i = 0; i < N; i++) {//先把所有的words里出现过的letter（注意不是word）都放进hashmap里，并且indegree设为0
 			for (char c : words[i].toCharArray()) {
 				indegree.put(c, 0);
 			}
 		}
-		HashMap<Character, HashSet<Character>> graph = new HashMap<>();
-		//这个hashmap 的key是每个字母，value是这个字母后面的所有字母的set集合
+		HashMap<Character, HashSet<Character>> nextsMap = new HashMap<>();
+		//这个hashmap 的key是每个字母，value是排在这个字母后面的所有字母的set集合
 		for (int i = 0; i < N - 1; i++) {
-			char[] cur = words[i].toCharArray();
-			char[] nex = words[i + 1].toCharArray();
-			int len = Math.min(cur.length, nex.length);
+			String cur = words[i];
+			String next = words[i + 1];
+			int len = Math.min(cur.length(), next.length());
 			int j = 0;
 			for (; j < len; j++) {
-				if (cur[j] != nex[j]) {
-					if (!graph.containsKey(cur[j])) {
-						graph.put(cur[j], new HashSet<>());
+				if (cur.charAt(j) != next.charAt(j)) {
+					if (!nextsMap.containsKey(cur.charAt(j))) {
+						nextsMap.put(cur.charAt(j), new HashSet<>());
 					}
-					if (!graph.get(cur[j]).contains(nex[j])) {//避免重复计算，比如两次b->a就不能把a的入度加成2，只有两次不同的比如c->a和d->a两次才可以加成2
-						graph.get(cur[j]).add(nex[j]);
-						indegree.put(nex[j], indegree.get(nex[j]) + 1);
+					if (!nextsMap.get(cur.charAt(j)).contains(next.charAt(j))) {//避免重复计算，比如两次b->a就不能把a的入度加成2，只有两次不同的比如c->a和d->a两次才可以加成2
+						nextsMap.get(cur.charAt(j)).add(next.charAt(j));
+						indegree.put(next.charAt(j), indegree.get(next.charAt(j)) + 1);
 					}
-					break;
+					break;//如果找到cur.charAt(j) != next.charAt(j)说明没有意义再比较目前的cur和next下面的值了，所以break
 				}
 			}
-			if (j < cur.length && j == nex.length) {
+			if (j < cur.length() && j == next.length()) {//说明cur的长度比next长，同时next里所有出现的letter都出现在cur相同位置，
+				// 这说明肯定不符合尝试，比如cur = loveeee, next = love,所以直接返回“”
 				return "";
 			}
 		}
+		//接下来就是topology sort的基本思路了
 		StringBuilder ans = new StringBuilder();
 		Queue<Character> q = new LinkedList<>();
 		for (Character key : indegree.keySet()) {
@@ -51,8 +56,8 @@ public class Problem_0269_AlienDictionary {
 		while (!q.isEmpty()) {
 			char cur = q.poll();
 			ans.append(cur);
-			if (graph.containsKey(cur)) {
-				for (char next : graph.get(cur)) {
+			if (nextsMap.containsKey(cur)) {
+				for (char next : nextsMap.get(cur)) {
 					indegree.put(next, indegree.get(next) - 1);
 					if (indegree.get(next) == 0) {
 						q.offer(next);

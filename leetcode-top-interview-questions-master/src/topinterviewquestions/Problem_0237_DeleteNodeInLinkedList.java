@@ -7,6 +7,7 @@ public class Problem_0237_DeleteNodeInLinkedList {
 		ListNode next;
 	}
 
+	// a trick solution
 	public void deleteNode(ListNode node) {
 		node.val = node.next.val;
 		node.next = node.next.next;

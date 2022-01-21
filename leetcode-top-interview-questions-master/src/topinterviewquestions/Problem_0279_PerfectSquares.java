@@ -1,16 +1,50 @@
 package topinterviewquestions;
 
+import java.util.*;
+
 public class Problem_0279_PerfectSquares {
 
-	// 暴力解
-	public static int numSquares1(int n) {
-		int res = n, num = 2;
-		while (num * num <= n) {
-			int a = n / (num * num), b = n % (num * num);
-			res = Math.min(res, a + numSquares1(b));
-			num++;
+
+	//Approach 2: Dynamic Programming
+	// https://leetcode.com/problems/perfect-squares/solution/
+	//Time complexity: O(n*sqrt{n}) In main step, we have a nested loop,
+	// where the outer loop is of n iterations and in the inner loop it takes at maximum sqrt{n} iterations.
+	//Space Complexity: O(n). We keep all the intermediate sub-solutions in the array dp[].
+	//https://leetcode.com/problems/perfect-squares/discuss/71495/An-easy-understanding-DP-solution-in-Java
+	public int numSquares_dp(int n) {
+		int[] dp = new int[n + 1];
+		Arrays.fill(dp, Integer.MAX_VALUE);
+		dp[0] = 0;
+		for(int i = 1; i <= n; ++i) {
+			int min = Integer.MAX_VALUE;
+			int j = 1;
+			while(i - j*j >= 0) {
+				min = Math.min(min, dp[i - j*j] + 1);
+				++j;
+			}
+			dp[i] = min;
 		}
-		return res;
+		return dp[n];
+	}
+
+
+	//hashset+queue
+	public int numSquares(int n) {
+		Set<Integer> vis = new HashSet<>();
+		Queue<Integer> q = new LinkedList<>();
+		q.offer(n);
+		for (int level = 0; !q.isEmpty(); level++) {
+			for (int i = q.size(); i > 0; i--) {
+				int num = q.poll();
+				if (num == 0) {
+					return level;
+				}
+				for (int j = 1; j * j <= num; j++)
+					if (vis.add(num - j * j))
+						q.offer(num - j * j);
+			}
+		}
+		return 0;
 	}
 
 	// 1 : 1, 4, 9, 16, 25, 36, ...
@@ -44,6 +78,10 @@ public class Problem_0279_PerfectSquares {
 	// 数学解
 	// 1）四平方和定理
 	// 2）任何数消掉4的因子，结论不变
+	//Time complexity: O(sqrt(n))
+	// ). In the main loop, we check if the number can be decomposed into the sum of two squares,
+	// which takes O(sqrt(n)) iterations. In the rest of cases, we do the check in constant time.
+	//Space complexity: O(1). The algorithm consumes a constant space, regardless the size of the input number.
 	public static int numSquares3(int n) {
 		while (n % 4 == 0) {
 			n /= 4;
@@ -64,6 +102,18 @@ public class Problem_0279_PerfectSquares {
 		for (int i = 1; i < 1000; i++) {
 			System.out.println(i + " , " + numSquares1(i));
 		}
+	}
+
+
+	// 暴力解
+	public static int numSquares1(int n) {
+		int res = n, num = 2;
+		while (num * num <= n) {
+			int a = n / (num * num), b = n % (num * num);
+			res = Math.min(res, a + numSquares1(b));
+			num++;
+		}
+		return res;
 	}
 
 }

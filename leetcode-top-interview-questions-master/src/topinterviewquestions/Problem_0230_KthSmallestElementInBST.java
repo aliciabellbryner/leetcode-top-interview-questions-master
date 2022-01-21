@@ -13,6 +13,7 @@ public class Problem_0230_KthSmallestElementInBST {
 
 	//use morris traverse
 	//best solution
+	//time O(N), space O(1)
 	public static int kthSmallest(TreeNode head, int k) {
 		if (head == null) {
 			return -1;

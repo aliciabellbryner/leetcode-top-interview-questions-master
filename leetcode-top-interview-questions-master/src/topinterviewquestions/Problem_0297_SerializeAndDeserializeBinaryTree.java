@@ -1,9 +1,6 @@
 package topinterviewquestions;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Problem_0297_SerializeAndDeserializeBinaryTree {
 
@@ -18,44 +15,47 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
 		}
 	}
 
+
+	//pre-order serialize
+	//time O(N), space O(N)
 	public String serialize(TreeNode root) {
-		LinkedList<String> ans = new LinkedList<>();//must use this, cannot write as List<String> ans = new LinkedList<>()
+		LinkedList<String> res = new LinkedList<>();//must use this, cannot write as List<String> res = new LinkedList<>()
 		// or you won't be able to use the peekLast() and pollLast() method, and arraylist doesn't have peek or poll method
-		if (root == null) {
-			ans.add(null);
+		if (root == null) {//corner case
+			res.add(null);
 		} else {
-			ans.add(String.valueOf(root.val));
+			res.add(String.valueOf(root.val));
 			Queue<TreeNode> queue = new LinkedList<TreeNode>();
 			queue.add(root);
 			while (!queue.isEmpty()) {
 				root = queue.poll();
-				if (root.left != null) {
-					ans.add(String.valueOf(root.left.val));
+				if (root.left != null) {//如果root的左边不为null则把root的左边放到res中去，同时这个左node放到queue中去
+					res.add(String.valueOf(root.left.val));
 					queue.add(root.left);
 				} else {
-					ans.add(null);
+					res.add(null);
 				}
-				if (root.right != null) {
-					ans.add(String.valueOf(root.right.val));
+				if (root.right != null) {//如果root的右边不为null则把root的左边放到res中去，同时这个右node放到queue中去
+					res.add(String.valueOf(root.right.val));
 					queue.add(root.right);
 				} else {
-					ans.add(null);
+					res.add(null);
 				}
 			}
 		}
-		while (!ans.isEmpty() && ans.peekLast() == null) {//
-			ans.pollLast();//pollLast() remove the last element entered, poll() remove the first element entered
+		while (!res.isEmpty() && res.peekLast() == null) {//
+			res.pollLast();//pollLast() remove the last element entered, poll() remove the first element entered
 		}//去除leaf是null且右边都是null的节点
-		StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		String str = ans.pollFirst();
-		builder.append(str == null ? "null" : str);
-		while (!ans.isEmpty()) {
-			str = ans.pollFirst();
-			builder.append("," + (str == null ? "null" : str));
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		String str = res.pollFirst();
+		sb.append(str == null ? "null" : str);
+		while (!res.isEmpty()) {
+			str = res.pollFirst();
+			sb.append("," + (str == null ? "null" : str));
 		}
-		builder.append("]");
-		return builder.toString();
+		sb.append("]");
+		return sb.toString();
 	}
 
 	public TreeNode deserialize(String data) {

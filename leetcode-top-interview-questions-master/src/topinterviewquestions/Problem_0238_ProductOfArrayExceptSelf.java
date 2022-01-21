@@ -2,17 +2,19 @@ package topinterviewquestions;
 
 public class Problem_0238_ProductOfArrayExceptSelf {
 
+
+	//best solution
 	public int[] productExceptSelf_leetcode(int[] nums) {
-		int[] arr = new int[nums.length];
+		int[] arr = new int[nums.length];//arr[i]表示nums[0...(i-1)]的乘积
 		arr[0] = 1;
 		for (int i = 1; i < nums.length; i++) {
 			arr[i] = arr[i-1] * nums[i-1];
 		}
-		int right = 1;
+		int rightProduct = 1;//表示右边的所有书乘积
 		int[] res = new int[nums.length];
 		for (int j = nums.length - 1; j >= 0; j--) {
-			res[j] = right * arr[j];
-			right *= nums[j];
+			res[j] = rightProduct * arr[j];
+			rightProduct *= nums[j];
 		}
 		return res;
 	}
