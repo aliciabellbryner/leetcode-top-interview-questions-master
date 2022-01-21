@@ -5,7 +5,38 @@ import java.util.TreeMap;
 
 public class Problem_0673_NumberOfLongestIncreasingSubsequence {
 
-	public static int findNumberOfLIS(int[] nums) {
+
+	//https://leetcode.com/problems/number-of-longest-increasing-subsequence/discuss/107293/JavaC%2B%2B-Simple-dp-solution-with-explanation
+	//len[i]: the length of the Longest Increasing Subsequence which ends with nums[i].
+	//cnt[i]: the number of the Longest Increasing Subsequence which ends with nums[i].
+	public int findNumberOfLIS(int[] nums) {
+		int N = nums.length, res = 0, max_len = 0;
+		int[] len =  new int[N], cnt = new int[N];
+		for(int i = 0; i<N; i++){
+			len[i] = cnt[i] = 1;
+			for(int j = 0; j <i ; j++){
+				if(nums[i] > nums[j]){
+					if(len[i] == len[j] + 1) {
+						cnt[i] += cnt[j];
+					}
+					if(len[i] < len[j] + 1) {
+						len[i] = len[j] + 1;
+						cnt[i] = cnt[j];
+					}
+				}
+			}
+			if(max_len == len[i]) {
+				res += cnt[i];
+			}
+			if(max_len < len[i]){
+				max_len = len[i];
+				res = cnt[i];
+			}
+		}
+		return res;
+	}
+
+	public static int findNumberOfLIS2(int[] nums) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
@@ -46,7 +77,7 @@ public class Problem_0673_NumberOfLongestIncreasingSubsequence {
 		return dp.get(dp.size() - 1).firstEntry().getValue();
 	}
 
-	public static int findNumberOfLIS2(int[] nums) {
+	public static int findNumberOfLIS3(int[] nums) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}

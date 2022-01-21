@@ -16,6 +16,9 @@ public class Problem_0347_TopKFrequentElements {
 		}
 	}
 
+	//Time complexity : O(Nlogk) if k<N and O(N) in the particular case of N=k.
+	// That ensures time complexity to be better than O(NlogN).
+	//Space complexity : O(N+k) to store the hash map with not more N elements and a heap with k elements.
 	public static int[] topKFrequent(int[] nums, int k) {
 		HashMap<Integer, Node> map = new HashMap<>();
 		for (int num : nums) {

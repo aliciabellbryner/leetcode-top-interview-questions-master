@@ -8,7 +8,7 @@ public class Problem_0763_PartitionLabels {
 	//time O(N), space O(1)
 	public static List<Integer> partitionLabels(String S) {
 		int[] lastIdx = new int[26];
-		for (int i = 0; i < S.length(); i++) {
+		for (int i = 0; i < S.length(); i++) {//代表i位置这个char出现的最右的idx
 			lastIdx[S.charAt(i) - 'a'] = i;
 		}
 		List<Integer> ans = new ArrayList<>();

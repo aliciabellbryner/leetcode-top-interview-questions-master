@@ -2,6 +2,25 @@ package topinterviewquestions;
 
 public class Problem_0309_BestTimeToBuyAndSellStockWithCooldown {
 
+
+	//leetcode solution
+	//https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/solution/
+	//time O(N)
+	//space O(1)
+	public int maxProfit(int[] prices) {
+
+		int sold = Integer.MIN_VALUE, held = Integer.MIN_VALUE, reset = 0;
+
+		for (int price : prices) {
+			int preSold = sold;
+
+			sold = held + price;
+			held = Math.max(held, reset - price);
+			reset = Math.max(reset, preSold);
+		}
+		return Math.max(sold, reset);
+	}
+
 	// 该方法是对的，提交之后大量的测试用例通过，最后几个会超时
 	// 如果把这个方法改成动态规划，是可以通过的，但这个尝试不是最优解
 	public static int maxProfit1(int[] prices) {

@@ -5,6 +5,58 @@ import java.util.PriorityQueue;
 
 public class Problem_0378_KthSmallestElementInSortedMatrix {
 
+
+	//leetcode solution: https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/solution/
+	//time: O(log(Max−Min)) where Max is the maximum element in the array and likewise, Min is the minimum element.
+	//Space Complexity: O(1)
+	public int kthSmallest(int[][] matrix, int k) {
+
+		int N = matrix.length;
+		int start = matrix[0][0], end = matrix[N - 1][N - 1];
+		while (start < end) {
+
+			int mid = start + (end - start) / 2;
+			// first number is the smallest which is the start and the second number is the largest which is the end
+			int[] smallLargePair = {matrix[0][0], matrix[N - 1][N - 1]};
+
+			int count = countLessEqual(matrix, mid, smallLargePair);
+
+			if (count == k) return smallLargePair[0];
+
+			if (count < k) {
+				start = smallLargePair[1]; // search higher
+			} else {
+				end = smallLargePair[0]; // search lower
+			}
+		}
+		return start;
+	}
+
+	private int countLessEqual(int[][] matrix, int mid, int[] smallLargePair) {
+
+		int count = 0;
+		int n = matrix.length, row = n - 1, col = 0;//从左下角开始
+		while (row >= 0 && col < n) {
+			if (matrix[row][col] > mid) {
+				// as matrix[row][col] is bigger than the mid, let's keep track of the
+				// smallest number greater than the mid
+				smallLargePair[1] = Math.min(smallLargePair[1], matrix[row][col]);
+				row--;
+			} else {
+				// as matrix[row][col] is less than or equal to the mid, let's keep track of the
+				// biggest number less than or equal to the mid
+				smallLargePair[0] = Math.max(smallLargePair[0], matrix[row][col]);
+				count += row + 1;
+				col++;
+			}
+		}
+
+		return count;
+	}
+
+
+
+	//zuo's solution using priorityqueue
 	public static class Node {
 		public int value;
 		public int row;
@@ -26,6 +78,7 @@ public class Problem_0378_KthSmallestElementInSortedMatrix {
 		}
 
 	}
+
 
 	public static int kthSmallest1(int[][] matrix, int k) {
 		int N = matrix.length;

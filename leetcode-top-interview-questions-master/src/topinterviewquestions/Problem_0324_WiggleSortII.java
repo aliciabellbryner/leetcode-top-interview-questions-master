@@ -1,9 +1,36 @@
 package topinterviewquestions;
 
+import java.util.Arrays;
+
 public class Problem_0324_WiggleSortII {
 
-	// 时间复杂度O(N)，额外空间复杂度O(1)
+
+	//https://leetcode.com/problems/wiggle-sort-ii/discuss/77746/AC-java-solution(7ms)/81956
+	//space is not O(1), space O(N)
 	public void wiggleSort(int[] nums) {
+		Arrays.sort(nums);
+		int N = nums.length;
+		int[] temp = new int[N];
+		int mid = N%2==0 ? N/2-1 : N/2;
+		int index = 0;
+		for(int i=0;i<=mid;i++){
+			temp[index] = nums[mid-i];
+			if(index+1<N) {
+				temp[index + 1] = nums[N - i - 1];
+			}
+			index = index+2;
+		}
+		for(int i=0;i<N;i++){
+			nums[i] = temp[i];
+		}
+	}
+
+
+
+
+	//Zuo's solution
+	// 时间复杂度O(N)，额外空间复杂度O(1)
+	public void wiggleSort2(int[] nums) {
 		if (nums == null || nums.length < 2) {
 			return;
 		}

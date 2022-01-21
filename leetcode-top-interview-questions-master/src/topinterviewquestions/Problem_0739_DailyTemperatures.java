@@ -6,18 +6,19 @@ import java.util.Stack;
 
 public class Problem_0739_DailyTemperatures {
 
+	//单调栈，time O(N) space O(N)
 	public static int[] dailyTemperatures(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return new int[0];
 		}
 		int N = arr.length;
-		int[] ans = new int[N];
-		Stack<List<Integer>> stack = new Stack<>();
+		int[] res = new int[N];
+		Stack<List<Integer>> stack = new Stack<>();//store index，里面idx对应的arr[idx]递减
 		for (int i = 0; i < N; i++) {
 			while (!stack.isEmpty() && arr[stack.peek().get(0)] < arr[i]) {
 				List<Integer> popIs = stack.pop();
 				for (Integer popi : popIs) {
-					ans[popi] = i - popi;
+					res[popi] = i - popi;
 				}
 			}
 			if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
@@ -28,7 +29,7 @@ public class Problem_0739_DailyTemperatures {
 				stack.push(list);
 			}
 		}
-		return ans;
+		return res;
 	}
 
 }

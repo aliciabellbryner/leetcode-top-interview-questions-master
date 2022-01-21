@@ -8,6 +8,7 @@ public class Problem_0337_HouseRobberIII {
 		public TreeNode right;
 	}
 
+	//time O(N) space O(N)
 	public static int rob(TreeNode root) {
 		Info info = process(root);
 		return Math.max(info.no, info.yes);

@@ -27,10 +27,14 @@ public class Problem_0772_BasicCalculatorIII {
 				ops.push(c);
 			} else if (c == ')') {
 				// do the math when we encounter a ')' until '('
-				while (ops.peek() != '(') nums.push(operation(ops.pop(), nums.pop(), nums.pop()));
+				while (ops.peek() != '(') {
+					nums.push(operation(ops.pop(), nums.pop(), nums.pop()));
+				}
 				ops.pop(); // get rid of '(' in the ops stack
 			} else if (c == '+' || c == '-' || c == '*' || c == '/') {
-				while (!ops.isEmpty() && precedence(c, ops.peek())) nums.push(operation(ops.pop(), nums.pop(),nums.pop()));
+				while (!ops.isEmpty() && precedence(c, ops.peek())) {
+					nums.push(operation(ops.pop(), nums.pop(),nums.pop()));
+				}
 				ops.push(c);
 			}
 		}
@@ -57,6 +61,8 @@ public class Problem_0772_BasicCalculatorIII {
 	}
 
 
+
+	//zuo
 	public static int calculate(String str) {
 		return f(str.toCharArray(), 0)[0];
 	}

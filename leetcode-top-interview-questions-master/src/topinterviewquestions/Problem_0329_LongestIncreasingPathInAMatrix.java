@@ -2,6 +2,44 @@ package topinterviewquestions;
 
 public class Problem_0329_LongestIncreasingPathInAMatrix {
 
+	//leetcode solution: Approach #2 (DFS + Memoization) [Accepted]
+	//https://leetcode.com/problems/longest-increasing-path-in-a-matrix/solution/
+	//Time complexity : O(mn). Each vertex/cell will be calculated once and only once,
+	// and each edge will be visited once and only once. The total time complexity is then O(V+E).
+	// VV is the total number of vertices and E is the total number of edges. In our problem,
+	// O(V)=O(mn), O(E) = O(4V) = O(mn).
+	//Space complexity : O(mn). The cache dominates the space complexity.
+	private static final int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+	private int M, N;
+
+	public int longestIncreasingPath(int[][] matrix) {
+		if (matrix.length == 0) {
+			return 0;
+		}
+		M = matrix.length;
+		N = matrix[0].length;
+		int[][] cache = new int[M][N];
+		int res = 0;
+		for (int i = 0; i < M; ++i)
+			for (int j = 0; j < N; ++j)
+				res = Math.max(res, dfs(matrix, i, j, cache));
+		return res;
+	}
+
+	private int dfs(int[][] matrix, int i, int j, int[][] cache) {
+		if (cache[i][j] != 0) {//说明走过了ij，所以直接返回
+			return cache[i][j];
+		}
+		for (int[] d : dirs) {
+			int x = i + d[0], y = j + d[1];
+			if (0 <= x && x < M && 0 <= y && y < N && matrix[x][y] > matrix[i][j])
+				cache[i][j] = Math.max(cache[i][j], dfs(matrix, x, y, cache));
+		}
+		return ++cache[i][j];//说明第一次走ij,所以要再包括本身
+	}
+
+
+	//Zuo's solution: too long!
 	//一定要写出dp不然用brutal force肯定会超时
 	public static int longest(int[][] matrix) {
 		int longest = 0;
@@ -40,7 +78,7 @@ public class Problem_0329_LongestIncreasingPathInAMatrix {
 		return 1 + next;
 	}
 
-	public static int longestIncreasingPath(int[][] matrix) {
+	public static int longestIncreasingPath1(int[][] matrix) {
 		if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
 			return 0;
 		}

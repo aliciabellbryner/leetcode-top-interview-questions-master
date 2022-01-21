@@ -3,7 +3,7 @@ package topinterviewquestions;
 import java.util.*;
 
 public class Problem_0380_InsertDeleteGetRandom {
-//leetcode solution:
+//leetcode solution: https://leetcode.com/problems/insert-delete-getrandom-o1/solution/
 	class RandomizedSet2 {
 		HashMap<Integer, Integer> map;
 		List<Integer> list;
@@ -18,13 +18,10 @@ public class Problem_0380_InsertDeleteGetRandom {
 			if (map.containsKey(val)) {
 				return false;
 			}
-
 			map.put(val, list.size());
 			list.add(val);
 			return true;
 		}
-
-
 		public boolean remove(int val) {
 			if (!map.containsKey(val)) {
 				return false;
@@ -37,8 +34,6 @@ public class Problem_0380_InsertDeleteGetRandom {
 			list.remove(list.size() - 1);
 			return true;
 		}
-
-
 		public int getRandom() {
 			return list.get(rand.nextInt(list.size()));
 		}
@@ -55,7 +50,6 @@ public class Problem_0380_InsertDeleteGetRandom {
 			list = new ArrayList<>();
 			rand = new Random();
 		}
-
 		public boolean insert(int val) {
 			boolean contain = map.containsKey(val);
 			if (!contain) {

@@ -1,12 +1,51 @@
 package topinterviewquestions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class Problem_0438_FindAllAnagramsInAString {
 
-	public static List<Integer> findAnagrams(String s, String p) {
+
+	//https://leetcode.com/problems/find-all-anagrams-in-a-string/solution/
+	//Approach 2: Sliding Window with Array
+	//Time complexity: O(N_s + N_p)
+	// since it's one pass along both strings.
+	//Space complexity: O(1), because pCount and sCount contain 26 elements each.
+	public List<Integer> findAnagrams(String s, String p) {
+		int ns = s.length(), np = p.length();
+		if (ns < np) return new ArrayList();
+
+		int [] pCNT = new int[26];
+		int [] sCNT = new int[26];
+		// build reference array using string p
+		for (char ch : p.toCharArray()) {
+			pCNT[(int)(ch - 'a')]++;
+		}
+
+		List<Integer> res = new ArrayList();
+		// sliding window on the string s
+		for (int i = 0; i < ns; ++i) {
+			// add one more letter
+			// on the right side of the window
+			sCNT[(int)(s.charAt(i) - 'a')]++;
+			// remove one letter
+			// from the left side of the window
+			if (i >= np) {
+				sCNT[(int)(s.charAt(i - np) - 'a')]--;
+			}
+			// compare array in the sliding window
+			// with the reference array
+			if (Arrays.equals(pCNT, sCNT)) {
+				res.add(i - np + 1);
+			}
+		}
+		return res;
+	}
+
+	//zuo
+	public static List<Integer> findAnagrams2(String s, String p) {
 		List<Integer> ans = new ArrayList<>();
 		if (s == null || p == null || s.length() < p.length()) {
 			return ans;

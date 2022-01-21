@@ -18,37 +18,18 @@ public class Problem_1448_GoodNodes {
       }
     }
 
-    //Solution1: dfs recursion: time O(N) as it will iterate every node once
-    //Space O(N) the worst scenario is the height of call stack can be N
-    public int res = 0;
-    public int goodNodes_1(TreeNode root) {
-        dfs(root, Integer.MIN_VALUE);
-        return res;
-    }
-    public void dfs(TreeNode node, int maxSoFar) {
-        if (node.val >= maxSoFar) {
-            res++;
-        }
-        if (node.left != null) {
-            dfs(node.left, Math.max(node.val, maxSoFar));
-        }
-        if (node.right != null) {
-            dfs(node.right, Math.max(node.val, maxSoFar));
-        }
-    }
-
     //solution2: dfs iterative
     /*
     Time complexity: O(N)
 
 With DFS we visit every node exactly once and do a constant amount of work each time.
 
-Space complexity: O(N)O
+Space complexity: O(N)
 
 In the worst case scenario, where every right child has 2 children and every left child has no children (or vice-versa), our stack will contain N / 2N/2 nodes at max depth.
      */
     public class Info {
-        int maxSoFar;
+        int maxSoFar;//从root出发到自己的node，经历的最大值（不包括自己）是多少
         TreeNode node;
         public Info(TreeNode n, int m) {
             node = n;
@@ -73,6 +54,27 @@ In the worst case scenario, where every right child has 2 children and every lef
         }
         return res;
     }
+
+
+    //Solution1: dfs recursion: time O(N) as it will iterate every node once
+    //Space O(N) the worst scenario is the height of call stack can be N
+    public int res = 0;
+    public int goodNodes_1(TreeNode root) {
+        dfs(root, Integer.MIN_VALUE);
+        return res;
+    }
+    public void dfs(TreeNode node, int maxSoFar) {
+        if (node.val >= maxSoFar) {
+            res++;
+        }
+        if (node.left != null) {
+            dfs(node.left, Math.max(node.val, maxSoFar));
+        }
+        if (node.right != null) {
+            dfs(node.right, Math.max(node.val, maxSoFar));
+        }
+    }
+
 
 
     //solution3: bfs iterative

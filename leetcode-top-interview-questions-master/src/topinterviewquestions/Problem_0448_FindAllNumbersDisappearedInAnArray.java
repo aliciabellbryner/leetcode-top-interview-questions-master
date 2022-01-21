@@ -1,11 +1,48 @@
 package topinterviewquestions;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Problem_0448_FindAllNumbersDisappearedInAnArray {
 
-	public static List<Integer> findDisappearedNumbers(int[] nums) {
+	//leetcode solution https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/solution/
+	//Approach 2: O(1) Space InPlace Modification Solution
+	//time O(N) space O(1)
+	public List<Integer> findDisappearedNumbers(int[] nums) {
+
+		// Iterate over each of the elements in the original array
+		for (int i = 0; i < nums.length; i++) {
+
+			// Treat the value as the new index
+			int newIndex = Math.abs(nums[i]) - 1;
+
+			// Check the magnitude of value at this new index
+			// If the magnitude is positive, make it negative
+			// thus indicating that the number nums[i] has
+			// appeared or has been visited.
+			if (nums[newIndex] > 0) {
+				nums[newIndex] *= -1;
+			}
+		}
+
+		// Response array that would contain the missing numbers
+		List<Integer> res = new LinkedList<Integer>();
+
+		// Iterate over the numbers from 1 to N and add all those
+		// that have positive magnitude in the array
+		for (int i = 1; i <= nums.length; i++) {
+			if (nums[i - 1] > 0) {
+				res.add(i);
+			}
+		}
+
+		return res;
+	}
+
+
+	//zuo
+	public static List<Integer> findDisappearedNumbers2(int[] nums) {
 		List<Integer> ans = new ArrayList<>();
 		if (nums == null || nums.length == 0) {
 			return ans;
