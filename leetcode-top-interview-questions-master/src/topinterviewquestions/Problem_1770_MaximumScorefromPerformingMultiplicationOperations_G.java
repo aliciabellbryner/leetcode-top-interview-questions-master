@@ -1,0 +1,4 @@
+package topinterviewquestions;
+
+public class Problem_1770_MaximumScorefromPerformingMultiplicationOperations_G {
+}
