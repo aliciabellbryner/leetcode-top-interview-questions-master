@@ -53,7 +53,7 @@ public class Problem_0341_FlattenNestedListIterator {
 		}
 
 
-		private void makeStackTopAnInteger() {
+		private void makeStackTopAnInteger() {//就是把listStack中的第一个元素变成是integer
 
 			while (!indexStack.isEmpty()) {
 

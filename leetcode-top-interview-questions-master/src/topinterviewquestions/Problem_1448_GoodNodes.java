@@ -80,12 +80,9 @@ In the worst case scenario, where every right child has 2 children and every lef
     //solution3: bfs iterative
     /*
     Time complexity: O(N)
-
-With BFS we visit every node exactly once and do a constant amount of work each time.
-
-Space complexity: O(N)
-
-The worst case scenario for space with BFS is when the tree is full. In this scenario, the final level contains N / 2N/2 nodes, and our queue will hold all the nodes in the final level at some point.
+    With BFS we visit every node exactly once and do a constant amount of work each time.
+    Space complexity: O(N)
+    The worst case scenario for space with BFS is when the tree is full. In this scenario, the final level contains N / 2N/2 nodes, and our queue will hold all the nodes in the final level at some point.
      */
     public int goodNodes_3(TreeNode root) {
         int res = 0;
