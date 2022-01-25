@@ -19,11 +19,11 @@ public class Problem_0394_DecodeString {
 
 	// s[i....]  何时停？遇到   ']'  或者遇到 s的终止位置，停止
 	// 返回Info
-	//Time Complexity: O(maxK⋅n) maxK is the maximum value of times
+	//Time Complexity: O(maxTimes⋅n)
 	//Space Complexity: O(n). n is the length of the string s
 	// This is the space used to store the internal call stack used for recursion.
 	// As we are recursively decoding each nested pattern,
-	// the maximum depth of recursive call stack would not be more than nn
+	// the maximum depth of recursive call stack would not be more than n
 	public static Info process(char[] s, int i) {
 		StringBuilder res = new StringBuilder();
 		int times = 0;
