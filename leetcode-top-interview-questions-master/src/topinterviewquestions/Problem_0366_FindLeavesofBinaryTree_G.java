@@ -37,7 +37,8 @@ public class Problem_0366_FindLeavesofBinaryTree_G {
 
         int currHeight = Math.max(leftHeight, rightHeight) + 1;
 
-        if (this.solution.size() == currHeight) {
+        if (this.solution.size() == currHeight) {//比如是leaf的话，他的左右两边都return -1，
+            // 那么他的currheight = -1 + 1 = 0, 这个时候solution.size()==0,所以加一个arraylist
             this.solution.add(new ArrayList<>());
         }
 
