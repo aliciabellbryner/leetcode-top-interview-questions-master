@@ -4,8 +4,9 @@ import java.util.*;
 
 public class Problem_0056_MergeIntervals {
 
-	//time O(nlogn): Other than the sort invocation, we do a simple linear scan of the list, so the runtime is dominated by the O(nlogn) complexity of sorting.
-	//space O(logn): the quick sort itself takes O(logn) space
+	//time O(nlogn): Other than the sort invocation, we do a simple linear scan of the list,
+	// so the runtime is dominated by the O(nlogn) complexity of sorting.
+	//space O(logn): the quick sort itself takes O(logn) space ( (for the call stack).)
 	public int[][] merge(int[][] intervals) {
 		Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));//sort the intervals using the [0] element
 		LinkedList<int[]> res = new LinkedList<>();
@@ -22,6 +23,62 @@ public class Problem_0056_MergeIntervals {
 			}
 		}
 		return res.toArray(new int[res.size()][]);
+	}
+
+
+
+
+	//Zuo's simple solution
+	public static class Range {
+		public int start;
+		public int end;
+
+		public Range(int s, int e) {
+			start = s;
+			end = e;
+		}
+	}
+
+	public static class RangeComparator implements Comparator<Range> {
+
+		@Override
+		public int compare(Range o1, Range o2) {
+			return o1.start - o2.start;
+		}
+
+	}
+	// intervals  N * 2
+	public static int[][] merge1(int[][] intervals) {
+		if (intervals.length == 0) {
+			return new int[0][0];
+		}
+		Range[] arr = new Range[intervals.length];
+		for (int i = 0; i < intervals.length; i++) {
+			arr[i] = new Range(intervals[i][0], intervals[i][1]);
+		}
+		Arrays.sort(arr, new RangeComparator());
+		ArrayList<Range> ans = new ArrayList<>();
+		int s = arr[0].start;
+		int e = arr[0].end;
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i].start > e) {
+				ans.add(new Range(s, e));
+				s = arr[i].start;
+				e = arr[i].end;
+			} else {
+				e = Math.max(e, arr[i].end);
+			}
+		}
+		ans.add(new Range(s, e));
+		return generateMatrix(ans);
+	}
+
+	public static int[][] generateMatrix(ArrayList<Range> list) {
+		int[][] matrix = new int[list.size()][2];
+		for (int i = 0; i < list.size(); i++) {
+			matrix[i] = new int[] { list.get(i).start, list.get(i).end };
+		}
+		return matrix;
 	}
 
 
@@ -70,58 +127,5 @@ public class Problem_0056_MergeIntervals {
 		return arr;
 	}
 
-	//Zuo's simple solution
-	public static class Range {
-		public int start;
-		public int end;
-
-		public Range(int s, int e) {
-			start = s;
-			end = e;
-		}
-	}
-
-	public static class RangeComparator implements Comparator<Range> {
-
-		@Override
-		public int compare(Range o1, Range o2) {
-			return o1.start - o2.start;
-		}
-
-	}
-
-	// intervals  N * 2
-	public static int[][] merge1(int[][] intervals) {
-		if (intervals.length == 0) {
-			return new int[0][0];
-		}
-		Range[] arr = new Range[intervals.length];
-		for (int i = 0; i < intervals.length; i++) {
-			arr[i] = new Range(intervals[i][0], intervals[i][1]);
-		}
-		Arrays.sort(arr, new RangeComparator());
-		ArrayList<Range> ans = new ArrayList<>();
-		int s = arr[0].start;
-		int e = arr[0].end;
-		for (int i = 1; i < arr.length; i++) {
-			if (arr[i].start > e) {
-				ans.add(new Range(s, e));
-				s = arr[i].start;
-				e = arr[i].end;
-			} else {
-				e = Math.max(e, arr[i].end);
-			}
-		}
-		ans.add(new Range(s, e));
-		return generateMatrix(ans);
-	}
-
-	public static int[][] generateMatrix(ArrayList<Range> list) {
-		int[][] matrix = new int[list.size()][2];
-		for (int i = 0; i < list.size(); i++) {
-			matrix[i] = new int[] { list.get(i).start, list.get(i).end };
-		}
-		return matrix;
-	}
 
 }
