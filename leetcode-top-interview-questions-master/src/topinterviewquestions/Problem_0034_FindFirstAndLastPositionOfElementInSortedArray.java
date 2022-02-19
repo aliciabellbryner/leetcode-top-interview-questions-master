@@ -50,4 +50,28 @@ public class Problem_0034_FindFirstAndLastPositionOfElementInSortedArray {
 		return ans;
 	}
 
+	public static int searchFirstB(char[] arr) {
+		int L = 0;
+		int R = arr.length - 1;
+		int ans = -1;
+		int mid = 0;
+		while (L <= R) {
+			mid = L + ((R - L) >> 1);
+			if (arr[mid] != 'b') {
+				L = mid + 1;
+			} else {
+				R = mid - 1;
+			}
+		}
+		return L;
+	}
+
+	public static void main(String[] args) {
+		char[] test = new char[]{'g', 'g', 'g', 'b', 'b'};
+		char[] test2 = new char[]{'g', 'b'};
+		System.out.println(searchFirstB(test));
+		System.out.println(searchFirstB(test2));
+	}
+
+
 }
