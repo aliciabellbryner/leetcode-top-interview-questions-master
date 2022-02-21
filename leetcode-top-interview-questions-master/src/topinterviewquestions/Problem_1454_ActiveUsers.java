@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+//https://leetcode.com/problems/active-users/discuss/644808/(_)-Mysql-Solutions%3A-3-easy-ways-%2B-1-RECURSIVE-CTE-way-to-solve-N
 public class Problem_1454_ActiveUsers {
  /*
  Related Questions:

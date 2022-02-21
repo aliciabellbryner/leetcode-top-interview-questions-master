@@ -2,56 +2,71 @@ package topinterviewquestions;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+/*
+Given an n x n matrix where each of the rows and columns is sorted in ascending order, return the kth smallest element in the matrix.
 
+Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+
+You must find a solution with a memory complexity better than O(n2).
+
+
+
+Example 1:
+
+Input: matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+Output: 13
+Explanation: The elements in the matrix are [1,5,9,10,11,12,13,13,15], and the 8th smallest number is 13
+Example 2:
+
+Input: matrix = [[-5]], k = 1
+Output: -5
+
+
+Constraints:
+
+n == matrix.length == matrix[i].length
+1 <= n <= 300
+-109 <= matrix[i][j] <= 109
+All the rows and columns of matrix are guaranteed to be sorted in non-decreasing order.
+1 <= k <= n2
+
+
+Follow up:
+
+Could you solve the problem with a constant memory (i.e., O(1) memory complexity)?
+Could you solve the problem in O(n) time complexity? The solution may be too advanced for an interview but you may find reading this paper fun.
+ */
 public class Problem_0378_KthSmallestElementInSortedMatrix {
 
 
-	//leetcode solution: https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/solution/
-	//time: O(log(Max−Min)) where Max is the maximum element in the array and likewise, Min is the minimum element.
-	//Space Complexity: O(1)
-	public int kthSmallest(int[][] matrix, int k) {
-
-		int N = matrix.length;
-		int start = matrix[0][0], end = matrix[N - 1][N - 1];
-		while (start < end) {
-
-			int mid = start + (end - start) / 2;
-			// first number is the smallest which is the start and the second number is the largest which is the end
-			int[] smallLargePair = {matrix[0][0], matrix[N - 1][N - 1]};
-
-			int count = countLessEqual(matrix, mid, smallLargePair);
-
-			if (count == k) return smallLargePair[0];
-
-			if (count < k) {
-				start = smallLargePair[1]; // search higher
-			} else {
-				end = smallLargePair[0]; // search lower
+	//https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
+	//Solution 2 : Binary Search
+	//We are done here, but let's think about this problem in another way:
+	//The key point for any binary search is to figure out the "Search Space". For me, I think there are two kind of "Search Space" -- index and range(the range from the smallest number to the biggest number). Most usually, when the array is sorted in one direction, we can use index as "search space", when the array is unsorted and we are going to find a specific number, we can use "range".
+	//
+	//Let me give you two examples of these two "search space"
+	//
+	//index -- A bunch of examples -- https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/ ( the array is sorted)
+	//range -- https://leetcode.com/problems/find-the-duplicate-number/ (Unsorted Array)
+	//The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions, we can not find a linear way to map the number and its index.
+	public class Solution {
+		public int kthSmallest(int[][] matrix, int k) {
+			int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+			while(lo < hi) {
+				int mid = lo + (hi - lo) / 2;
+				int count = 0,  j = matrix[0].length - 1;
+				for(int i = 0; i < matrix.length; i++) {
+					while(j >= 0 && matrix[i][j] > mid) j--;
+					count += (j + 1);
+				}
+				if(count < k) {
+					lo = mid + 1;
+				} else {
+					hi = mid;
+				}
 			}
+			return lo;
 		}
-		return start;
-	}
-
-	private int countLessEqual(int[][] matrix, int mid, int[] smallLargePair) {
-
-		int count = 0;
-		int n = matrix.length, row = n - 1, col = 0;//从左下角开始
-		while (row >= 0 && col < n) {
-			if (matrix[row][col] > mid) {
-				// as matrix[row][col] is bigger than the mid, let's keep track of the
-				// smallest number greater than the mid
-				smallLargePair[1] = Math.min(smallLargePair[1], matrix[row][col]);
-				row--;
-			} else {
-				// as matrix[row][col] is less than or equal to the mid, let's keep track of the
-				// biggest number less than or equal to the mid
-				smallLargePair[0] = Math.max(smallLargePair[0], matrix[row][col]);
-				count += row + 1;
-				col++;
-			}
-		}
-
-		return count;
 	}
 
 
