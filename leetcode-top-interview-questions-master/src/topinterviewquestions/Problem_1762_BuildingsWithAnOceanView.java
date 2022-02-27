@@ -37,6 +37,31 @@ Constraints:
 1 <= heights[i] <= 109
  */
 public class Problem_1762_BuildingsWithAnOceanView {
+
+    //diss
+    //Java - Trick is to traverse from right to left.
+    class Solution {
+        public int[] findBuildings(int[] heights) {
+            List<Integer> ls = new ArrayList<>();
+            int last = Integer.MIN_VALUE;
+            for (int i = heights.length - 1; i >= 0; i--) {
+                if (heights[i] > last) {
+                    ls.add(i);
+                    last = heights[i];
+                }
+            }
+
+            int index = 0;
+            int[] res = new int[ls.size()];
+            for (int i = ls.size() - 1; i >= 0; i--)
+                res[index++] = ls.get(i);
+
+            return res;
+        }
+    }
+
+
+    //solution
     /*
     Overview
 In this problem, we need to find all of the buildings that have an ocean view and return their indices. A building is said to have an ocean view if and only if all the buildings to its right are strictly shorter.
@@ -206,7 +231,7 @@ Space complexity: O(1)O(1).
 No auxiliary space was used other than for the output array.
 Although, in Java, in order to maintain a dynamic size array (since we don't know the size of the output array at the beginning), we created an extra Array List that supports fast O(1)O(1) push operation. Array List can contain at most NN elements, hence for the Java solution, the space complexity is O(N)O(N).
      */
-    class Solution1 {
+    class Solution_diss {
         public int[] findBuildings(int[] heights) {
             int n = heights.length;
             List<Integer> list = new ArrayList<>();
@@ -306,7 +331,7 @@ Although, in Java, in order to maintain a dynamic size array (since we don't kno
 
 
     //Java - Trick is to traverse from right to left.
-    class Solution {
+    class Solution_diss1 {
         public int[] findBuildings(int[] heights) {
             List<Integer> ls = new ArrayList<>();
             int last = Integer.MIN_VALUE;

@@ -48,6 +48,33 @@ public class Problem_1836_RemoveDuplicatesFromanUnsortedLinkedList {
 diss
      */
 
+    //clean O(N) Solution
+    class Solution {
+        public ListNode deleteDuplicatesUnsorted(ListNode head) {
+            // Key: val  Value: its frequency
+            Map<Integer, Integer> map = new HashMap<>();
+            ListNode curr = head;
+            while (curr != null) {
+                map.put(curr.val, map.getOrDefault(curr.val, 0) + 1);
+                curr = curr.next;
+            }
+
+            ListNode dummy = new ListNode(0);
+            curr = dummy;
+            while (head != null) {
+                if (map.get(head.val) == 1) {
+                    curr.next = head;
+                    curr = curr.next;
+                }
+
+                head = head.next;
+            }
+
+            curr.next = null;
+            return dummy.next;
+        }
+    }
+
 
     //Simple Java Two Pass 90% With Explanation and Picture - Time Complexity O(N) - Space Complexity O(N)
     //At first pass, count the number of times a node value repeated using a HashMap.
@@ -89,31 +116,4 @@ diss
         return tempHead.next; // we should return tempHead.next but not tempHead as tempHead is a dummy node we created
     }
 
-
-    //clean O(N) Solution
-    class Solution {
-        public ListNode deleteDuplicatesUnsorted(ListNode head) {
-            // Key: val  Value: its frequency
-            Map<Integer, Integer> map = new HashMap<>();
-            ListNode curr = head;
-            while (curr != null) {
-                map.put(curr.val, map.getOrDefault(curr.val, 0) + 1);
-                curr = curr.next;
-            }
-
-            ListNode dummy = new ListNode(0);
-            curr = dummy;
-            while (head != null) {
-                if (map.get(head.val) == 1) {
-                    curr.next = head;
-                    curr = curr.next;
-                }
-
-                head = head.next;
-            }
-
-            curr.next = null;
-            return dummy.next;
-        }
-    }
 }

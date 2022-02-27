@@ -59,6 +59,35 @@ public class Problem_1676_LowestCommonAncestorofaBinaryTreeIV {
           TreeNode right;
           TreeNode(int x) { val = x; }
       }
+
+    class Solution2 {
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode[] nodes) {
+            Set<Integer> s = new HashSet<>();
+            for (TreeNode n : nodes) {
+                s.add(n.val);
+            }
+            return lcaHelper(root, s);
+        }
+
+        private TreeNode lcaHelper(TreeNode root, Set<Integer> s) {
+            if (root == null) {
+                return null;
+            }
+            if (s.contains(root.val)) {
+                return root;
+            }
+            TreeNode left = lcaHelper(root.left, s);
+            TreeNode right = lcaHelper(root.right, s);
+            if (left != null && right != null) {//说明root两侧都有node在s里，并且已经是lowest level
+                return root;
+            } else {//返回任何一个非null的node
+                return (left != null) ? left : right;
+            }
+        }
+    }
+
+
+
     class Solution {
         TreeNode lca = null;
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode[] nodes) {
@@ -86,23 +115,6 @@ public class Problem_1676_LowestCommonAncestorofaBinaryTreeIV {
         }
     }
 
-
-    class Solution2 {
-        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode[] nodes) {
-            Set<Integer> s = new HashSet<>();
-            for (TreeNode n : nodes) s.add(n.val);
-            return lcaHelper(root, s);
-        }
-
-        private TreeNode lcaHelper(TreeNode root, Set<Integer> s) {
-            if (root == null) return null;
-            if (s.contains(root.val)) return root;
-            TreeNode left = lcaHelper(root.left, s);
-            TreeNode right = lcaHelper(root.right, s);
-            if (left != null && right != null) return root;
-            else return (left != null) ? left : right;
-        }
-    }
 
 
     class Solution3 {

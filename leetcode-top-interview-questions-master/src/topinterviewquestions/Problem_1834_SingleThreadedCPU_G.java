@@ -15,7 +15,7 @@ public class Problem_1834_SingleThreadedCPU_G {
             arr[i] = new int[]{tasks[i][0],tasks[i][1],i};
         }
         //sort arr with start time
-        Arrays.sort(arr,(a, b)-> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);//least duration come first
+        Arrays.sort(arr,(a, b)-> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);//earliest task come first and then least duration come first
         //create heap by pq and sort by duration and start time
         //a[2] - b[2]: If multiple tasks have the same shortest processing time, it will choose the task with the smallest index.
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)-> a[1] != b[1] ? a[1] - b[1] : a[2] - b[2]);//least start time come first

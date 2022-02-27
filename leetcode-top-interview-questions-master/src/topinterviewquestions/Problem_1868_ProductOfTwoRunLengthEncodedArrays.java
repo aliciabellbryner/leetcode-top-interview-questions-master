@@ -92,7 +92,9 @@ public class Problem_1868_ProductOfTwoRunLengthEncodedArrays {
 
     //Single pass, doesn't modify the input, beats 100%:
     public List<List<Integer>> findRLEArray(int[][] encoded1, int[][] encoded2) {
-        if (encoded1 == null || encoded2 == null && encoded1.length == 0 || encoded2.length == 0) return new ArrayList<>();
+        if (encoded1 == null || encoded2 == null && encoded1.length == 0 || encoded2.length == 0) {
+            return new ArrayList<>();
+        }
         List<List<Integer>> result = new ArrayList<>();
         int i = 0, j = 0;
         int[] first = encoded1[i], second = encoded2[j];
@@ -119,7 +121,7 @@ public class Problem_1868_ProductOfTwoRunLengthEncodedArrays {
     private void addToResult(List<List<Integer>> result, int value, int frequency) {
         if (result.size() == 0 || result.get(result.size() - 1).get(0) != value) {
             result.add(Arrays.asList(value, frequency));
-        } else {
+        } else {//说明有重复的乘积，所以需要删掉之前的freq，换上updated的乘积
             List<Integer> last = result.remove(result.size() - 1);
             result.add(Arrays.asList(last.get(0), last.get(1) + frequency));
         }
