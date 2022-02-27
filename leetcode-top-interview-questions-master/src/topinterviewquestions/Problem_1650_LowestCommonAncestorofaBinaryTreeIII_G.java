@@ -1,5 +1,8 @@
 package topinterviewquestions;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /*
 Given two nodes of a binary tree p and q, return their lowest common ancestor (LCA).
 
@@ -41,6 +44,7 @@ All Node.val are unique.
 p != q
 p and q exist in the tree.
  */
+//此题的listnode有parent
 public class Problem_1650_LowestCommonAncestorofaBinaryTreeIII_G {
     class Node {
         public int val;
@@ -59,6 +63,25 @@ public class Problem_1650_LowestCommonAncestorofaBinaryTreeIII_G {
     }
 
 
+    //more intuitive solution, but bad complexity
+    class Solution {
+        public Node lowestCommonAncestor(Node p, Node q) {
+            Set<Node> set = new HashSet<Node>();
+            Node temp = p;
+            while (temp != null) {
+                set.add(temp);
+                temp = temp.parent;
+            }
+            temp = q;
+            while (temp != null) {
+                if (set.contains(temp))
+                    break;
+                else
+                    temp = temp.parent;
+            }
+            return temp;
+        }
+    }
 
 }
 

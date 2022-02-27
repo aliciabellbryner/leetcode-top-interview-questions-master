@@ -1,4 +1,7 @@
 package topinterviewquestions;
+
+import java.util.*;
+
 /*
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
@@ -32,13 +35,8 @@ All Node.val are unique.
 p != q
 p and q will exist in the tree.
  */
+//treenode没有parent属性，而且p，q一定是在tree上的
 public class Problem_0236_LowestCommonAncestorOfBinaryTree {
-
-	public static class TreeNode {
-		public int val;
-		public TreeNode left;
-		public TreeNode right;
-	}
 
 	//time O(N): we need to visit all the nodes in the worst case
 	//space O(H): H is the height of the recursion tree, worst case is O(N), In the worst case the space utilized by stack would be N
@@ -47,6 +45,19 @@ public class Problem_0236_LowestCommonAncestorOfBinaryTree {
 		return process(root, p, q).lca;
 	}
 
+
+	//solution1: recursive
+	public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == p || root == q || root == null) return root;
+		TreeNode left = lowestCommonAncestor1(root.left, p, q);
+		TreeNode right = lowestCommonAncestor1(root.right, p, q);
+		if(left != null && right != null) {
+			return root;
+		}
+		return left != null ? left : right;
+	}
+
+	//solution2: use an inner class，这个方法也可以用在p，q不一定在tree上的1644题
 	public static class Info {
 		public TreeNode lca;
 		public boolean findp;
@@ -80,6 +91,44 @@ public class Problem_0236_LowestCommonAncestorOfBinaryTree {
 			}
 		}
 		return new Info(lca, findp, findq);
+	}
+
+
+	public static class TreeNode {
+		public int val;
+		public TreeNode left;
+		public TreeNode right;
+	}
+
+	//solution: iterative
+	//To find the lowest common ancestor, we need to find where is p and q and a way to track their ancestors. A parent pointer for each node found is good for the job. After we found both p and q, we create a set of p's ancestors. Then we travel through q's ancestors, the first one appears in p's is our answer.
+	public class Solution {
+		public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+			Map<TreeNode, TreeNode> parent = new HashMap<>();
+			Deque<TreeNode> stack = new ArrayDeque<>();
+			parent.put(root, null);
+			stack.push(root);
+
+			while (!parent.containsKey(p) || !parent.containsKey(q)) {
+				TreeNode node = stack.pop();
+				if (node.left != null) {
+					parent.put(node.left, node);
+					stack.push(node.left);
+				}
+				if (node.right != null) {
+					parent.put(node.right, node);
+					stack.push(node.right);
+				}
+			}
+			Set<TreeNode> ancestors = new HashSet<>();
+			while (p != null) {
+				ancestors.add(p);
+				p = parent.get(p);
+			}
+			while (!ancestors.contains(q))
+				q = parent.get(q);
+			return q;
+		}
 	}
 
 }

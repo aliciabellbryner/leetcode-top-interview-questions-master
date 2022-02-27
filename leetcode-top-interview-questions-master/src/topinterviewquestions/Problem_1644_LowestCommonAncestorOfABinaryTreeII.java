@@ -38,6 +38,7 @@ p != q
 
 Follow up: Can you find the LCA traversing the tree, without checking nodes existence?
  */
+////此题的listnode没有parent,而且给定的p和q不一定在这个tree上
 public class Problem_1644_LowestCommonAncestorOfABinaryTreeII {
 /*
 This question is similar to 236. Last Common Ancestor of Binary Tree. Question 236 has two important premises:
@@ -127,4 +128,67 @@ binary-search
       TreeNode right;
       TreeNode(int x) { val = x; }
   }
+
+    public static class Info {
+        public TreeNode lca;
+        public boolean findp;
+        public boolean findq;
+
+        public Info(TreeNode node, boolean f1, boolean f2) {
+            lca = node;
+            findp = f1;
+            findq = f2;
+        }
+    }
+
+    public static Info process(TreeNode node, TreeNode p, TreeNode q) {
+        if (node == null) {
+            return new Info(null, false, false);
+        }
+        Info leftInfo = process(node.left, p, q);
+        Info rightInfo = process(node.right, p, q);
+        boolean findp = node == p || leftInfo.findp || rightInfo.findp;
+        boolean findq = node == q || leftInfo.findq || rightInfo.findq;
+        TreeNode lca = null;
+        if (leftInfo.lca != null) {
+            lca = leftInfo.lca;
+        }
+        if (rightInfo.lca != null) {
+            lca = rightInfo.lca;
+        }
+        if (lca == null) {
+            if (findp && findq) {
+                lca = node;
+            }
+        }
+        return new Info(lca, findp, findq);
+    }
+
+    //或者不用inner class
+    class Solution {
+        boolean pFound = false;
+        boolean qFound = false;
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            TreeNode LCA = LCA(root, p, q);
+            return pFound && qFound ? LCA : null;
+        }
+
+        public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
+            if (root == null) return root;
+            TreeNode left = LCA(root.left, p, q);
+            TreeNode right = LCA(root.right, p, q);
+            if (root == p) {
+                pFound = true;
+                return root;
+            }
+            if (root == q) {
+                qFound = true;
+                return root;
+            }
+            return left == null ? right : right == null ? left : root;
+        }
+    }
+
+
 }

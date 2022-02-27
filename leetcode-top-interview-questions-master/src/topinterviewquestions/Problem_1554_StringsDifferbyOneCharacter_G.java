@@ -76,7 +76,7 @@ public class Problem_1554_StringsDifferbyOneCharacter_G {
         for (String word : dict) {
             char[] chars = word.toCharArray();
             for (int i = 0; i < chars.length; ++i) {
-                char temp = chars[i];
+                char temp = chars[i];//backtracking
                 chars[i] = '#';   // This represents the missing character.
                 String newString = new String(chars);
                 if (stringsWithAMissingChar.contains(newString)) {
@@ -84,7 +84,7 @@ public class Problem_1554_StringsDifferbyOneCharacter_G {
                 } else {
                     stringsWithAMissingChar.add(newString);
                 }
-                chars[i] = temp;
+                chars[i] = temp;//backtracking recovering
             }
         }
         return false;

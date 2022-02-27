@@ -149,8 +149,9 @@ On the other hand, we used recursion which will incur additional memory consumpt
 As a result, the overall space complexity of the algorithm is \mathcal{O}(N)O(N).
  */
 
+    //Approach 1: Distance with Height
     class Solution1 {
-        protected int diameter = 0;
+        int diameter = 0;
 
         /**
          * return the height of the node
@@ -185,6 +186,7 @@ As a result, the overall space complexity of the algorithm is \mathcal{O}(N)O(N)
     }
 
 
+    //Approach 2: Distance with Depth
     class Solution2 {
         protected int diameter = 0;
 

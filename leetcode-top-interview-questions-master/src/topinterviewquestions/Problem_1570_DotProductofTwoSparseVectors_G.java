@@ -103,25 +103,10 @@ Time complexity: O(n)O(n) for creating the <index, value> pair for non-zero valu
 Space complexity: O(L)O(L) for creating the <index, value> pairs for non-zero values. O(1)O(1) for calculating the dot product.
      */
 
-    class SparseVector1 {
-
-        private int[] array;
-
-        SparseVector1(int[] nums) {
-            array = nums;
-        }
-
-        public int dotProduct(SparseVector1 vec) {
-            int result = 0;
-
-            for (int i = 0; i < array.length; i++) {
-                result += array[i] * vec.array[i];
-            }
-            return result;
-        }
-    }
-
-
+    //Approach 2: Hash Set
+    //Time complexity: O(n) for creating the Hash Map; O(L) for calculating the dot product.
+    //
+    //Space complexity: O(L) for creating the Hash Map, as we only store elements that are non-zero. O(1) for calculating the dot product.
     class SparseVector2 {
         // Map the index to value for all non-zero values in the vector
         Map<Integer, Integer> mapping;
@@ -148,6 +133,28 @@ Space complexity: O(L)O(L) for creating the <index, value> pairs for non-zero va
             return result;
         }
     }
+
+
+    class SparseVector1 {
+
+        private int[] array;
+
+        SparseVector1(int[] nums) {
+            array = nums;
+        }
+
+        public int dotProduct(SparseVector1 vec) {
+            int result = 0;
+
+            for (int i = 0; i < array.length; i++) {
+                result += array[i] * vec.array[i];
+            }
+            return result;
+        }
+    }
+
+
+
 
 
     //Java implementation with comments, beats 100%:
