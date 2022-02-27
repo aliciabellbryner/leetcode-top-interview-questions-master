@@ -24,7 +24,7 @@ public class Problem_2092_FindAllPeopleWithSecret_G {
             if(px == py) {
                 return;
             }
-            if(px < py) {
+            if(px < py) {//把parent大的一起归并到小的去
                 parents[py] = px;
             } else {
                 parents[px] = py;
@@ -58,7 +58,7 @@ public class Problem_2092_FindAllPeopleWithSecret_G {
                 visited.add(meet[0]);
                 visited.add(meet[1]);
             }
-            for(int i = 0; i < n; i++) {
+            for(int i = 0; i < n; i++) {//就是把所有parent[i]=0的i都放进res里去
                 if(union.find(i) == 0) {
                     res.add(i);
                 }
