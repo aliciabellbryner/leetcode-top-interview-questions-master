@@ -8,6 +8,8 @@ public class Problem_0670_MaximumSwap {
     // we check whether there exists a larger digit in this num (start from 9 to current digit).
     // We also need to make sure the position of this larger digit is behind the current one.
     // If we find it, simply swap these two digits and return the result.
+    //思路就是先用bucket来记录0。。。9这些数字出现在num中的最后一个位置
+    //然后再从开始到最后遍历，对每个i，从buckets[9]开始找到num[i]的位置，如果找到最大的值在i后面，那就把他们调换一下就是结果
     public int maximumSwap(int num) {
         char[] digits = Integer.toString(num).toCharArray();
 

@@ -8,7 +8,7 @@ public class Problem_0140_WordBreakII {
 	//https://leetcode.com/problems/word-break-ii/discuss/44167/My-concise-JAVA-solution-based-on-memorized-DFS/808237
 	//Time Complexity: O(N ^ 2 + 2^N + W), Let N be the length of the input string and W be the number of words in the dictionary.
 	//Space Complexity: O(2 ^ N * N + W)
-	int maxLen = 0;
+	int maxLen = 0;//这个的目的是为了减少for循环的长度
 	public List<String> wordBreak(String s, List<String> wordDict) {
 		Set<String> set = new HashSet<>(wordDict);
 		for(String str: wordDict){
@@ -18,7 +18,7 @@ public class Problem_0140_WordBreakII {
 		return backtrack(s,set,0, map);
 	}
 	private List<String> backtrack(String s, Set<String> set,int start, HashMap<Integer,List<String>> map){
-		if(map.containsKey(start)) {
+		if(map.containsKey(start)) {//hashmap的key是代表从s的[start, end]所有的chars中可以用dict中的word组成的list
 			return map.get(start);
 		}
 		if(start == s.length()){

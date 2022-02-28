@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 
 public class Problem_0215_KthLargestElementInAnArray {
 
+	//quick sort
 	public int findKthLargest(int[] nums, int k) {
 		return minKth(nums, nums.length + 1 - k);
 	}

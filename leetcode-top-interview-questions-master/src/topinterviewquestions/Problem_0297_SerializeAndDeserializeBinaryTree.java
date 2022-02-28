@@ -4,18 +4,38 @@ import java.util.*;
 
 public class Problem_0297_SerializeAndDeserializeBinaryTree {
 
-	// 提交代码时不要提交TreeNode类
-	public static class TreeNode {
-		public int val;
-		public TreeNode left;
-		public TreeNode right;
+	//https://leetcode.com/problems/serialize-and-deserialize-binary-tree/discuss/74253/Easy-to-understand-Java-Solution/77363
+	class Solution1 {
+		// 提交代码时不要提交TreeNode类
+		public String serialize(TreeNode root) {
+			return serial(new StringBuilder(), root).toString();
+		}
 
-		public TreeNode(int value) {
-			val = value;
+		// Generate preorder string
+		private StringBuilder serial(StringBuilder str, TreeNode root) {
+			if (root == null) return str.append("#");
+			str.append(root.val).append(",");
+			serial(str, root.left).append(",");
+			serial(str, root.right);
+			return str;
+		}
+
+		public TreeNode deserialize(String data) {
+			return deserial(new LinkedList<>(Arrays.asList(data.split(","))));
+		}
+
+		// Use queue to simplify position move
+		private TreeNode deserial(Queue<String> q) {
+			String val = q.poll();
+			if ("#".equals(val)) return null;
+			TreeNode root = new TreeNode(Integer.valueOf(val));
+			root.left = deserial(q);
+			root.right = deserial(q);
+			return root;
 		}
 	}
 
-
+	//solution by Zuo
 	//pre-order serialize
 	//time O(N), space O(N)
 	public String serialize(TreeNode root) {
@@ -96,5 +116,16 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
 		list.poll();
 		System.out.println(list.peek().val);//peeklast看的是最后加的元素，peek看的是加的第一个元素
 	}
+
+	public static class TreeNode {
+		public int val;
+		public TreeNode left;
+		public TreeNode right;
+
+		public TreeNode(int value) {
+			val = value;
+		}
+	}
+
 
 }

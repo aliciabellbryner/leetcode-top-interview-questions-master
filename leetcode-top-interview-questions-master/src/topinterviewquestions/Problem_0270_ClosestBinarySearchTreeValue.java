@@ -111,6 +111,20 @@ Space complexity : \mathcal{O}(1)O(1).
 
 
  */
+
+	//Binary Search, O(H) time since here one goes from root down to a leaf.
+	class Solution3 {
+		public int closestValue(TreeNode root, double target) {
+			int val, closest = root.val;
+			while (root != null) {
+				val = root.val;
+				closest = Math.abs(val - target) < Math.abs(closest - target) ? val : closest;
+				root =  target < root.val ? root.left : root.right;
+			}
+			return closest;
+		}
+	}
+
 class Solution1 {
 	public void inorder(TreeNode root, List<Integer> nums) {
 		if (root == null) return;
@@ -153,17 +167,7 @@ class Solution1 {
 		}
 	}
 
-	class Solution3 {
-		public int closestValue(TreeNode root, double target) {
-			int val, closest = root.val;
-			while (root != null) {
-				val = root.val;
-				closest = Math.abs(val - target) < Math.abs(closest - target) ? val : closest;
-				root =  target < root.val ? root.left : root.right;
-			}
-			return closest;
-		}
-	}
+
 
 	//discussion
 	public int closestValue(TreeNode root, double target) {

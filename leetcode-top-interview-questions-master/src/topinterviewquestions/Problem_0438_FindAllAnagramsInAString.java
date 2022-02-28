@@ -17,11 +17,11 @@ public class Problem_0438_FindAllAnagramsInAString {
 		int ns = s.length(), np = p.length();
 		if (ns < np) return new ArrayList();
 
-		int [] pCNT = new int[26];
-		int [] sCNT = new int[26];
+		int [] p_cnt = new int[26];
+		int [] s_cnt = new int[26];
 		// build reference array using string p
 		for (char ch : p.toCharArray()) {
-			pCNT[(int)(ch - 'a')]++;
+			p_cnt[(int)(ch - 'a')]++;
 		}
 
 		List<Integer> res = new ArrayList();
@@ -29,15 +29,15 @@ public class Problem_0438_FindAllAnagramsInAString {
 		for (int i = 0; i < ns; ++i) {
 			// add one more letter
 			// on the right side of the window
-			sCNT[(int)(s.charAt(i) - 'a')]++;
+			s_cnt[(int)(s.charAt(i) - 'a')]++;
 			// remove one letter
 			// from the left side of the window
 			if (i >= np) {
-				sCNT[(int)(s.charAt(i - np) - 'a')]--;
+				s_cnt[(int)(s.charAt(i - np) - 'a')]--;
 			}
 			// compare array in the sliding window
 			// with the reference array
-			if (Arrays.equals(pCNT, sCNT)) {
+			if (Arrays.equals(p_cnt, s_cnt)) {
 				res.add(i - np + 1);
 			}
 		}

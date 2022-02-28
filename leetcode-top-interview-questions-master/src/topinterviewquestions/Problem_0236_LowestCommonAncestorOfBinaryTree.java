@@ -36,6 +36,15 @@ p != q
 p and q will exist in the tree.
  */
 //treenode没有parent属性，而且p，q一定是在tree上的
+/*
+Constraints:
+
+The number of nodes in the tree is in the range [2, 105].
+-109 <= Node.val <= 109
+All Node.val are unique.
+p != q
+p and q will exist in the tree.
+ */
 public class Problem_0236_LowestCommonAncestorOfBinaryTree {
 
 	//time O(N): we need to visit all the nodes in the worst case

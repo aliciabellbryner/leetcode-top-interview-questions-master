@@ -1,4 +1,10 @@
 package topinterviewquestions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /*
 We can shift a string by shifting each of its letters to its successive letter.
 
@@ -27,6 +33,36 @@ Constraints:
 strings[i] consists of lowercase English letters.
  */
 public class Problem_0249_GroupShiftedStrings_G {
+
+    //https://tenderleo.gitbooks.io/leetcode-solutions-/content/GoogleEasy/249.html?q=
+    public class Solution {
+        public List<List<String>> groupStrings(String[] strings) {
+            Map<String,   List<String>> map = new HashMap<>();
+
+            for(String s : strings){
+                String hash = getHash(s);
+                if(map.containsKey(hash)){
+                    map.get(hash).add(s);
+                }else{
+                    List<String> l = new ArrayList<>();
+                    l.add(s);
+                    map.put(hash, l);
+                }
+            }
+
+            return new ArrayList<List<String>>(map.values());
+        }
+
+        String getHash(String s){
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< s.length(); i++){
+                sb.append((s.charAt(i) - s.charAt(0) + 26) % 26);
+                sb.append('.');// to make sure there is no overlap.
+            }
+
+            return sb.toString();
+        }
+    }
 
     /*
     Overview

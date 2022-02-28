@@ -46,10 +46,10 @@ public class Problem_0076_MinimumWindowSubstring {
 			map[cha]++;
 		}
 		int all = t.length();
-		int L = 0;
+		int L = 0;//L和R就是移动窗口
 		int R = 0;
 		// -1(从来没找到过合法的)
-		int minLen = -1;
+		int minLen = -1;//这个就是最小子序列的长度
 		int resl = -1;//the res's left idx
 		int resr = -1;//the res's right idx
 		// [L..R)   [0,0)  R

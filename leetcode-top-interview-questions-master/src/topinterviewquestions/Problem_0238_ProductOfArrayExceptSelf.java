@@ -1,11 +1,20 @@
 package topinterviewquestions;
+/*
+Constraints:
 
+2 <= nums.length <= 105
+-30 <= nums[i] <= 30
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+
+Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+ */
 public class Problem_0238_ProductOfArrayExceptSelf {
 
 
 	//best solution
 	public int[] productExceptSelf_leetcode(int[] nums) {
-		int[] arr = new int[nums.length];//arr[i]表示nums[0...(i-1)]的乘积
+		int[] arr = new int[nums.length];//arr[i]表示nums[0...(i-1)]的乘积，注意：不包括i位置
 		arr[0] = 1;
 		for (int i = 1; i < nums.length; i++) {
 			arr[i] = arr[i-1] * nums[i-1];

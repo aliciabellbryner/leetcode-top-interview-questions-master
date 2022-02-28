@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Problem_0139_WordBreak {
 
+	//注意，这个题题意是必须要用上dict中所有的word，能组成s
 	//this is the best solution O(N^2) 用的是int[] dp, trie tree + dp
 	// Space complexity : O(N). The depth of recursion tree can go up to N.
 	public static class Node {//前缀树的经典写法
@@ -32,7 +33,8 @@ public class Problem_0139_WordBreak {
 			node.end = true;
 		}
 		int N = s.length();
-		int[] dp = new int[N + 1];//dp[i] means how many ways we can use all the word in wordDict to form s[N...](从第N个元素开始（包括N）到s最后）
+		int[] dp = new int[N + 1];//dp[i] means how many ways we can use
+		// all the word in wordDict to form s[N...](从第N个元素开始（包括N）到s最后）
 		dp[N] = 1;//不选wordDict中任何word则就可以构成空字符串
 		for (int index = N - 1; index >= 0; index--) {
 			Node cur = root;

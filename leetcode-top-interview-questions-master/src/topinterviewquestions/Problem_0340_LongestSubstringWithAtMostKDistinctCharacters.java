@@ -28,7 +28,7 @@ public class Problem_0340_LongestSubstringWithAtMostKDistinctCharacters {
 			return 0;
 		}
 		int N = s.length();
-		int[] count = new int[256];
+		int[] count = new int[256];//代表每个字母对应的出现频率
 		int diff = 0;
 		int R = 0;
 		int res = 0;
