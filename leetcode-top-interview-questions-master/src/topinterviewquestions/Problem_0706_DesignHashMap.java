@@ -27,11 +27,9 @@ public class Problem_0706_DesignHashMap {
         /** value will always be non-negative. */
         public void put(int key, int value) {
             int index = getHashcode(key);
-            for(int i=0; i<lists[index].size(); i++)
-            {
-                if(lists[index].get(i)[0]==key)
-                {
-                    lists[index].get(i)[1]=value;
+            for(int i=0; i<lists[index].size(); i++) {//先在原来的lists中找是否已经有这个key
+                if(lists[index].get(i)[0]==key) {
+                    lists[index].get(i)[1]=value;//把value赋给这个key对应的值
                     return;
                 }
             }
@@ -42,8 +40,7 @@ public class Problem_0706_DesignHashMap {
         /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
         public int get(int key) {
             int index = getHashcode(key);
-            for(int i=0; i<lists[index].size(); i++)
-            {
+            for(int i=0; i<lists[index].size(); i++) {
                 if(lists[index].get(i)[0]==key)
                     return lists[index].get(i)[1];
             }
@@ -54,8 +51,7 @@ public class Problem_0706_DesignHashMap {
         /** Removes the mapping of the specified value key if this map contains a mapping for the key */
         public void remove(int key) {
             int index = getHashcode(key);
-            for(int i=0; i<lists[index].size(); i++)
-            {
+            for(int i=0; i<lists[index].size(); i++) {
                 if(lists[index].get(i)[0]==key)
                     lists[index].remove(i);
             }

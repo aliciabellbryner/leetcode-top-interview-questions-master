@@ -69,6 +69,37 @@ public class Problem_0134_GasStation {
 		return start;
 	}
 
+	//from discussion: easy solution:
+	public int canCompleteCircuit_2(String[] strArr) {
+		int tank = 0;
+		for(int i = 1; i < strArr.length; i++) {
+			int gas = Integer.valueOf(strArr[i].split(":")[0]);
+			int cost = Integer.valueOf(strArr[i].split(":")[1]);
+			tank += gas - cost;
+		}
+		if(tank < 0) {//先把所有加起来，如果小于0那肯定不能往返，返回-1
+			return -1;
+		}
+		int start = 0;
+		int accumulate = 0;
+		//we don't need to go from the tail to head again once we find the start, as per the problem description, there will be only one answer
+		//first thing we can be sure is that the answer cannot be in [0, start-1], then if the answer exist in [start+1, gas.length-1],
+		// then there does exists some place j that also can make the total gain > 0  from j to gas.length-1,
+		// then it is definitely sure there will be two answer as the gain from start to j is also >= 0,
+		// which contradict the only one answer statement, so we can know for sure the start is the answer
+		for(int i = 1; i < strArr.length; i++){
+			int curGain = Integer.valueOf(strArr[i].split(":")[0]) - Integer.valueOf(strArr[i].split(":")[1]);
+			if(accumulate + curGain < 0){//means cur job failed. you have to start from i+1
+				start = i + 1;
+				accumulate = 0;
+			} else {
+				accumulate += curGain;
+			}
+		}
+		return start - 1;
+	}
+
+
 	public static int canCompleteCircuit1(int[] gas, int[] cost) {
 		boolean[] good = goodArray(gas, cost);
 		for (int i = 0; i < gas.length; i++) {

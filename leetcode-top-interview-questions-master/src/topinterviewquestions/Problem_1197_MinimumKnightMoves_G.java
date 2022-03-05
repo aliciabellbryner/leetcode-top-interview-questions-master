@@ -58,6 +58,7 @@ public class Problem_1197_MinimumKnightMoves_G {
         }
     }
 
+    //bfs
     //https://leetcode.com/problems/minimum-knight-moves/discuss/401580/Clean-Java-BFS-solution
     //Time and Space Complexity: O((max(∣x∣,∣y∣))^2)
     class Solution1 {

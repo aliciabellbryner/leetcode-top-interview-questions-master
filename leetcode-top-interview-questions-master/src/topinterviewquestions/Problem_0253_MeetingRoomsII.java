@@ -30,11 +30,12 @@ public class Problem_0253_MeetingRoomsII {
 		for (int i = 0; i < m.length; i++) {
 			lines[i] = new Line(m[i][0], m[i][1]);
 		}
-		Arrays.sort(lines, (o1, o2) -> o1.start - o2.start);//这里一定要用start升序排列
+		Arrays.sort(lines, (o1, o2) -> o1.start - o2.start);//minheap, 这里一定要用start升序排列
 		PriorityQueue<Line> heap = new PriorityQueue<>((o1, o2) -> o1.end - o2.end);//这里一定要用end升序排列，所以得到的heap的minheap
 		int max = 0;
 		for (int i = 0; i < lines.length; i++) {
-			while (!heap.isEmpty() && heap.peek().end <= lines[i].start) {//前面的结束时间早于目前会议的开始时间，就把前面的从stack弹出
+			while (!heap.isEmpty() && heap.peek().end <= lines[i].start) {
+				//前面的结束时间早于目前会议的开始时间，就把前面的从stack弹出
 				heap.poll();
 			}
 			heap.add(lines[i]);

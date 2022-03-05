@@ -33,6 +33,7 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 		int val;
 		TreeNode left;
 		TreeNode right;
+
 		public TreeNode(int v) {
 			this.val = v;
 		}
@@ -41,94 +42,159 @@ public class Problem_0124_BinaryTreeMaximumPathSum {
 	//solution1: use an inner class
 	//time O(N): O(N), where N is number of nodes, since we visit each node not more than 2 times.
 	//space O(H), where H is a tree height, to keep the recursion stack. In the average case of balanced tree, the tree height H=logN, in the worst case of skewed tree, H=N.
-	public class Info {
-		int maxFromHead;//the max value you can get if you start from head
-		int max;//the max value you can get wherever you start
-		public Info(int i, int j) {
-			maxFromHead = i;
-			max = j;
-		}
-	}
-	public int maxPathSum(TreeNode root) {
-		if (root == null) {
-			return -1;
-		}
-		return process(root).max;
-	}
-	public Info process(TreeNode root) {
-		if (root == null) {
-			return null;
-		}
-		Info l = process(root.left);
-		Info r = process(root.right);
-		int m1 = l == null ? Integer.MIN_VALUE : l.max;
-		int m2 = l == null ? Integer.MIN_VALUE : l.maxFromHead;
-		int m3 = l == null ? Integer.MIN_VALUE : l.maxFromHead + root.val;
-		int m4 = r == null ? Integer.MIN_VALUE : r.max;
-		int m5 = r == null ? Integer.MIN_VALUE : r.maxFromHead;
-		int m6 = r == null ? Integer.MIN_VALUE : r.maxFromHead + root.val;
-		int m7 = root.val;
-		int m8 = root.val;
-		if (l != null) {
-			m8 += l.maxFromHead;
-		}
-		if (r != null) {
-			m8 += r.maxFromHead;
-		}
-		int maxFromHead = Math.max(m7, Math.max(m3, m6));
-		int max = Math.max(Math.max(maxFromHead, m1), Math.max(Math.max(m2, m4), Math.max(m5, m8)));
-		return new Info(maxFromHead, max);
-	}
+	class Solution1 {
 
+		public static class Info {
+			int maxFromHead;//the max value you can get if you start from head
+			int max;//the max value you can get wherever you start
+
+			public Info(int i, int j) {
+				maxFromHead = i;
+				max = j;
+			}
+		}
+
+		public int maxPathSum(TreeNode root) {
+			if (root == null) {
+				return -1;
+			}
+			return process(root).max;
+		}
+
+		public Info process(TreeNode root) {
+			if (root == null) {
+				return null;
+			}
+			Info l = process(root.left);
+			Info r = process(root.right);
+			int m1 = l == null ? Integer.MIN_VALUE : l.max;
+			int m2 = l == null ? Integer.MIN_VALUE : l.maxFromHead;
+			int m3 = l == null ? Integer.MIN_VALUE : l.maxFromHead + root.val;
+			int m4 = r == null ? Integer.MIN_VALUE : r.max;
+			int m5 = r == null ? Integer.MIN_VALUE : r.maxFromHead;
+			int m6 = r == null ? Integer.MIN_VALUE : r.maxFromHead + root.val;
+			int m7 = root.val;
+			int m8 = root.val;
+			if (l != null) {
+				m8 += l.maxFromHead;
+			}
+			if (r != null) {
+				m8 += r.maxFromHead;
+			}
+			int maxFromHead = Math.max(m7, Math.max(m3, m6));
+			int max = Math.max(Math.max(maxFromHead, m1), Math.max(Math.max(m2, m4), Math.max(m5, m8)));
+			return new Info(maxFromHead, max);
+		}
+	}
 
 	//solution2: very similiar
-	public static int maxPathSum2(TreeNode root) {
-		if (root == null) {
-			return 0;
+	class Solution2 {
+		public static int maxPathSum2(TreeNode root) {
+			if (root == null) {
+				return 0;
+			}
+			return process2(root).maxPathSum;
 		}
-		return process2(root).maxPathSum;
+
+		public static class Info2 {
+			public int maxPathSum;
+			public int maxPathSumFromHead;
+
+			public Info2(int path, int head) {
+				maxPathSum = path;
+				maxPathSumFromHead = head;
+			}
+		}
+
+		public static Info2 process2(TreeNode x) {
+			if (x == null) {
+				return null;
+			}
+			Info2 leftInfo = process2(x.left);
+			Info2 rightInfo = process2(x.right);
+			int p1 = Integer.MIN_VALUE;
+			if (leftInfo != null) {
+				p1 = leftInfo.maxPathSum;
+			}
+			int p2 = Integer.MIN_VALUE;
+			if (rightInfo != null) {
+				p2 = rightInfo.maxPathSum;
+			}
+			int p3 = x.val;
+			int p4 = Integer.MIN_VALUE;
+			if (leftInfo != null) {
+				p4 = x.val + leftInfo.maxPathSumFromHead;
+			}
+			int p5 = Integer.MIN_VALUE;
+			if (rightInfo != null) {
+				p5 = x.val + rightInfo.maxPathSumFromHead;
+			}
+			int p6 = Integer.MIN_VALUE;
+			if (leftInfo != null && rightInfo != null) {
+				p6 = x.val + leftInfo.maxPathSumFromHead + rightInfo.maxPathSumFromHead;
+			}
+			int maxSum = Math.max(Math.max(Math.max(p1, p2), Math.max(p3, p4)), Math.max(p5, p6));
+			int maxSumFromHead = Math.max(p3, Math.max(p4, p5));
+			return new Info2(maxSum, maxSumFromHead);
+		}
 	}
 
-	public static class Info2 {
-		public int maxPathSum;
-		public int maxPathSumFromHead;
-
-		public Info2(int path, int head) {
-			maxPathSum = path;
-			maxPathSumFromHead = head;
+	//follow up: 如果是只需要找到最大的subtree sum，也就是说必须把一个node下所有的节点都算
+	class Solution3 {
+		public static int maxPathSum(TreeNode root) {
+			if (root == null) {
+				return -1;
+			}
+			return process(root).max;
 		}
+
+		public static class Info {
+			int sum;//代表这个节点下subtree的sum（包括自己这个节点的值）
+			int max;//代表这个节点下能到达的最大的subtree的sum
+
+			Info(int s, int m) {
+				sum = s;
+				max = m;
+			}
+		}
+
+		public static Info process(TreeNode root) {
+			if (root == null) {
+				return null;
+			}
+			Info l = process(root.left);
+			Info r = process(root.right);
+			int sum = root.val;
+			int max = root.val;
+			if (l == null && r == null) {
+				return new Info(sum, max);
+			}
+			if (l != null && r == null) {
+				max = Math.max(l.max, max + l.sum);
+				sum += l.sum;
+			} else if (r != null && l == null) {
+				max = Math.max(r.max, max + r.sum);
+				sum += r.sum;
+			} else {
+				max = Math.max(r.max, max + r.sum + l.sum);
+				sum += r.sum + l.sum;
+			}
+			return new Info(sum, max);
+		}
+
 	}
 
-	public static Info2 process2(TreeNode x) {
-		if (x == null) {
-			return null;
-		}
-		Info2 leftInfo = process2(x.left);
-		Info2 rightInfo = process2(x.right);
-		int p1 = Integer.MIN_VALUE;
-		if (leftInfo != null) {
-			p1 = leftInfo.maxPathSum;
-		}
-		int p2 = Integer.MIN_VALUE;
-		if (rightInfo != null) {
-			p2 = rightInfo.maxPathSum;
-		}
-		int p3 = x.val;
-		int p4 = Integer.MIN_VALUE;
-		if (leftInfo != null) {
-			p4 = x.val + leftInfo.maxPathSumFromHead;
-		}
-		int p5 = Integer.MIN_VALUE;
-		if (rightInfo != null) {
-			p5 = x.val + rightInfo.maxPathSumFromHead;
-		}
-		int p6 = Integer.MIN_VALUE;
-		if (leftInfo != null && rightInfo != null) {
-			p6 = x.val + leftInfo.maxPathSumFromHead + rightInfo.maxPathSumFromHead;
-		}
-		int maxSum = Math.max(Math.max(Math.max(p1, p2), Math.max(p3, p4)), Math.max(p5, p6));
-		int maxSumFromHead = Math.max(p3, Math.max(p4, p5));
-		return new Info2(maxSum, maxSumFromHead);
+
+
+	public static void main(String[] args) {
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(-2);
+		root.right = new TreeNode(3);
+		root.left.left = new TreeNode(4);
+		root.left.right = new TreeNode(5);
+		root.right.left = new TreeNode(-6);
+		root.right.right = new TreeNode(2);
+//		System.out.println(maxPathSum(root));
 	}
 
 }

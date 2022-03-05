@@ -24,17 +24,17 @@ public class Problem_0556_NextGreaterElementIII {
     //那只要把i和j位置的数调换，然后再把i+1到最后面的数逆序就可以得到下一个更大的数了
     //举例：499132654 -> i = 5, j = 8 -> 499132564
     class Solution {
-        public int nextGreaterElement(int n) {
-            char[] digits = Integer.toString(n).toCharArray();
+        public int nextGreaterElement(int num) {
+            char[] digits = Integer.toString(num).toCharArray();
 
-            int i = getIndexOfFirstSmallerDigit(digits);
+            int firstSmallerIdx = getIndexOfFirstSmallerDigit(digits);
 
-            if (i == -1) return -1;
+            if (firstSmallerIdx == -1) return -1;
 
-            int j = getIndexOfFirstLargerDigit(digits, i);
+            int firstLargerIdx = getIndexOfFirstLargerDigit(digits, firstSmallerIdx);
 
-            swap(digits, i, j);
-            reverse(digits, i + 1, digits.length - 1);
+            swap(digits, firstSmallerIdx, firstLargerIdx);
+            reverse(digits, firstSmallerIdx + 1, digits.length - 1);
             return Long.parseLong(new String(digits)) > Integer.MAX_VALUE ? -1 : Integer.parseInt(new String(digits));
         }
 

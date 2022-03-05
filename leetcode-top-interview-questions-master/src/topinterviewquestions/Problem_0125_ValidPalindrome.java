@@ -1,5 +1,7 @@
 package topinterviewquestions;
 
+import java.util.Arrays;
+
 public class Problem_0125_ValidPalindrome {
 	//my solution
 	public boolean isPalindrome_j(String s) {
@@ -70,7 +72,15 @@ public class Problem_0125_ValidPalindrome {
 
 
 	public static void main(String[] args) {
-		System.out.println(Character.toLowerCase('9'));
+
+		String s = "test";
+		char[] ca = s.toCharArray();
+		char temp = ca[2];
+		ca[2] = ca[3];
+		ca[3] = temp;
+		System.out.println(String.valueOf(ca));
+		System.out.println(s);
+//		System.out.println(Character.toLowerCase('9'));
 	}
 
 }

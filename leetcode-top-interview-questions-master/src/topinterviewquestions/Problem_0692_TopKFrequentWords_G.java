@@ -13,7 +13,7 @@ public class Problem_0692_TopKFrequentWords_G {
         public List<String> topKFrequent(String[] words, int k) {
 
             List<String> res = new LinkedList<>();
-            Map<String, Integer> map = new HashMap<>();
+            Map<String, Integer> map = new HashMap<>();//key是word，value是出现的freq
             for(int i=0; i<words.length; i++)
             {
                 map.put(words[i], map.getOrDefault(words[i], 0)+1);

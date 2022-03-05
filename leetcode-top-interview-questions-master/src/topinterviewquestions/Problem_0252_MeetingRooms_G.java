@@ -63,6 +63,7 @@ Time complexity : O(n \log n)O(nlogn). The time complexity is dominated by sorti
 Space complexity : O(1)O(1). Since no additional space is allocated.
      */
 
+    //time O(n^2), space O(1)
     class Solution1 {
         public boolean canAttendMeetings(int[][] intervals) {
             for (int i = 0; i < intervals.length; i++) {
@@ -81,6 +82,8 @@ Space complexity : O(1)O(1). Since no additional space is allocated.
         }
     }
 
+    //approach 2: sorting
+    //time O(nlogn), space O(logN) because quick sort
     class Solution2 {
         public boolean canAttendMeetings(int[][] intervals) {
             Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
