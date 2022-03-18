@@ -104,6 +104,8 @@ Space complexity: O(L)O(L) for creating the <index, value> pairs for non-zero va
      */
 
     //Approach 2: Hash Set
+    //Store the non-zero values and their corresponding indices in a dictionary, with the index being the key.
+    // Any index that is not present corresponds to a value 0 in the input array.
     //Time complexity: O(n) for creating the Hash Map; O(L) for calculating the dot product.
     //
     //Space complexity: O(L) for creating the Hash Map, as we only store elements that are non-zero. O(1) for calculating the dot product.

@@ -1,14 +1,27 @@
 package topinterviewquestions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Problem_0049_GroupAnagrams {
 
 
-	public static List<List<String>> groupAnagrams(String[] strs) {
+	//time O(nm),n is the total number of words and m is the length of each word.
+	public List<List<String>> groupAnagrams(String[] strs) {
+		if (strs == null || strs.length == 0) return new ArrayList<>();
+		Map<String, List<String>> map = new HashMap<>();
+		for (String s : strs) {
+			char[] ca = new char[26];
+			for (char c : s.toCharArray()) ca[c - 'a']++;
+			String keyStr = String.valueOf(ca);
+			if (!map.containsKey(keyStr)) map.put(keyStr, new ArrayList<>());
+			map.get(keyStr).add(s);
+		}
+		return new ArrayList<>(map.values());
+	}
+
+
+	//time O(nmlogm),n is the total number of words and m is the length of each word.
+	public static List<List<String>> groupAnagrams1(String[] strs) {
 		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 		for (String str : strs) {
 			char[] chs = str.toCharArray();
@@ -26,7 +39,7 @@ public class Problem_0049_GroupAnagrams {
 		return res;
 	}
 
-	public static List<List<String>> groupAnagrams1(String[] strs) {
+	public static List<List<String>> groupAnagrams2(String[] strs) {
 		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 		for (String str : strs) {
 			int[] record = new int[26];
