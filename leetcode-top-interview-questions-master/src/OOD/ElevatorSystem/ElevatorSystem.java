@@ -1,4 +1,4 @@
-package OOD;
+package OOD.ElevatorSystem;
 
 import java.util.*;
 import java.util.Collections;
