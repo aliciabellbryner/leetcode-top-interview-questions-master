@@ -64,10 +64,10 @@ public class Problem_0379_DesignPhoneDirectory {
          @return - Return an available number. Return -1 if none is available. */
         public int get() {
             if (next[pos]==-1) return -1;
-            int ret = pos;
+            int res = pos;
             pos = next[pos];
-            next[ret]=-1;
-            return ret;
+            next[res]=-1;
+            return res;
         }
 
         /** Check if a number is available or not. */
