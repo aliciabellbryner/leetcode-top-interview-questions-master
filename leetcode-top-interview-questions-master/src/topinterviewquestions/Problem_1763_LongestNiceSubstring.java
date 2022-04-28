@@ -54,6 +54,7 @@ public class Problem_1763_LongestNiceSubstring {
             return s;
         }
 
+
         //https://leetcode.com/problems/longest-nice-substring/discuss/1075274/Java-Solution-with-Set-comment-explanation
     class Solution2 {
         public String longestNiceSubstring(String s) {
@@ -94,7 +95,10 @@ public class Problem_1763_LongestNiceSubstring {
 
 
     public static void main(String[] args) {
-        String test = "aA";
-        System.out.println(longestNiceSubstring(test));
+//        String test = "aA";
+//        System.out.println(longestNiceSubstring(test));
+        String test = "abcde";
+        System.out.println(test.substring(0,2));
+        System.out.println(test.substring(1));
     }
 }
