@@ -34,7 +34,9 @@ public class Problem_0140_WordBreakII {
 				for(String str: backtrack(s,set,i+1,map)){
 					if(str.length() == 0){
 						list.add(tempStr);
-					}else list.add(tempStr+" "+str);
+					}else {
+						list.add(tempStr+" "+str);
+					}
 				}
 			}
 		}

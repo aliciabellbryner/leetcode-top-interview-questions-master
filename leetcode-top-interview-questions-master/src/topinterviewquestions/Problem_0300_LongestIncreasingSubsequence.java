@@ -31,6 +31,30 @@ Constraints:
 public class Problem_0300_LongestIncreasingSubsequence {
 
 
+	// binary search: O(nlogn)
+	//https://leetcode.com/problems/russian-doll-envelopes/discuss/82763/Java-NLogN-Solution-with-Explanation/87032
+	public class Solution {
+		public int lengthOfLIS(int[] nums) {
+			int[] dp = new int[nums.length];
+			int size = 0;
+
+			for(int num: nums) {
+				// binary search
+				int left = 0, right = size, middle = 0;     // right = size
+				while(left < right) {
+					middle = left + (right - left) / 2;
+					if(dp[middle] < num) left = middle + 1;
+					else right = middle;
+				}
+
+				// left is the right position to 'replace' in dp array
+				dp[left] = num;
+				if(left == size) size++;
+			}
+			return size;
+		}
+	}
+
 
 	//time O(NlogN) space O(N)
 	//Approach 3: Improve With Binary Search

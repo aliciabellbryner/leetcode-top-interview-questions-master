@@ -20,7 +20,7 @@ public class Problem_0416_PartitionEqualSubsetSum {
 			dp[0][nums[0]] = true;
 		}
 		for (int i = 1; i < N; i++) {
-			for (int j = 1; j <= sum; j++) {
+			for (int j = 1; j <= sum; j++) {     
 				dp[i][j] = dp[i - 1][j];
 				if (j - nums[i] >= 0) {
 					dp[i][j] |= dp[i - 1][j - nums[i]];//|代表只要至少有一个是true它就是true
