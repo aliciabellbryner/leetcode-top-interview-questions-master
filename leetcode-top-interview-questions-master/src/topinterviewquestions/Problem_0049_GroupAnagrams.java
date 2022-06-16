@@ -6,11 +6,13 @@ public class Problem_0049_GroupAnagrams {
 
 
 	//time O(nm),n is the total number of words and m is the length of each word.
-	public List<List<String>> groupAnagrams(String[] strs) {
+	public static List<List<String>> groupAnagrams(String[] strs) {
 		if (strs == null || strs.length == 0) return new ArrayList<>();
 		Map<String, List<String>> map = new HashMap<>();
 		for (String s : strs) {
 			char[] ca = new char[26];
+			//char array to String is really fast than int[]
+			//why not use int[] to store the freq? https://leetcode.com/problems/group-anagrams/discuss/19176/Share-my-short-JAVA-solution/241458
 			for (char c : s.toCharArray()) ca[c - 'a']++;
 			String keyStr = String.valueOf(ca);
 			if (!map.containsKey(keyStr)) map.put(keyStr, new ArrayList<>());
@@ -63,5 +65,15 @@ public class Problem_0049_GroupAnagrams {
 		return res;
 	}
 
+
+	public static void main(String[] args) {
+		String[] strs = new String[]{"aa","teta","tan","ate","nat","bat"};
+//		System.out.println(groupAnagrams(strs));
+		char[] ca = new char[3];
+		ca[0]++;
+		ca[0]++;
+		ca[0]++;
+		System.out.println(ca[0]);
+	}
 
 }
